@@ -1,6 +1,6 @@
 {
-  "name": "oop-cats-and-slaves",
-  "version": "1.0.0",
+  "name": "filmvisarna",
+  "version": "0.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
@@ -12,5 +12,6 @@
     "compression": "^1.7.1",
     "express": "^4.16.2",
     "jsonflex": "^1.0.10"
-  }
+  },
+  "private": true
 }
