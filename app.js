@@ -2,6 +2,7 @@
 const express = require('express');
 const flexjson = require('jsonflex')();
 const compression = require('compression');
+const path = require('path');
 
 // Create express server
 const app = express();
@@ -14,8 +15,8 @@ app.use(express.static('www'));
 // Serve the index.html page on every request that
 // doesn't have a file extension in its url
 // (so that single page apps work on page reload)
-app.get(/^[^\.]*$/, (req, res) => {
-  res.sendFile(__dirname + '/www/index.html');
+app.get(/^[^.]*$/, (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 // Start server
