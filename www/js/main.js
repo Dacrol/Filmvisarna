@@ -1,3 +1,23 @@
+let url = location.pathname;
+
+if (url === '/' || url === '') {
+  renderView('/home.html');
+}
+
+$('a#pills-home').click(function (e) {
+  e.preventDefault();
+  renderView('home.html');
+});
+
+$('a#pills-test').click(function (e) {
+  e.preventDefault();
+  renderView('test');
+});
+
+$('a#pills-current').click(function (e) {
+  e.preventDefault();
+  renderView('/current', {movie: '<a href="http://www.imdb.com/title/tt1663662/">Pacific Rim</a>'});
+});
 
 function renderView (viewFile, tagArgs, selector = '#root', viewsFolder = './views/') {
 
