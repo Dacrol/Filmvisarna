@@ -4,7 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, views, public, !**/*.json\"",
+    "lint": "eslint .",
+    "sass": "",
+    "watch": ""
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +17,18 @@
     "express": "^4.16.2",
     "jsonflex": "^1.0.10"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "@types/jquery": "^3.2.18",
+    "babel-eslint": "^8.2.1",
+    "browser-sync": "^2.23.5",
+    "eslint": "^4.15.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
 }
