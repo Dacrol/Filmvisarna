@@ -9,6 +9,7 @@
     "eslint": "eslint www/**/*.js",
     "htmlhint": "htmlhint www/**/*.{htm,html}",
     "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\"",
+    "test": "npm run lint",
     "sass": "",
     "watch": ""
   },
