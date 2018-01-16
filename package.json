@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node app.js",
     "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, views, public, !**/*.json\"",
-    "lint": "eslint .",
+    "lintjs": "eslint .",
+    "linthtml": "htmlhint www/**/*.{htm,html}",
+    "lint": "concurrently \"npm run lintjs\" \"npm run linthtml\"",
     "sass": "",
     "watch": ""
   },
@@ -19,16 +21,18 @@
   },
   "private": true,
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-sass": "^3.1.0",
     "@types/jquery": "^3.2.18",
     "babel-eslint": "^8.2.1",
     "browser-sync": "^2.23.5",
+    "concurrently": "^3.5.1",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "htmlhint": "^0.9.13"
   }
 }
