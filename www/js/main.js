@@ -4,20 +4,9 @@ if (url === '/' || url === '') {
   renderView('/home.html');
 }
 
-$('a#pills-home').click(function (e) {
-  e.preventDefault();
-  renderView('home.html');
-});
-
-$('a#pills-test').click(function (e) {
-  e.preventDefault();
-  renderView('test');
-});
-
-$('a#pills-current').click(function (e) {
-  e.preventDefault();
-  renderView('/current', {movie: '<a href="http://www.imdb.com/title/tt1663662/">Pacific Rim</a>'});
-});
+bindSelector('a#pills-home', 'home.html');
+bindSelector('a#pills-test', 'test');
+bindSelector('a#pills-current', '/current', {movie: '<a href="http://www.imdb.com/title/tt1663662/">Pacific Rim</a>'});
 
 function renderView (viewFile, tagArgs, selector = '#root', viewsFolder = './views/') {
 
@@ -37,4 +26,11 @@ function renderView (viewFile, tagArgs, selector = '#root', viewsFolder = './vie
   console.log(viewFile);
   const url = viewsFolder + viewFile;
   $.get(url, function (data) { $(selector).html($.templates(data).render(tagArgs)); });
+}
+
+function bindSelector (selector, view, tagArgs) {
+  $(selector).click(function (e) {
+    e.preventDefault();
+    renderView(view, tagArgs);
+  });
 }
