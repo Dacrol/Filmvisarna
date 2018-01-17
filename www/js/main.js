@@ -17,7 +17,7 @@ function renderView (viewFile, tagArgs, selector = '#root', viewsFolder = './vie
     viewFile = /[^/](.*)$/.exec(viewFile)[0];
 
   }
-  if (!viewFile.endsWith('.html')) {
+  if (!(viewFile.endsWith('.html') || viewFile.endsWith('.htm'))) {
     viewFile = viewFile + '.html';
   }
   if (!viewsFolder.endsWith('/')) {
