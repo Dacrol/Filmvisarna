@@ -7,7 +7,7 @@
     "start": "node app.js",
     "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, views, public, !**/*.json\"",
     "eslint": "eslint www/**/*.js",
-    "htmlhint": "htmlhint www/**/*.{htm,html}",
+    "htmlhint": "htmlhint --config .htmlhintrc www/**/*.{htm,html}",
     "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\"",
     "test": "npm run lint",
     "sass": "",

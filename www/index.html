@@ -1,28 +1,53 @@
 <!DOCTYPE html>
 <html lang="sv">
-  <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Filmvisarna</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/libs/bootstrap-4-beta.css">
-    <!-- Application specific CSS -->
-    <link rel="stylesheet" href="/css/main.css">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Filmvisarna</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/libs/bootstrap-4-beta.css">
+  <!-- Application specific CSS -->
+  <link rel="stylesheet" href="/css/main.css">
+</head>
 
-  </head>
-  <body>
-    <main>
-      <h1>Filmvisarna</h1>
-    </main>
+<body>
+  <div class="container mt-5">
+    <header>
+      <div class="mx-auto" style="width: 500px; text-align: center">
+        <h1>Filmvisarna</h1>
+        <div class="mx-auto">
+          <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist" style="    padding-left: 40px; justify-content: center;">
+            <li class="nav-item">
+              <a class="nav-link active" id="pills-home" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Hem</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-current" data-toggle="pill" href="#pills-current" role="tab" aria-controls="pills-current"
+                aria-selected="false">Aktuella</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-test" data-toggle="pill" href="#pills-test" role="tab" aria-controls="pills-test" aria-selected="false">Test</a>
+            </li>
+          </ul>
+        </div>
+      </div>
 
+    </header>
+    <div class="mx-auto" style="width: 200px;">
+      <main class="mt-4 text-center">
+        <div id="root"></div>
+      </main>
+    </div>
+  </div>
 
-    <!-- JavaScript libraries -->
-    <script src="/jsonflex.js"></script>
-    <script src="/js/libs/jquery-3.2.1.js"></script>
-    <script src="/js/libs/popper-1.11.0.js"></script>
-    <script src="/js/libs/bootstrap-4-beta.js"></script>
-    <!-- Application specific JavaScript -->
-    <script src="/js/main.js"></script>
-  </body>
+  <!-- JavaScript libraries -->
+  <script src="/jsonflex.js"></script>
+  <script src="/js/libs/jquery-3.2.1.js"></script>
+  <script src="/js/libs/popper-1.11.0.js"></script>
+  <script src="/js/libs/bootstrap-4-beta.js"></script>
+  <script src="/js/libs/jsrender.js"></script>
+  <!-- Application specific JavaScript -->
+  <script src="/js/main.js"></script>
+</body>
+
 </html>
