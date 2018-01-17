@@ -1,3 +1,12 @@
+
+$.getJSON('/json/salong.json',
+  function (json) {
+    let salonger = json;
+    console.log(salonger);
+    bindSelector('a#pills-salonger', 'salonger', {salong1: salonger[0].name, salong2: salonger[1].name});
+  }
+);
+
 let url = location.pathname;
 
 if (url === '/' || url === '') {
@@ -5,7 +14,6 @@ if (url === '/' || url === '') {
 }
 
 bindSelector('a#pills-home', 'home.html');
-bindSelector('a#pills-test', 'test');
 bindSelector('a#pills-current', '/current', {movie: '<a href="http://www.imdb.com/title/tt1663662/">Pacific Rim</a>'});
 
 function renderView (viewFile, tagArgs, selector = '#root', viewsFolder = './views/') {
