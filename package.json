@@ -16,9 +16,12 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "bootstrap": "^4.0.0-beta.3",
         "compression": "^1.7.1",
         "express": "^4.16.2",
-        "jsonflex": "^1.0.10"
+        "jsonflex": "^1.0.10",
+        "popper.js": "^1.12.9",
+        "jquery": "^3.2.1"
     },
     "private": true,
     "devDependencies": {
