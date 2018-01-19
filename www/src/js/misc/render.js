@@ -1,4 +1,3 @@
-
 $.getJSON('/json/salong.json',
   function (json) {
     let salonger = json;
