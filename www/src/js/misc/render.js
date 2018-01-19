@@ -3,7 +3,6 @@ let render = function() {
     $.getJSON('/json/salong.json',
         function(json) {
             let salonger = json;
-            console.log(salonger);
             bindSelector('a#pills-salonger', 'salonger', {
                 salong1: salonger[0].name,
                 salong2: salonger[1].name
@@ -15,6 +14,23 @@ let render = function() {
 
     if (url === '/' || url === '') {
         renderView('/home.html');
+    }
+    if (url === '/salons') {
+        $.getJSON('/json/salong.json',
+        function(json) {
+            let salonger = json;
+                    renderView('/salonger.html', {
+                salong1: salonger[0].name,
+                salong2: salonger[1].name
+            });
+        }
+    );
+
+    }
+    if (url === '/current') {
+        renderView('/current.html', {
+            movie: '<a href="http://www.imdb.com/title/tt1663662/">Pacific Rim</a>'
+        });
     }
 
     bindSelector('a#pills-home', 'home.html');
@@ -37,7 +53,6 @@ let render = function() {
         if (!viewsFolder.endsWith('/')) {
             viewsFolder = viewsFolder + '/';
         }
-        console.log(viewFile);
         const url = viewsFolder + viewFile;
         $.get(url, function(data) {
             $(selector).html($.templates(data).render(tagArgs));

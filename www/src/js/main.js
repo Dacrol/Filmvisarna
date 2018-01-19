@@ -4,9 +4,9 @@ require('jsrender')($);
 import render from "./misc/render.js";
 import "../../../node_modules/popper.js/dist/umd/popper.js";
 import "../../../node_modules/bootstrap/dist/js/bootstrap.min.js";
-import Test from "./classes/test.class.js";
+import App from "./classes/app.class.js";
 
 render();
 
 //classes
-let test = new Test();
+let app = new App();
