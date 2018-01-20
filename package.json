@@ -11,7 +11,7 @@
         "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\"",
         "test": "npm run lint",
         "compile": "gulp default",
-        "watch": "concurrently \"npm run sync\" \"gulp watch\""
+        "watch": "concurrently --kill-others \"npm run sync\" \"gulp watch\""
     },
     "author": "",
     "license": "ISC",
