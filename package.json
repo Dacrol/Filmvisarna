@@ -4,14 +4,14 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "start": "node app.js",
+        "start": "gulp default && node app.js",
         "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, !**/src/*\"",
         "eslint": "eslint www/**/*.js",
-        "htmlhint": "htmlhint www/**/*.{htm,html}",
+        "htmlhint": "htmlhint --config .htmlhintrc www/**/*.{htm,html}",
         "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\"",
         "test": "npm run lint",
         "compile": "gulp default",
-        "watch": "concurrently --kill-others \"npm run sync\" \"gulp watch\""
+        "watch": "gulp default && concurrently --kill-others \"npm run sync\" \"gulp watch\""
     },
     "author": "",
     "license": "ISC",
