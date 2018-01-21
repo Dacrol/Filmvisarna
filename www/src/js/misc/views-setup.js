@@ -11,15 +11,4 @@ export default function viewsSetup (app) {
     ['salong1', 'salong2'],
     'name'
   );
-
-  /*  app.bindView('a#pills-salonger', 'salonger', '/salons', function () {
-    $.getJSON('/json/salong.json', function (json) {
-      let salonger = json;
-      app.renderView('salonger', {
-        salong1: salonger[0].name,
-        salong2: salonger[1].name
-      });
-    });
-  });
-   */
 }
