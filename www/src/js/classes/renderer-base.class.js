@@ -1,5 +1,4 @@
 class Renderer {
-
   /**
    * Binds a view to a selector
    *
@@ -16,24 +15,6 @@ class Renderer {
   bindView (...args) {
     // @ts-ignore
     Renderer.bindView(...args);
-  }
-
-  /**
-   * Renders a view
-   *
-   // @ts-ignore
-   * @param {string} viewFile
-   // @ts-ignore
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
-   // @ts-ignore
-   * @param {string} [selector='#root'] default #root
-   // @ts-ignore
-   * @param {string} [viewsFolder='./views/'] default ./views/
-   * @memberof Renderer
-   */
-  renderView (...args) {
-    // @ts-ignore
-    Renderer.renderView(...args);
   }
 
   /**
@@ -56,6 +37,24 @@ class Renderer {
   bindViewWithJSON (...args) {
     // @ts-ignore
     Renderer.bindViewWithJSON(...args);
+  }
+
+  /**
+   * Renders a view
+   *
+   // @ts-ignore
+   * @param {string} viewFile
+   // @ts-ignore
+   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   // @ts-ignore
+   * @param {string} [selector='#root'] default #root
+   // @ts-ignore
+   * @param {string} [viewsFolder='./views/'] default ./views/
+   * @memberof Renderer
+   */
+  renderView (...args) {
+    // @ts-ignore
+    Renderer.renderView(...args);
   }
 
   /**
@@ -154,14 +153,14 @@ class Renderer {
     });
   }
   /**
- * Binds a view to a URL
- *
- * @static
- * @param {string} view
- * @param {string} url
- * @param {Object} tagArgs
- * @memberof Renderer Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
- */
+   * Binds a view to a URL
+   *
+   * @static
+   * @param {string} view
+   * @param {string} url
+   * @param {Object} tagArgs
+   * @memberof Renderer Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   */
   static bindViewToUrl (view, url, tagArgs) {
     $(document).ready(function () {
       let path = location.pathname;
