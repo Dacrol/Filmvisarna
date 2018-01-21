@@ -8,7 +8,8 @@
         "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, !**/src/*\"",
         "eslint": "eslint www/**/*.js",
         "htmlhint": "htmlhint --config .htmlhintrc www/**/*.{htm,html}",
-        "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\"",
+        "stylelint": "stylelint www/src/**/*.scss",
+        "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\" \"npm run stylelint\"",
         "test": "npm run lint",
         "compile": "gulp default",
         "watch": "gulp default && concurrently --kill-others \"npm run sync\" \"gulp watch\""
@@ -47,6 +48,9 @@
         "gulp-sourcemaps": "^2.6.3",
         "gulp-uglify": "^3.0.0",
         "htmlhint": "^0.9.13",
+        "stylelint": "^8.4.0",
+        "stylelint-config-standard": "^18.0.0",
+        "stylelint-scss": "^2.2.0",
         "vinyl-buffer": "^1.0.1",
         "vinyl-source-stream": "^2.0.0"
     },

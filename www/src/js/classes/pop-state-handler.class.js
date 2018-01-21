@@ -1,33 +1,24 @@
 class PopStateHandler {
-
-  constructor(){
-
+  constructor () {
     this.addEventHandler();
-
     this.changePage();
-
     window.addEventListener('popstate', () => this.changePage());
-
   }
 
-  addEventHandler(){
-
+  addEventHandler () {
     let that = this;
 
-    $(document).on('click','a.pop',function(e){
-
+    $(document).on('click', 'a.pop', function (e) {
       let href = $(this).attr('href');
       history.pushState(null, null, href);
 
       that.changePage();
 
       e.preventDefault();
-
     });
   }
 
-  changePage(){
-
+  changePage () {
     let url = location.pathname;
 
     $('header a').removeClass('active');
@@ -36,28 +27,25 @@ class PopStateHandler {
     let urls = {
       '/': 'home',
       '/current': 'aktuella',
-      '/salons': 'salonger',
+      '/salons': 'salonger'
     };
 
     let methodName = urls[url];
     this[methodName]();
-
   }
 
-  home(){
+  home () {
     // $('main').empty();
     // console.log('hem')
   }
-  aktuella(){
+  aktuella () {
     // $('main').empty();
     // console.log('aktuella')
   }
-  salonger(){
+  salonger () {
     // $('main').empty();
     // console.log('salonger')
-    
   }
-
 }
 
 export default PopStateHandler;
