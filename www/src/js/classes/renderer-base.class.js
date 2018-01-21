@@ -2,12 +2,50 @@ class Renderer {
   bindView (...args) {
     Renderer.bindView(...args);
   }
+  renderView (...args) {
+    Renderer.renderView(...args);
+  }
+  bindViewWithJSON (...args) {
+    Renderer.bindViewWithJSON(...args);
+  }
 
-  static bindView (selector, view, tagArgs, url = null) {
+  static bindViewWithJSON (
+    selector,
+    view,
+    url,
+    jsonUrl,
+    tagVariables = [],
+    tagVariableKey = null
+  ) {
+    if (!jsonUrl.startsWith('/')) {
+      jsonUrl = '/' + jsonUrl;
+    }
+    Renderer.bindView(selector, view, url, function () {
+      $.getJSON(jsonUrl, function (json) {
+        const tagArgs = {};
+        tagVariables.forEach((tagVariable, index) => {
+          !tagVariableKey
+            ? Object.assign(tagArgs, { [tagVariable]: json[index] })
+            : Object.assign(tagArgs, {
+              [tagVariable]: json[index][tagVariableKey]
+            });
+        });
+        Renderer.renderView('salonger', tagArgs);
+      });
+    });
+  }
+
+  static bindView (selector, view, url, tagArgs) {
     $(selector).click(function (e) {
       e.preventDefault();
-      Renderer.renderView(view, tagArgs);
+      if (typeof tagArgs !== 'function') {
+        Renderer.renderView(view, tagArgs);
+      } else {
+        // console.log(tagArgs);
+        tagArgs();
+      }
     });
+    Renderer.bindViewToUrl(view, url, tagArgs);
   }
 
   static renderView (
@@ -16,6 +54,7 @@ class Renderer {
     selector = '#root',
     viewsFolder = './views/'
   ) {
+    console.log(...arguments);
     if (!(tagArgs instanceof Object)) {
       tagArgs = {};
     }
@@ -32,7 +71,17 @@ class Renderer {
     $.get(url, function (data) {
       $(selector).html($.templates(data).render(tagArgs));
     });
-    return url;
+  }
+
+  static bindViewToUrl (view, url, tagArgs) {
+    $(document).ready(function () {
+      let path = location.pathname;
+      if (path === url && typeof tagArgs !== 'function') {
+        Renderer.renderView(view, tagArgs);
+      } else if (path === url) {
+        tagArgs();
+      }
+    });
   }
 }
 
