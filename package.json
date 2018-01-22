@@ -1,39 +1,62 @@
 {
-  "name": "filmvisarna",
-  "version": "0.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "start": "node app.js",
-    "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, views, public, !**/*.json\"",
-    "eslint": "eslint www/**/*.js",
-    "htmlhint": "htmlhint --config .htmlhintrc www/**/*.{htm,html}",
-    "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\"",
-    "test": "npm run lint",
-    "sass": "",
-    "watch": ""
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "compression": "^1.7.1",
-    "express": "^4.16.2",
-    "jsonflex": "^1.0.10"
-  },
-  "private": true,
-  "devDependencies": {
-    "@types/jquery": "^3.2.18",
-    "babel-eslint": "^8.2.1",
-    "browser-sync": "^2.23.5",
-    "concurrently": "^3.5.1",
-    "eslint": "^4.15.0",
-    "eslint-config-standard": "^11.0.0-beta.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "gulp": "^3.9.1",
-    "gulp-sass": "^3.1.0",
-    "htmlhint": "^0.9.13"
-  }
+    "name": "filmvisarna",
+    "version": "0.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "gulp default && node app.js",
+        "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, !**/src/*\"",
+        "eslint": "eslint www/**/*.js",
+        "htmlhint": "htmlhint --config .htmlhintrc www/**/*.{htm,html}",
+        "stylelint": "stylelint www/src/**/*.scss",
+        "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\" \"npm run stylelint\"",
+        "test": "npm run lint",
+        "compile": "gulp default",
+        "watch": "gulp default && concurrently --kill-others \"npm run sync\" \"gulp watch\""
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bootstrap": "^4.0.0-beta.3",
+        "compression": "^1.7.1",
+        "express": "^4.16.2",
+        "jquery": "^3.2.1",
+        "jsonflex": "^1.0.10",
+        "jsrender": "^0.9.90",
+        "popper.js": "^1.12.9"
+    },
+    "private": true,
+    "devDependencies": {
+        "@types/jquery": "^3.2.18",
+        "babel-core": "^6.26.0",
+        "babel-eslint": "^8.2.1",
+        "babel-preset-env": "^1.6.1",
+        "babelify": "^8.0.0",
+        "browser-sync": "^2.23.5",
+        "browserify": "^15.2.0",
+        "concurrently": "^3.5.1",
+        "eslint": "^4.15.0",
+        "eslint-config-standard": "^11.0.0-beta.0",
+        "eslint-plugin-import": "^2.8.0",
+        "eslint-plugin-node": "^5.2.1",
+        "eslint-plugin-promise": "^3.6.0",
+        "eslint-plugin-standard": "^3.0.1",
+        "gulp": "^3.9.1",
+        "gulp-autoprefixer": "^4.1.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-sass": "^3.1.0",
+        "gulp-sourcemaps": "^2.6.3",
+        "gulp-uglify": "^3.0.0",
+        "htmlhint": "^0.9.13",
+        "stylelint": "^8.4.0",
+        "stylelint-config-standard": "^18.0.0",
+        "stylelint-scss": "^2.2.0",
+        "vinyl-buffer": "^1.0.1",
+        "vinyl-source-stream": "^2.0.0"
+    },
+    "babel": {
+        "presets": [
+            "env"
+        ]
+    }
 }
