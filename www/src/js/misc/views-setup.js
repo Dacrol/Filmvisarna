@@ -1,5 +1,5 @@
 export default function viewsSetup (app) {
-  app.bindView('a#pills-home', 'home', '/');
+  app.bindViewWithJSON('a#pills-home', 'home', '/', '/json/movie-data.json', 'movies');
   app.bindView('a#pills-current', 'current', '/current', {
     movie: '<a href="http://www.imdb.com/title/tt1663662/">Pacific Rim</a>'
   });
@@ -12,3 +12,4 @@ export default function viewsSetup (app) {
     'name'
   );
 }
+
