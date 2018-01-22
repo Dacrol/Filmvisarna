@@ -1,60 +1,83 @@
+/** Class for rendering views */
 class Renderer {
   /**
    * Binds a view to a selector
    *
-   // @ts-ignore
    * @param {string} selector
-   // @ts-ignore
    * @param {string} view
-   // @ts-ignore
    * @param {string} url
-   // @ts-ignore
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
    * @memberof Renderer
    */
-  bindView (...args) {
+  bindView (selector, view, url, tagArgs) {
     // @ts-ignore
-    Renderer.bindView(...args);
+    Renderer.bindView(...arguments);
   }
 
   /**
    * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with tagArgs supplied as a function.
    *
-   // @ts-ignore
    * @param {string} selector
-   // @ts-ignore
    * @param {string} view
-   // @ts-ignore
    * @param {string} url
-   // @ts-ignore
    * @param {string} jsonUrl
-   // @ts-ignore
-   * @param {string[]} tagVariables name of the tags as they are written in the html template file, for example ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}
-   // @ts-ignore
+   * @param {string[]|string} tagVariables name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
    * @param {string} [tagVariableKey] name of the object key that holds the desired data, for example: 'name' in salons.json
    * @memberof Renderer
    */
-  bindViewWithJSON (...args) {
+  bindViewWithJSON (selector, view, url, jsonUrl, tagVariables, tagVariableKey) {
     // @ts-ignore
-    Renderer.bindViewWithJSON(...args);
+    Renderer.bindViewWithJSON(...arguments);
   }
 
   /**
    * Renders a view
    *
-   // @ts-ignore
    * @param {string} viewFile
-   // @ts-ignore
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
-   // @ts-ignore
    * @param {string} [selector='#root'] default #root
-   // @ts-ignore
    * @param {string} [viewsFolder='./views/'] default ./views/
    * @memberof Renderer
    */
-  renderView (...args) {
+  renderView (viewFile, tagArgs, selector = '#root', viewsFolder = './views/') {
     // @ts-ignore
-    Renderer.renderView(...args);
+    Renderer.renderView(...arguments);
+  }
+
+  /**
+   * Binds a view to a URL
+   *
+   * @param {string} view
+   * @param {string} url
+   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   * @memberof Renderer
+   */
+  bindViewToUrl (view, url, tagArgs) {
+    // @ts-ignore
+    Renderer.bindViewToUrl(...arguments);
+  }
+
+  /**
+   * Binds a view to a selector
+   *
+   * @static
+   * @param {string} selector
+   * @param {string} view
+   * @param {string} url
+   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
+   * @memberof Renderer
+   */
+  static bindView (selector, view, url, tagArgs) {
+    $(selector).click(function (e) {
+      e.preventDefault();
+      if (typeof tagArgs !== 'function') {
+        Renderer.renderView(view, tagArgs);
+      } else {
+        // console.log(tagArgs);
+        tagArgs();
+      }
+    });
+    Renderer.bindViewToUrl(view, url, tagArgs);
   }
 
   /**
@@ -65,7 +88,7 @@ class Renderer {
    * @param {string} view
    * @param {string} url
    * @param {string} jsonUrl
-   * @param {string[]} tagVariables name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}
+   * @param {string[]|string} tagVariables name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
    * @param {string} [tagVariableKey] name of the object key that holds the desired data, for example: 'name' in salons.json
    * @memberof Renderer
    */
@@ -82,40 +105,21 @@ class Renderer {
     }
     Renderer.bindView(selector, view, url, function () {
       $.getJSON(jsonUrl, function (json) {
-        const tagArgs = {};
-        tagVariables.forEach((tagVariable, index) => {
-          !tagVariableKey
-            ? Object.assign(tagArgs, { [tagVariable]: json[index] })
-            : Object.assign(tagArgs, {
-              [tagVariable]: json[index][tagVariableKey]
-            });
-        });
+        let tagArgs = {};
+        if (!Array.isArray(tagVariables)) {
+          Object.assign(tagArgs, { [tagVariables]: json });
+        } else {
+          tagVariables.forEach((tagVariable, index) => {
+            !tagVariableKey
+              ? Object.assign(tagArgs, { [tagVariable]: json[index] })
+              : Object.assign(tagArgs, {
+                [tagVariable]: json[index][tagVariableKey]
+              });
+          });
+        }
         Renderer.renderView(view, tagArgs);
       });
     });
-  }
-
-  /**
-   * Binds a view to a selector
-   *
-   * @static
-   * @param {string} selector
-   * @param {string} view
-   * @param {string} url
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
-   * @memberof Renderer
-   */
-  static bindView (selector, view, url, tagArgs) {
-    $(selector).click(function (e) {
-      e.preventDefault();
-      if (typeof tagArgs !== 'function') {
-        Renderer.renderView(view, tagArgs);
-      } else {
-        // console.log(tagArgs);
-        tagArgs();
-      }
-    });
-    Renderer.bindViewToUrl(view, url, tagArgs);
   }
 
   /**
@@ -158,8 +162,8 @@ class Renderer {
    * @static
    * @param {string} view
    * @param {string} url
-   * @param {Object} tagArgs
-   * @memberof Renderer Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
+   * @memberof Renderer
    */
   static bindViewToUrl (view, url, tagArgs) {
     $(document).ready(function () {
