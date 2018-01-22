@@ -90,7 +90,7 @@ class Renderer {
               [tagVariable]: json[index][tagVariableKey]
             });
         });
-        Renderer.renderView('salonger', tagArgs);
+        Renderer.renderView(view, tagArgs);
       });
     });
   }
