@@ -1,4 +1,5 @@
 import PopStateHandler from './pop-state-handler.class.js';
+const urlRegex = /(\W\w*)\W?(.*)/;
 /** Class for rendering views */
 class Renderer extends PopStateHandler {
   /**
@@ -67,7 +68,7 @@ class Renderer extends PopStateHandler {
   }
 
   /**
-   * Binds a view to a selector
+   * Binds a view to a selector and a URL
    *
    * @static
    * @param {string} [selector]
@@ -77,17 +78,17 @@ class Renderer extends PopStateHandler {
    * @memberof Renderer
    */
   static bindView (selector = null, view, url, tagArgs) {
-    if (selector) {
-      $(selector).click(function (e) {
-        e.preventDefault();
-        if (typeof tagArgs !== 'function') {
-          Renderer.renderView(view, tagArgs);
-        } else {
-        // console.log(tagArgs);
-          tagArgs();
-        }
-      });
-    }
+    // if (selector) {
+    //   $(selector).unbind('click');
+    //   $(selector).click(function (e) {
+    //     e.preventDefault();
+    //     if (typeof tagArgs !== 'function') {
+    //       Renderer.renderView(view, tagArgs);
+    //     } else {
+    //       tagArgs();
+    //     }
+    //   });
+    // }
     Renderer.bindViewToUrl(view, url, tagArgs);
   }
 
@@ -114,9 +115,9 @@ class Renderer extends PopStateHandler {
     if (!jsonUrl.startsWith('/')) {
       jsonUrl = '/' + jsonUrl;
     }
-    Renderer.bindView(selector, view, url, function () {
+    Renderer.bindView(selector, view, url, function (pathParams) {
       $.getJSON(jsonUrl, function (json) {
-        let tagArgs = {};
+        let tagArgs = {'path_params': pathParams};
         if (!Array.isArray(tagVariables)) {
           Object.assign(tagArgs, { [tagVariables]: json });
         } else {
@@ -149,7 +150,7 @@ class Renderer extends PopStateHandler {
     selector = '#root',
     viewsFolder = './views/'
   ) {
-    console.log(...arguments);
+    // console.log(...arguments);
     if (!(tagArgs instanceof Object)) {
       tagArgs = {};
     }
@@ -165,6 +166,7 @@ class Renderer extends PopStateHandler {
     const url = viewsFolder + viewFile;
     $.get(url, function (data) {
       $(selector).html($.templates(data).render(tagArgs));
+      console.log(tagArgs);
     });
   }
   /**
@@ -178,11 +180,20 @@ class Renderer extends PopStateHandler {
    */
   static bindViewToUrl (view, url, tagArgs) {
     $(document).ready(function () {
-      let path = location.pathname;
-      if (path === url && typeof tagArgs !== 'function') {
-        Renderer.renderView(view, tagArgs);
-      } else if (path === url) {
-        tagArgs();
+      const path = location.pathname;
+      const urlParts = urlRegex.exec(path);
+      // console.log(urlParts);
+      try {
+        if (urlParts[1] === url && typeof tagArgs !== 'function') {
+          // console.log('!')
+          Object.assign(tagArgs, {'path_params': urlParts[2]});
+          // console.log(tagArgs);
+          Renderer.renderView(view, tagArgs);
+        } else if (urlParts[1] === url) {
+          tagArgs(urlParts[2]);
+        }
+      } catch (error) {
+        console.warn('Invalid url: ', error);
       }
     });
   }

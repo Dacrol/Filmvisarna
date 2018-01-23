@@ -7,7 +7,7 @@ class PopStateHandler {
   }
 
   bindViewToPopState (url, viewMethod) {
-    console.log(this.viewMethods);
+    // console.log(this.viewMethods);
     Object.assign(this.viewMethods, {[url]: viewMethod});
   }
 
