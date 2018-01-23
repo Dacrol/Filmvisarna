@@ -4,7 +4,7 @@ class Renderer extends PopStateHandler {
   /**
    * Binds a view to a selector
    *
-   * @param {string} selector
+   * @param {string} [selector]
    * @param {string} view
    * @param {string} url
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
@@ -22,7 +22,7 @@ class Renderer extends PopStateHandler {
   /**
    * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with tagArgs supplied as a function.
    *
-   * @param {string} selector
+   * @param {string} [selector]
    * @param {string} view
    * @param {string} url
    * @param {string} jsonUrl
@@ -70,22 +70,24 @@ class Renderer extends PopStateHandler {
    * Binds a view to a selector
    *
    * @static
-   * @param {string} selector
+   * @param {string} [selector]
    * @param {string} view
    * @param {string} url
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
    * @memberof Renderer
    */
-  static bindView (selector, view, url, tagArgs) {
-    $(selector).click(function (e) {
-      e.preventDefault();
-      if (typeof tagArgs !== 'function') {
-        Renderer.renderView(view, tagArgs);
-      } else {
+  static bindView (selector = null, view, url, tagArgs) {
+    if (selector) {
+      $(selector).click(function (e) {
+        e.preventDefault();
+        if (typeof tagArgs !== 'function') {
+          Renderer.renderView(view, tagArgs);
+        } else {
         // console.log(tagArgs);
-        tagArgs();
-      }
-    });
+          tagArgs();
+        }
+      });
+    }
     Renderer.bindViewToUrl(view, url, tagArgs);
   }
 
@@ -93,7 +95,7 @@ class Renderer extends PopStateHandler {
    * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with tagArgs supplied as a function.
    *
    * @static
-   * @param {string} selector
+   * @param {string} [selector]
    * @param {string} view
    * @param {string} url
    * @param {string} jsonUrl
