@@ -11,5 +11,11 @@ export default function viewsSetup (app) {
     ['salong1', 'salong2'],
     'name'
   );
+  app.bindViewWithJSON(
+    '',
+    'posterfilm',
+    '/film',
+    '/json/movie-data.json',
+    'movies')
 }
 
