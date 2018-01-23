@@ -46,10 +46,10 @@ class Renderer extends PopStateHandler {
    * @param {string} viewFile
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
    * @param {string} [selector='#root'] default #root
-   * @param {string} [viewsFolder='./views/'] default ./views/
+   * @param {string} [viewsFolder='/views/'] default /views/
    * @memberof Renderer
    */
-  renderView (viewFile, tagArgs, selector = '#root', viewsFolder = './views/') {
+  renderView (viewFile, tagArgs, selector = '#root', viewsFolder = '/views/') {
     // @ts-ignore
     Renderer.renderView(...arguments);
   }
@@ -141,14 +141,14 @@ class Renderer extends PopStateHandler {
    * @param {string} viewFile
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
    * @param {string} [selector='#root'] default #root
-   * @param {string} [viewsFolder='./views/'] default ./views/
+   * @param {string} [viewsFolder='/views/'] default /views/
    * @memberof Renderer
    */
   static renderView (
     viewFile,
     tagArgs,
     selector = '#root',
-    viewsFolder = './views/'
+    viewsFolder = '/views/'
   ) {
     // console.log(...arguments);
     if (!(tagArgs instanceof Object)) {
