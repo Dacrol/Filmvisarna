@@ -12,7 +12,7 @@
         "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\" \"npm run stylelint\"",
         "test": "npm run lint",
         "compile": "gulp default",
-        "watch": "gulp default && concurrently --kill-others \"npm run sync\" \"gulp watch\""
+        "watch": "gulp default && concurrently --allow-restart --restart-after 5000 --restart-tries 24 --kill-others \"npm run sync\" \"gulp watch\""
     },
     "author": "",
     "license": "ISC",
