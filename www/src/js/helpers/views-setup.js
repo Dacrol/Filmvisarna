@@ -14,6 +14,5 @@ export default function viewsSetup (app) {
     'posterfilm',
     '/film',
     '/json/movie-data.json',
-    'movies')
+    'movies');
 }
-

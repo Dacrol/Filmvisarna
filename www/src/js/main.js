@@ -9,13 +9,14 @@ import viewsSetup from './helpers/views-setup';
 
 // @ts-ignore
 require('jsrender')(jQuery);
-// let owlCarousel = require("owl.carousel")(jQuery);
 // @ts-ignore
 window.$ = window.jQuery = jQuery;
-require("../../../node_modules/owl.carousel/dist/owl.carousel");
+// @ts-ignore
+require('../../../node_modules/owl.carousel/dist/owl.carousel');
+
 // classes
 let app = new App();
 
+// @ts-ignore
 window.$.owlCarousel = window.$.fn.owlCarousel;
 viewsSetup(app);
-
