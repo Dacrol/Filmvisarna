@@ -6,8 +6,7 @@
 		<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
 			<ul>
 			{{for movies}}
-
-				<li>{{:original_title}}</li>
+				<img src="https://image.tmdb.org/t/p/original{{:backdrop_path}}"/>
 
 			{{/for}}
 		</ul>
