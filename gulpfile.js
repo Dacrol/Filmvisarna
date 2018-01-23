@@ -20,53 +20,53 @@ var jsDist = './www/dist/js/';
 var jsWatch = 'www/src/js/**/*.js';
 var jsFiles = [jsSRC];
 
-gulp.task('style', function() {
-    gulp.src(styleSRC)
-        .pipe(sourcemaps.init())
-        .pipe(sass({
-            errorLogToConsole: true,
-            outputStyle: 'compressed'
-        }))
-        .on('error', console.error.bind(console))
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: false
-        }))
-        .pipe(rename({
-            suffix: '.min'
-        }))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(styleDist));
+gulp.task('style', function () {
+  gulp.src(styleSRC)
+    .pipe(sourcemaps.init())
+    .pipe(sass({
+      errorLogToConsole: true,
+      outputStyle: 'compressed'
+    }))
+    .on('error', console.error.bind(console))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
+    .pipe(rename({
+      suffix: '.min'
+    }))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(styleDist));
 });
 
 
 
-gulp.task('js', function() {
-    jsFiles.map(function(entry) {
-        return browserify({
-                entries: [jsFolder + entry]
-            })
-            .transform(babelify, {
-                presets: ['env']
-            })
-            .bundle()
-            .pipe(source(entry))
-            .pipe(rename({
-                extname: '.min.js'
-            }))
-            .pipe(buffer())
-            .pipe(sourcemaps.init({
-                loadMaps: true
-            }))
-            .pipe(uglify())
-            .pipe(sourcemaps.write('./'))
-            .pipe(gulp.dest(jsDist));
-    });
+gulp.task('js', function () {
+  jsFiles.map(function (entry) {
+    return browserify({
+      entries: [jsFolder + entry]
+    })
+      .transform(babelify, {
+        presets: ['env']
+      })
+      .bundle()
+      .pipe(source(entry))
+      .pipe(rename({
+        extname: '.min.js'
+      }))
+      .pipe(buffer())
+      .pipe(sourcemaps.init({
+        loadMaps: true
+      }))
+      .pipe(uglify())
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest(jsDist));
+  });
 });
 
 gulp.task('default', ['style', 'js']);
 
-gulp.task('watch', ['default'], function() {
-    gulp.watch(styleWatch, ['style']);
-    gulp.watch(jsWatch, ['js']);
+gulp.task('watch', ['default'], function () {
+  gulp.watch(styleWatch, ['style']);
+  gulp.watch(jsWatch, ['js']);
 });
