@@ -11,3 +11,4 @@ require('jsrender')($);
 // classes
 let app = new App();
 viewsSetup(app);
+
