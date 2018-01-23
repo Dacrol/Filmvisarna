@@ -1,5 +1,6 @@
+import PopStateHandler from './pop-state-handler.class.js';
 /** Class for rendering views */
-class Renderer {
+class Renderer extends PopStateHandler {
   /**
    * Binds a view to a selector
    *
@@ -10,8 +11,12 @@ class Renderer {
    * @memberof Renderer
    */
   bindView (selector, view, url, tagArgs) {
-    // @ts-ignore
-    Renderer.bindView(...arguments);
+    let viewMethod = () => {
+      // @ts-ignore
+      Renderer.bindView(...arguments);
+    };
+    this.bindViewToPopState(url, viewMethod);
+    viewMethod();
   }
 
   /**
@@ -26,8 +31,12 @@ class Renderer {
    * @memberof Renderer
    */
   bindViewWithJSON (selector, view, url, jsonUrl, tagVariables, tagVariableKey) {
-    // @ts-ignore
-    Renderer.bindViewWithJSON(...arguments);
+    let viewMethod = () => {
+      // @ts-ignore
+      Renderer.bindViewWithJSON(...arguments);
+    };
+    this.bindViewToPopState(url, viewMethod);
+    viewMethod();
   }
 
   /**
