@@ -6,10 +6,20 @@ import viewsSetup from './helpers/views-setup';
 
 // @ts-ignore
 require('jsrender')(jQuery);
+// let owlCarousel = require("owl.carousel")(jQuery);
 // @ts-ignore
 window.$ = window.jQuery = jQuery;
 
+// jQuery.fn.owlCarousel = owlCarousel;
+
 // classes
 let app = new App();
+
+// $('#carouselExampleIndicators').carousel({
+// 	pause : "hover",
+// 	ride : "carousel"
+// });
+
+
 viewsSetup(app);
 
