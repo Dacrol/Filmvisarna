@@ -1,0 +1,45 @@
+
+
+<div class="row">
+	<div class="col-12">
+
+
+		<!-- Wrapper för affisch och kortfattad information om filmen -->
+		<div class="film-info mb-3" style="min-height: 500px; background-color: #eee; border-bottom: 1px solid #ccc"><!-- inline-stylingen är temporär -->
+			<!-- Filmens affisch -->
+			<div class="card d-inline-block float-left mr-5" style="max-width: 20rem;">
+			  <div class="card-body text-dark">
+			  	<img class="card-img-top" src="https://image.tmdb.org/t/p/original{{:movies[0].images.posters[0].file_path}}" alt="Card image cap">
+			  </div>
+			</div>
+			<!-- Kortfattad text om filmen -->
+			<h1 class="pt-2">{{:movies[0].title_sv}}</h1>
+			<p class="pr-5 mb-3">{{:movies[0].plot_sv}}</p>
+		</div>
+	</div>
+</div>
+
+
+
+		
+		<iframe class="mx-auto mb-3" width="1110" height="450" src="https://www.youtube.com/embed/{{:movies[0].videos.results[0].key}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>					  
+		
+		
+		<div class="row">
+			<div class="col-12 mb-3">
+		<h2>Föreställningar</h2>
+		</div>
+	</div>
+		<div class="row">
+			<div class="col-12 mb-3">
+		<div class="dropdown">
+	  <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	    Datum
+	  </button>
+	  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	    <a class="dropdown-item" href="#">Idag</a>
+	    <a class="dropdown-item" href="#">Imorgon</a>
+	  </div>
+	 </div>
+	</div>
+</div>
