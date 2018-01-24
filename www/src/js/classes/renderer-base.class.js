@@ -27,11 +27,11 @@ class Renderer extends PopStateHandler {
    * @param {string} view
    * @param {string} url
    * @param {string} jsonUrl
-   * @param {string[]|string} tagVariables name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
-   * @param {string} [tagVariableKey] name of the object key that holds the desired data, for example: 'name' in salons.json
+   * @param {string[]|string} dataName name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
+   * @param {string} [dataKey] name of the object key that holds the desired data, for example: 'name' in salons.json
    * @memberof Renderer
    */
-  bindViewWithJSON (selector, view, url, jsonUrl, tagVariables, tagVariableKey) {
+  bindViewWithJSON (selector, view, url, jsonUrl, dataName, dataKey) {
     let viewMethod = () => {
       // @ts-ignore
       Renderer.bindViewWithJSON(...arguments);
@@ -104,8 +104,8 @@ class Renderer extends PopStateHandler {
    * @param {string} view
    * @param {string} url
    * @param {string} jsonUrl
-   * @param {string[]|string} tagVariables name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
-   * @param {string} [tagVariableKey] name of the object key that holds the desired data, for example: 'name' in salons.json
+   * @param {string[]|string} dataName name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
+   * @param {string} [dataKey] name of the object key that holds the desired data, for example: 'name' in salons.json
    * @memberof Renderer
    */
   static bindViewWithJSON (
@@ -113,8 +113,8 @@ class Renderer extends PopStateHandler {
     view,
     url,
     jsonUrl,
-    tagVariables,
-    tagVariableKey
+    dataName,
+    dataKey
   ) {
     if (!jsonUrl.startsWith('/')) {
       jsonUrl = '/' + jsonUrl;
@@ -122,14 +122,14 @@ class Renderer extends PopStateHandler {
     Renderer.bindView(selector, view, url, function (pathParams) {
       $.getJSON(jsonUrl, function (json) {
         let contextData = {'path_params': pathParams};
-        if (!Array.isArray(tagVariables)) {
-          Object.assign(contextData, { [tagVariables]: json });
+        if (!Array.isArray(dataName)) {
+          Object.assign(contextData, { [dataName]: json });
         } else {
-          tagVariables.forEach((tagVariable, index) => {
-            !tagVariableKey
+          dataName.forEach((tagVariable, index) => {
+            !dataKey
               ? Object.assign(contextData, { [tagVariable]: json[index] })
               : Object.assign(contextData, {
-                [tagVariable]: json[index][tagVariableKey]
+                [tagVariable]: json[index][dataKey]
               });
           });
         }
