@@ -8,10 +8,10 @@ class Renderer extends PopStateHandler {
    * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
    * @memberof Renderer
    */
-  bindView (selector, view, url, tagArgs) {
+  bindView (selector, view, url, contextData) {
     let viewMethod = () => {
       // @ts-ignore
       Renderer.bindView(...arguments);
@@ -21,7 +21,7 @@ class Renderer extends PopStateHandler {
   }
 
   /**
-   * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with tagArgs supplied as a function.
+   * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with contextData supplied as a function.
    *
    * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
@@ -44,12 +44,12 @@ class Renderer extends PopStateHandler {
    * Renders a view
    *
    * @param {string} viewFile
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
    * @param {string} [selector='#root'] default #root
    * @param {string} [viewsFolder='/views/'] default /views/
    * @memberof Renderer
    */
-  renderView (viewFile, tagArgs, selector = '#root', viewsFolder = '/views/') {
+  renderView (viewFile, contextData, selector = '#root', viewsFolder = '/views/') {
     // @ts-ignore
     Renderer.renderView(...arguments);
   }
@@ -59,10 +59,10 @@ class Renderer extends PopStateHandler {
    *
    * @param {string} view
    * @param {string} url
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function for complex operations
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function for complex operations
    * @memberof Renderer
    */
-  bindViewToUrl (view, url, tagArgs) {
+  bindViewToUrl (view, url, contextData) {
     let viewMethod = () => {
       // @ts-ignore
       Renderer.bindViewToUrl(...arguments);
@@ -78,26 +78,26 @@ class Renderer extends PopStateHandler {
    * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
    * @memberof Renderer
    */
-  static bindView (selector = null, view, url, tagArgs) {
+  static bindView (selector = null, view, url, contextData) {
     if (selector && !$(selector).hasClass('pop')) {
       $(selector).unbind('click');
       $(selector).click(function (e) {
         e.preventDefault();
-        if (typeof tagArgs !== 'function') {
-          Renderer.renderView(view, tagArgs);
+        if (typeof contextData !== 'function') {
+          Renderer.renderView(view, contextData);
         } else {
-          tagArgs();
+          contextData();
         }
       });
     }
-    Renderer.bindViewToUrl(view, url, tagArgs);
+    Renderer.bindViewToUrl(view, url, contextData);
   }
 
   /**
-   * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with tagArgs supplied as a function.
+   * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with contextData supplied as a function.
    *
    * @static
    * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
@@ -121,19 +121,19 @@ class Renderer extends PopStateHandler {
     }
     Renderer.bindView(selector, view, url, function (pathParams) {
       $.getJSON(jsonUrl, function (json) {
-        let tagArgs = {'path_params': pathParams};
+        let contextData = {'path_params': pathParams};
         if (!Array.isArray(tagVariables)) {
-          Object.assign(tagArgs, { [tagVariables]: json });
+          Object.assign(contextData, { [tagVariables]: json });
         } else {
           tagVariables.forEach((tagVariable, index) => {
             !tagVariableKey
-              ? Object.assign(tagArgs, { [tagVariable]: json[index] })
-              : Object.assign(tagArgs, {
+              ? Object.assign(contextData, { [tagVariable]: json[index] })
+              : Object.assign(contextData, {
                 [tagVariable]: json[index][tagVariableKey]
               });
           });
         }
-        Renderer.renderView(view, tagArgs);
+        Renderer.renderView(view, contextData);
       });
     });
   }
@@ -143,20 +143,20 @@ class Renderer extends PopStateHandler {
    *
    * @static
    * @param {string} viewFile
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
    * @param {string} [selector='#root'] default #root
    * @param {string} [viewsFolder='/views/'] default /views/
    * @memberof Renderer
    */
   static renderView (
     viewFile,
-    tagArgs,
+    contextData,
     selector = '#root',
     viewsFolder = '/views/'
   ) {
     // console.log(...arguments);
-    if (!(tagArgs instanceof Object)) {
-      tagArgs = {};
+    if (!(contextData instanceof Object)) {
+      contextData = {};
     }
     if (viewFile.startsWith('/')) {
       viewFile = /[^/](.*)$/.exec(viewFile)[0];
@@ -169,8 +169,8 @@ class Renderer extends PopStateHandler {
     }
     const url = viewsFolder + viewFile;
     $.get(url, function (data) {
-      $(selector).html($.templates(data).render(tagArgs));
-      console.log(tagArgs);
+      $(selector).html($.templates(data).render(contextData));
+      console.log(contextData);
     });
   }
   /**
@@ -179,22 +179,22 @@ class Renderer extends PopStateHandler {
    * @static
    * @param {string} view
    * @param {string} url
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
    * @memberof Renderer
    */
-  static bindViewToUrl (view, url, tagArgs) {
+  static bindViewToUrl (view, url, contextData) {
     $(document).ready(function () {
       const path = location.pathname;
       const urlParts = urlRegex.exec(path);
       // console.log(urlParts);
       try {
-        if (urlParts[1] === url && typeof tagArgs !== 'function') {
+        if (urlParts[1] === url && typeof contextData !== 'function') {
           // console.log('!')
-          Object.assign(tagArgs, {'path_params': urlParts[2]});
-          // console.log(tagArgs);
-          Renderer.renderView(view, tagArgs);
+          Object.assign(contextData, {'path_params': urlParts[2]});
+          // console.log(contextData);
+          Renderer.renderView(view, contextData);
         } else if (urlParts[1] === url) {
-          tagArgs(urlParts[2]);
+          contextData(urlParts[2]);
         }
       } catch (error) {
         console.warn('Invalid url: ', error);
