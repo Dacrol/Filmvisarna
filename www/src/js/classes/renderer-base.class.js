@@ -3,9 +3,9 @@ const urlRegex = /(\W\w*)\W?(.*)/;
 /** Class for rendering views */
 class Renderer extends PopStateHandler {
   /**
-   * Binds a view to a selector
+   * Binds a view to a selector and a URL
    *
-   * @param {string} [selector]
+   * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
@@ -23,7 +23,7 @@ class Renderer extends PopStateHandler {
   /**
    * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with tagArgs supplied as a function.
    *
-   * @param {string} [selector]
+   * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
    * @param {string} jsonUrl
@@ -59,36 +59,40 @@ class Renderer extends PopStateHandler {
    *
    * @param {string} view
    * @param {string} url
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function for complex operations
    * @memberof Renderer
    */
   bindViewToUrl (view, url, tagArgs) {
-    // @ts-ignore
-    Renderer.bindViewToUrl(...arguments);
+    let viewMethod = () => {
+      // @ts-ignore
+      Renderer.bindViewToUrl(...arguments);
+    };
+    this.bindViewToPopState(url, viewMethod);
+    viewMethod();
   }
 
   /**
    * Binds a view to a selector and a URL
    *
    * @static
-   * @param {string} [selector]
+   * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
    * @memberof Renderer
    */
   static bindView (selector = null, view, url, tagArgs) {
-    // if (selector) {
-    //   $(selector).unbind('click');
-    //   $(selector).click(function (e) {
-    //     e.preventDefault();
-    //     if (typeof tagArgs !== 'function') {
-    //       Renderer.renderView(view, tagArgs);
-    //     } else {
-    //       tagArgs();
-    //     }
-    //   });
-    // }
+    if (selector && !$(selector).hasClass('pop')) {
+      $(selector).unbind('click');
+      $(selector).click(function (e) {
+        e.preventDefault();
+        if (typeof tagArgs !== 'function') {
+          Renderer.renderView(view, tagArgs);
+        } else {
+          tagArgs();
+        }
+      });
+    }
     Renderer.bindViewToUrl(view, url, tagArgs);
   }
 
@@ -96,7 +100,7 @@ class Renderer extends PopStateHandler {
    * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with tagArgs supplied as a function.
    *
    * @static
-   * @param {string} [selector]
+   * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
    * @param {string} jsonUrl

@@ -1,4 +1,5 @@
 export default function viewsSetup (app) {
+  // The first argument can be null if the selector already has the class pop
   app.bindViewWithJSON('a#pills-home', 'home', '/', '/json/movie-data.json', 'movies');
   app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
   app.bindViewWithJSON(
