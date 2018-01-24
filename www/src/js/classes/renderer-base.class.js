@@ -1,10 +1,11 @@
 import PopStateHandler from './pop-state-handler.class.js';
+const urlRegex = /(\W\w*)\W?(.*)/;
 /** Class for rendering views */
 class Renderer extends PopStateHandler {
   /**
-   * Binds a view to a selector
+   * Binds a view to a selector and a URL
    *
-   * @param {string} [selector]
+   * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
@@ -22,7 +23,7 @@ class Renderer extends PopStateHandler {
   /**
    * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with tagArgs supplied as a function.
    *
-   * @param {string} [selector]
+   * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
    * @param {string} jsonUrl
@@ -45,10 +46,10 @@ class Renderer extends PopStateHandler {
    * @param {string} viewFile
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
    * @param {string} [selector='#root'] default #root
-   * @param {string} [viewsFolder='./views/'] default ./views/
+   * @param {string} [viewsFolder='/views/'] default /views/
    * @memberof Renderer
    */
-  renderView (viewFile, tagArgs, selector = '#root', viewsFolder = './views/') {
+  renderView (viewFile, tagArgs, selector = '#root', viewsFolder = '/views/') {
     // @ts-ignore
     Renderer.renderView(...arguments);
   }
@@ -58,32 +59,36 @@ class Renderer extends PopStateHandler {
    *
    * @param {string} view
    * @param {string} url
-   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function for complex operations
    * @memberof Renderer
    */
   bindViewToUrl (view, url, tagArgs) {
-    // @ts-ignore
-    Renderer.bindViewToUrl(...arguments);
+    let viewMethod = () => {
+      // @ts-ignore
+      Renderer.bindViewToUrl(...arguments);
+    };
+    this.bindViewToPopState(url, viewMethod);
+    viewMethod();
   }
 
   /**
-   * Binds a view to a selector
+   * Binds a view to a selector and a URL
    *
    * @static
-   * @param {string} [selector]
+   * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
    * @memberof Renderer
    */
   static bindView (selector = null, view, url, tagArgs) {
-    if (selector) {
+    if (selector && !$(selector).hasClass('pop')) {
+      $(selector).unbind('click');
       $(selector).click(function (e) {
         e.preventDefault();
         if (typeof tagArgs !== 'function') {
           Renderer.renderView(view, tagArgs);
         } else {
-        // console.log(tagArgs);
           tagArgs();
         }
       });
@@ -95,7 +100,7 @@ class Renderer extends PopStateHandler {
    * Binds a view to a selector and a URL, and fetches JSON data to use as tag arguments. For more complex operations than basic JSON fetching, please use the normal bindView with tagArgs supplied as a function.
    *
    * @static
-   * @param {string} [selector]
+   * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
    * @param {string} jsonUrl
@@ -114,9 +119,9 @@ class Renderer extends PopStateHandler {
     if (!jsonUrl.startsWith('/')) {
       jsonUrl = '/' + jsonUrl;
     }
-    Renderer.bindView(selector, view, url, function () {
+    Renderer.bindView(selector, view, url, function (pathParams) {
       $.getJSON(jsonUrl, function (json) {
-        let tagArgs = {};
+        let tagArgs = {'path_params': pathParams};
         if (!Array.isArray(tagVariables)) {
           Object.assign(tagArgs, { [tagVariables]: json });
         } else {
@@ -140,16 +145,16 @@ class Renderer extends PopStateHandler {
    * @param {string} viewFile
    * @param {Object} tagArgs Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
    * @param {string} [selector='#root'] default #root
-   * @param {string} [viewsFolder='./views/'] default ./views/
+   * @param {string} [viewsFolder='/views/'] default /views/
    * @memberof Renderer
    */
   static renderView (
     viewFile,
     tagArgs,
     selector = '#root',
-    viewsFolder = './views/'
+    viewsFolder = '/views/'
   ) {
-    console.log(...arguments);
+    // console.log(...arguments);
     if (!(tagArgs instanceof Object)) {
       tagArgs = {};
     }
@@ -165,6 +170,7 @@ class Renderer extends PopStateHandler {
     const url = viewsFolder + viewFile;
     $.get(url, function (data) {
       $(selector).html($.templates(data).render(tagArgs));
+      console.log(tagArgs);
     });
   }
   /**
@@ -178,11 +184,20 @@ class Renderer extends PopStateHandler {
    */
   static bindViewToUrl (view, url, tagArgs) {
     $(document).ready(function () {
-      let path = location.pathname;
-      if (path === url && typeof tagArgs !== 'function') {
-        Renderer.renderView(view, tagArgs);
-      } else if (path === url) {
-        tagArgs();
+      const path = location.pathname;
+      const urlParts = urlRegex.exec(path);
+      // console.log(urlParts);
+      try {
+        if (urlParts[1] === url && typeof tagArgs !== 'function') {
+          // console.log('!')
+          Object.assign(tagArgs, {'path_params': urlParts[2]});
+          // console.log(tagArgs);
+          Renderer.renderView(view, tagArgs);
+        } else if (urlParts[1] === url) {
+          tagArgs(urlParts[2]);
+        }
+      } catch (error) {
+        console.warn('Invalid url: ', error);
       }
     });
   }
