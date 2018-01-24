@@ -4,6 +4,10 @@ class PopStateHandler {
     this.addEventHandler();
     // this.changePage();
     window.addEventListener('popstate', () => this.changePage());
+    $(function () {
+      $('header a').removeClass('active');
+      $(`header a[href="${location.pathname}"]`).addClass('active');
+    });
   }
 
   bindViewToPopState (url, viewMethod) {
