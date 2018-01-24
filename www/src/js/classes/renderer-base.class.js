@@ -55,23 +55,6 @@ class Renderer extends PopStateHandler {
   }
 
   /**
-   * Binds a view to a URL
-   *
-   * @param {string} view
-   * @param {string} url
-   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function for complex operations
-   * @memberof Renderer
-   */
-  bindViewToUrl (view, url, contextData) {
-    let viewMethod = () => {
-      // @ts-ignore
-      Renderer.bindViewToUrl(...arguments);
-    };
-    this.bindViewToPopState(url, viewMethod);
-    viewMethod();
-  }
-
-  /**
    * Binds a view to a selector and a URL
    *
    * @static
