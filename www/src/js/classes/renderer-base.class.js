@@ -27,7 +27,7 @@ class Renderer extends PopStateHandler {
    * @param {string} view
    * @param {string} url
    * @param {string} jsonUrl
-   * @param {string[]|string} dataName name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
+   * @param {(string|string[])} dataName name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
    * @param {string} [dataKey] name of the object key that holds the desired data, for example: 'name' in salons.json
    * @memberof Renderer
    */
@@ -93,32 +93,45 @@ class Renderer extends PopStateHandler {
    * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
    * @param {string} view
    * @param {string} url
-   * @param {string} jsonUrl
-   * @param {string[]|string} dataName name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
+   * @param {(string|string[])} jsonUrl
+   * @param {(string|string[])} dataName name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
    * @param {string} [dataKey] name of the object key that holds the desired data, for example: 'name' in salons.json
    * @memberof Renderer
    */
   static bindViewWithJSON (selector, view, url, jsonUrl, dataName, dataKey) {
-    if (!jsonUrl.startsWith('/')) {
-      jsonUrl = '/' + jsonUrl;
-    }
-    Renderer.bindView(selector, view, url, function (pathParams) {
-      $.getJSON(jsonUrl, function (json) {
-        let contextData = { pathParams: pathParams };
-        if (!Array.isArray(dataName)) {
-          Object.assign(contextData, { [dataName]: json });
-        } else {
-          dataName.forEach((tagVariable, index) => {
-            !dataKey
-              ? Object.assign(contextData, { [tagVariable]: json[index] })
-              : Object.assign(contextData, {
-                [tagVariable]: json[index][dataKey]
-              });
-          });
-        }
-        Renderer.renderView(view, contextData);
+    if (!Array.isArray(jsonUrl)) {
+      if (!jsonUrl.startsWith('/')) {
+        jsonUrl = '/' + jsonUrl;
+      }
+      Renderer.bindView(selector, view, url, function (pathParams) {
+        // @ts-ignore
+        $.getJSON(jsonUrl, function (json) {
+          let contextData = { pathParams: pathParams };
+          if (!Array.isArray(dataName)) {
+            Object.assign(contextData, { [dataName]: json });
+          } else {
+            dataName.forEach((tagVariable, index) => {
+              !dataKey
+                ? Object.assign(contextData, { [tagVariable]: json[index] })
+                : Object.assign(contextData, {
+                  [tagVariable]: json[index][dataKey]
+                });
+            });
+          }
+          Renderer.renderView(view, contextData);
+        });
       });
-    });
+    } else if (Array.isArray(jsonUrl)) {
+      Renderer.bindView(selector, view, url, async () => {
+        let contextData = await Promise.all(
+          // @ts-ignore
+          jsonUrl.map((url) => {
+            return $.getJSON(url);
+          })
+        );
+        Renderer.renderView(view, { data: contextData });
+      });
+    }
   }
 
   /**
@@ -176,7 +189,6 @@ class Renderer extends PopStateHandler {
           Object.assign(contextData, { pathParams: urlParts[2] });
           // console.log(contextData);
           Renderer.renderView(view, contextData);
-
         } else if (urlParts[1] === url) {
           contextData(Renderer, urlParts[2]);
         }
