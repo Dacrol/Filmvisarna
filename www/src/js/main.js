@@ -4,9 +4,6 @@ import '../../../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import App from './classes/app.class.js';
 import viewsSetup from './helpers/views-setup';
 
-
-
-
 // @ts-ignore
 require('jsrender')(jQuery);
 // @ts-ignore
