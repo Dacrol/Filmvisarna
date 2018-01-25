@@ -49,7 +49,12 @@ class Renderer extends PopStateHandler {
    * @param {string} [viewsFolder='/views/'] default /views/
    * @memberof Renderer
    */
-  renderView (viewFile, contextData, selector = '#root', viewsFolder = '/views/') {
+  renderView (
+    viewFile,
+    contextData,
+    selector = '#root',
+    viewsFolder = '/views/'
+  ) {
     // @ts-ignore
     Renderer.renderView(...arguments);
   }
@@ -65,7 +70,7 @@ class Renderer extends PopStateHandler {
    * @memberof Renderer
    */
   static bindView (selector = null, view, url, contextData) {
-    if (selector && !$(selector).hasClass('pop')) {
+    if (selector && !$(selector).hasClass('pop') && !$(selector).prop('href')) {
       $(selector).unbind('click');
       $(selector).click(function (e) {
         e.preventDefault();
@@ -75,6 +80,8 @@ class Renderer extends PopStateHandler {
           contextData();
         }
       });
+    } else if (selector && !$(selector).prop('href')) {
+      $(selector).addClass('pop');
     }
     Renderer.bindViewToUrl(view, url, contextData);
   }
@@ -91,20 +98,13 @@ class Renderer extends PopStateHandler {
    * @param {string} [dataKey] name of the object key that holds the desired data, for example: 'name' in salons.json
    * @memberof Renderer
    */
-  static bindViewWithJSON (
-    selector,
-    view,
-    url,
-    jsonUrl,
-    dataName,
-    dataKey
-  ) {
+  static bindViewWithJSON (selector, view, url, jsonUrl, dataName, dataKey) {
     if (!jsonUrl.startsWith('/')) {
       jsonUrl = '/' + jsonUrl;
     }
     Renderer.bindView(selector, view, url, function (pathParams) {
       $.getJSON(jsonUrl, function (json) {
-        let contextData = {'path_params': pathParams};
+        let contextData = { path_params: pathParams };
         if (!Array.isArray(dataName)) {
           Object.assign(contextData, { [dataName]: json });
         } else {
@@ -173,7 +173,7 @@ class Renderer extends PopStateHandler {
       try {
         if (urlParts[1] === url && typeof contextData !== 'function') {
           // console.log('!')
-          Object.assign(contextData, {'path_params': urlParts[2]});
+          Object.assign(contextData, { path_params: urlParts[2] });
           // console.log(contextData);
           Renderer.renderView(view, contextData);
         } else if (urlParts[1] === url) {
