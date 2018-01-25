@@ -1,5 +1,7 @@
-class PopStateHandler {
+import Base from './base.class';
+class PopStateHandler extends Base {
   constructor () {
+    super();
     this.viewMethods = {};
     this.addEventHandler();
     // this.changePage();
@@ -12,7 +14,7 @@ class PopStateHandler {
 
   bindViewToPopState (url, viewMethod) {
     // console.log(this.viewMethods);
-    Object.assign(this.viewMethods, {[url]: viewMethod});
+    Object.assign(this.viewMethods, { [url]: viewMethod });
   }
 
   addEventHandler () {

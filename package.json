@@ -15,7 +15,7 @@
     "test": "npm run lint",
     "compile": "gulp default",
     "watch":
-      "gulp default && concurrently  --kill-others --allow-restart --restart-after 5000 --restart-tries 24 \"npm run sync\" \"gulp watch\""
+      "gulp default && concurrently  --kill-others --allow-restart --restart-after 5000 --restart-tries 2 \"npm run sync\" \"gulp watch\""
   },
   "author": "",
   "license": "ISC",
