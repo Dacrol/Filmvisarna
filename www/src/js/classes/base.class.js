@@ -26,7 +26,7 @@ class Base {
     this.addEvents(templateNo);
 
     // If subrendering to a temporary holder
-    if (selector.indexOf('.temp-render-holder') == 0) {
+    if (selector.indexOf('.temp-render-holder') === 0) {
       $(selector).replaceWith(this.baseEl);
     } else if (!selector && oldBaseEl) {
       // If rerendering to existing place in the DOM
