@@ -1,3 +1,4 @@
+// @ts-nocheck
 class Base {
   constructor () {
     if (!Base.subRenderCounter) {

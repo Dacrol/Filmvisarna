@@ -6,12 +6,12 @@ class Renderer extends PopStateHandler {
    * Binds a view to a selector and a URL
    *
    * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
-   * @param {string} view
+   * @param {string} [view]
    * @param {string} url
-   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function that ends by calling Renderer.renderView. Providing the data as an array will render the template once for each item in the array. A provided function can also use the usual render function from the inherited Base class.
    * @memberof Renderer
    */
-  bindView (selector, view, url, contextData) {
+  bindView (selector, view = '', url, contextData) {
     let viewMethod = () => {
       // @ts-ignore
       Renderer.bindView(...arguments);
@@ -44,7 +44,7 @@ class Renderer extends PopStateHandler {
    * Renders a view
    *
    * @param {string} viewFile
-   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}. Providing the data as an array will render the template once for each item in the array. A provided function can also use the usual render function from the inherited Base class.
    * @param {string} [selector='#root'] default #root
    * @param {string} [viewsFolder='/views/'] default /views/
    * @memberof Renderer
@@ -64,12 +64,12 @@ class Renderer extends PopStateHandler {
    *
    * @static
    * @param {string} [selector] Only necessary if the selector does not have the class 'pop'
-   * @param {string} view
+   * @param {string} [view]
    * @param {string} url
-   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function that ends by calling Renderer.renderView. Providing the data as an array will render the template once for each item in the array. A provided function can also use the usual render function from the inherited Base class.
    * @memberof Renderer
    */
-  static bindView (selector = null, view, url, contextData) {
+  static bindView (selector = null, view = '', url, contextData) {
     if (selector && !$(selector).hasClass('pop') && !$(selector).prop('href')) {
       $(selector).unbind('click');
       $(selector).click(function (e) {
@@ -77,7 +77,7 @@ class Renderer extends PopStateHandler {
         if (typeof contextData !== 'function') {
           Renderer.renderView(view, contextData);
         } else {
-          contextData();
+          contextData(Renderer);
         }
       });
     } else if (selector && !$(selector).prop('href')) {
@@ -104,7 +104,7 @@ class Renderer extends PopStateHandler {
     }
     Renderer.bindView(selector, view, url, function (pathParams) {
       $.getJSON(jsonUrl, function (json) {
-        let contextData = { path_params: pathParams };
+        let contextData = { pathParams: pathParams };
         if (!Array.isArray(dataName)) {
           Object.assign(contextData, { [dataName]: json });
         } else {
@@ -126,7 +126,7 @@ class Renderer extends PopStateHandler {
    *
    * @static
    * @param {string} viewFile
-   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}. Providing the data as an array will render the template once for each item in the array. A provided function can also use the usual render function from the inherited Base class.
    * @param {string} [selector='#root'] default #root
    * @param {string} [viewsFolder='/views/'] default /views/
    * @memberof Renderer
@@ -160,12 +160,12 @@ class Renderer extends PopStateHandler {
    * Binds a view to a URL
    *
    * @static
-   * @param {string} view
+   * @param {string} [view]
    * @param {string} url
-   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function
+   * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function that ends by calling Renderer.renderView. Providing the data as an array will render the template once for each item in the array. A provided function can also use the usual render function from the inherited Base class.
    * @memberof Renderer
    */
-  static bindViewToUrl (view, url, contextData) {
+  static bindViewToUrl (view = '', url, contextData) {
     $(document).ready(function () {
       const path = location.pathname;
       const urlParts = urlRegex.exec(path);
@@ -173,11 +173,12 @@ class Renderer extends PopStateHandler {
       try {
         if (urlParts[1] === url && typeof contextData !== 'function') {
           // console.log('!')
-          Object.assign(contextData, { path_params: urlParts[2] });
+          Object.assign(contextData, { pathParams: urlParts[2] });
           // console.log(contextData);
           Renderer.renderView(view, contextData);
+
         } else if (urlParts[1] === url) {
-          contextData(urlParts[2]);
+          contextData(Renderer, urlParts[2]);
         }
       } catch (error) {
         console.warn('Invalid url: ', error);
