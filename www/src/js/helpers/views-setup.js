@@ -36,7 +36,7 @@ export default function viewsSetup (app) {
         $.getJSON('/json/salong.json')
       ]);
       data[0].forEach((movie, index) => {
-        Object.assign(movie, {id: index})
+        Object.assign(movie, { id: index });
       });
       let contextData = data[1].map(screening => {
         return Object.assign(
@@ -97,5 +97,5 @@ function stringToSlug (str) {
     .replace(/[\u0300-\u036f]/g, '') // öäå -> oaa
     .trim()
     .replace(/&/g, '-and-')
-    .replace(/[\s\W-]+/g, '-')
+    .replace(/[\s\W-]+/g, '-');
 }
