@@ -103,7 +103,7 @@ class Renderer extends PopStateHandler {
       if (!jsonUrl.startsWith('/')) {
         jsonUrl = '/' + jsonUrl;
       }
-      Renderer.bindView(selector, view, url, function (pathParams) {
+      Renderer.bindView(selector, view, url, function (Renderer, pathParams) {
         // @ts-ignore
         $.getJSON(jsonUrl, function (json) {
           let contextData = { pathParams: pathParams };
@@ -118,6 +118,7 @@ class Renderer extends PopStateHandler {
                 });
             });
           }
+          // console.log(contextData);
           Renderer.renderView(view, contextData);
         });
       });
