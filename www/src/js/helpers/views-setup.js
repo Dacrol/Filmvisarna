@@ -35,6 +35,9 @@ export default function viewsSetup (app) {
         $.getJSON('/json/screenings.json'),
         $.getJSON('/json/salong.json')
       ]);
+      data[0].forEach((movie, index) => {
+        Object.assign(movie, {id: index})
+      });
       let contextData = data[1].map(screening => {
         return Object.assign(
           screening,
@@ -50,7 +53,49 @@ export default function viewsSetup (app) {
           }
         );
       });
+      const dateOptions = {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      };
+      contextData.forEach(screening => {
+        const date = new Date(screening.date).toLocaleDateString(
+          'sv-SE',
+          dateOptions
+        );
+        Object.assign(screening, {
+          dateString: capitalizeFirstLetter(date)
+        });
+      });
       Renderer.renderView('screenings', { screenings: contextData });
     }
   );
+}
+
+/**
+ * Capitalizes the first letter of a string.
+ *
+ * @param {string} str
+ * @returns {string}
+ */
+function capitalizeFirstLetter (str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
+ * Slugifies a string, for example: Pacific Rim -> pacific-rim
+ *
+ * @param {string} str
+ * @returns {string}
+ */
+function stringToSlug (str) {
+  return str
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // öäå -> oaa
+    .trim()
+    .replace(/&/g, '-and-')
+    .replace(/[\s\W-]+/g, '-')
 }
