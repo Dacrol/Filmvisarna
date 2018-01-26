@@ -1,14 +1,20 @@
-class PopStateHandler {
+import Base from './base.class';
+class PopStateHandler extends Base {
   constructor () {
+    super();
     this.viewMethods = {};
     this.addEventHandler();
     // this.changePage();
     window.addEventListener('popstate', () => this.changePage());
+    $(function () {
+      $('header a').removeClass('active');
+      $(`header a[href="${location.pathname}"]`).addClass('active');
+    });
   }
 
   bindViewToPopState (url, viewMethod) {
-    console.log(this.viewMethods)
-    Object.assign(this.viewMethods, {[url]: viewMethod});
+    // console.log(this.viewMethods);
+    Object.assign(this.viewMethods, { [url]: viewMethod });
   }
 
   addEventHandler () {
