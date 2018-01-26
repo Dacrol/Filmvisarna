@@ -9,9 +9,10 @@ class Renderer extends PopStateHandler {
    * @param {string} [view]
    * @param {string} url
    * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function that ends by calling Renderer.renderView. Providing the data as an array will render the template once for each item in the array. A provided function can also use the usual render function from the inherited Base class.
+   * @param {Function} [callbackFn] a function to run each time the view is rendered.
    * @memberof Renderer
    */
-  bindView (selector, view = '', url, contextData) {
+  bindView (selector, view = '', url, contextData, callbackFn) {
     let viewMethod = () => {
       // @ts-ignore
       Renderer.bindView(...arguments);
@@ -29,7 +30,7 @@ class Renderer extends PopStateHandler {
    * @param {string} jsonUrl
    * @param {(string|string[])} dataName name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
    * @param {string} [dataKey] name of the object key that holds the desired data, for example: 'name' in salons.json
-   * @param {Function} callbackFn a function to run each time the view is rendered.
+   * @param {Function} [callbackFn] a function to run each time the view is rendered.
    * @memberof Renderer
    */
   bindViewWithJSON (
@@ -76,15 +77,19 @@ class Renderer extends PopStateHandler {
    * @param {string} [view]
    * @param {string} url
    * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function that ends by calling Renderer.renderView. Providing the data as an array will render the template once for each item in the array. A provided function can also use the usual render function from the inherited Base class.
+   * @param {Function} [callbackFn] a function to run each time the view is rendered.
    * @memberof Renderer
    */
-  static bindView (selector = null, view = '', url, contextData) {
+  static bindView (selector = null, view = '', url, contextData, callbackFn = null) {
     if (selector && !$(selector).hasClass('pop') && !$(selector).prop('href')) {
       $(selector).unbind('click');
       $(selector).click(function (e) {
         e.preventDefault();
         if (typeof contextData !== 'function') {
           Renderer.renderView(view, contextData);
+          if (callbackFn) {
+            callbackFn();
+          }
         } else {
           contextData(Renderer);
         }
@@ -92,7 +97,7 @@ class Renderer extends PopStateHandler {
     } else if (selector && !$(selector).prop('href')) {
       $(selector).addClass('pop');
     }
-    Renderer.bindViewToUrl(view, url, contextData);
+    Renderer.bindViewToUrl(view, url, contextData, callbackFn);
   }
 
   /**
@@ -105,7 +110,7 @@ class Renderer extends PopStateHandler {
    * @param {(string|string[])} jsonUrl
    * @param {(string|string[])} dataName name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
    * @param {string} [dataKey] name of the object key that holds the desired data, for example: 'name' in salons.json
-   * @param {Function} callbackFn a function to run each time the view is rendered.
+   * @param {Function} [callbackFn] a function to run each time the view is rendered.
    * @memberof Renderer
    */
   static bindViewWithJSON (
@@ -209,9 +214,10 @@ class Renderer extends PopStateHandler {
    * @param {string} [view]
    * @param {string} url
    * @param {Object} contextData Object containing tag arguments, for example: {salong1: salongName} for the tag {{:salong1}}, or a function that ends by calling Renderer.renderView. Providing the data as an array will render the template once for each item in the array. A provided function can also use the usual render function from the inherited Base class.
+   * @param {Function} [callbackFn] a function to run each time the view is rendered.
    * @memberof Renderer
    */
-  static bindViewToUrl (view = '', url, contextData) {
+  static bindViewToUrl (view = '', url, contextData, callbackFn) {
     $(document).ready(function () {
       const path = location.pathname;
       const urlParts = urlRegex.exec(path);
@@ -222,6 +228,9 @@ class Renderer extends PopStateHandler {
           Object.assign(contextData, { pathParams: urlParts[2] });
           // console.log(contextData);
           Renderer.renderView(view, contextData);
+          if (callbackFn) {
+            callbackFn();
+          }
         } else if (urlParts[1] === url) {
           contextData(Renderer, urlParts[2]);
         }
