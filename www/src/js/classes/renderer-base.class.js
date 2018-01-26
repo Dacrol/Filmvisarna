@@ -172,7 +172,7 @@ class Renderer extends PopStateHandler {
     const url = viewsFolder + viewFile;
     $.get(url, function (data) {
       $(selector).html($.templates(data).render(contextData));
-      console.log(contextData);
+      // console.log(contextData);
     });
   }
   /**
