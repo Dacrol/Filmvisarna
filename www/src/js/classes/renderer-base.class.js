@@ -32,7 +32,15 @@ class Renderer extends PopStateHandler {
    * @param {Function} callbackFn a function to run each time the view is rendered.
    * @memberof Renderer
    */
-  bindViewWithJSON (selector, view, url, jsonUrl, dataName, dataKey, callbackFn) {
+  bindViewWithJSON (
+    selector,
+    view,
+    url,
+    jsonUrl,
+    dataName,
+    dataKey,
+    callbackFn
+  ) {
     let viewMethod = () => {
       // @ts-ignore
       Renderer.bindViewWithJSON(...arguments);
@@ -100,7 +108,15 @@ class Renderer extends PopStateHandler {
    * @param {Function} callbackFn a function to run each time the view is rendered.
    * @memberof Renderer
    */
-  static bindViewWithJSON (selector, view, url, jsonUrl, dataName, dataKey = null, callbackFn) {
+  static bindViewWithJSON (
+    selector,
+    view,
+    url,
+    jsonUrl,
+    dataName,
+    dataKey = null,
+    callbackFn
+  ) {
     if (!Array.isArray(jsonUrl)) {
       if (!jsonUrl.startsWith('/')) {
         jsonUrl = '/' + jsonUrl;
@@ -113,15 +129,20 @@ class Renderer extends PopStateHandler {
             Object.assign(contextData, { [dataName]: json });
           } else {
             dataName.forEach((tagVariable, index) => {
-              !dataKey
-                ? Object.assign(contextData, { [tagVariable]: json[index] })
-                : Object.assign(contextData, {
+              if (!dataKey || typeof dataKey === 'function') {
+                Object.assign(contextData, { [tagVariable]: json[index] });
+              } else {
+                Object.assign(contextData, {
                   [tagVariable]: json[index][dataKey]
                 });
+              }
             });
           }
           // console.log(contextData);
           Renderer.renderView(view, contextData);
+          if (typeof dataKey === 'function') {
+            callbackFn = dataKey;
+          }
           if (callbackFn) {
             callbackFn();
           }
@@ -131,11 +152,17 @@ class Renderer extends PopStateHandler {
       Renderer.bindView(selector, view, url, async () => {
         let contextData = await Promise.all(
           // @ts-ignore
-          jsonUrl.map((url) => {
+          jsonUrl.map(url => {
             return $.getJSON(url);
           })
         );
         Renderer.renderView(view, { data: contextData });
+        if (typeof dataKey === 'function') {
+          callbackFn = dataKey;
+        }
+        if (callbackFn) {
+          callbackFn();
+        }
       });
     }
   }
