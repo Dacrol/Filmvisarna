@@ -23,12 +23,9 @@ class PopStateHandler extends Base {
     // $('a.pop').unbind('click');
     $('a.pop').off('click', 'a.pop');
     $(document).on('click', 'a.pop', function (e) {
-      console.log('!');
       let href = $(this).attr('href');
       history.pushState(null, null, href);
-
       that.changePage();
-
       e.preventDefault();
     });
   }
@@ -38,11 +35,8 @@ class PopStateHandler extends Base {
     let urlParts = urlRegex.exec(url);
     $('header a').removeClass('active');
     $(`header a[href="${url}"]`).addClass('active');
-
-    // let methodName = this.urls[url];
     let urlPart = urlParts[1];
     this.viewMethods[urlPart]();
-
     this.addEventHandler();
   }
 }
