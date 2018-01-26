@@ -98,21 +98,49 @@ class Renderer extends PopStateHandler {
    * @param {string} [selector]
    * @param {string} view
    * @param {string} url
-   * @param {string} jsonUrl
-   * @param {string[]|string} tagVariables name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
-   * @param {string} [tagVariableKey] name of the object key that holds the desired data, for example: 'name' in salons.json
+   * @param {(string|string[])} jsonUrl
+   * @param {(string|string[])} dataName name of the tags as they are written in the html template file, for example: ['salong1', 'salong2'] for a template with the tags {{:salong1}} & {{:salong2}}. Pass a single string to access the entire JSON object as is.
+   * @param {string} [dataKey] name of the object key that holds the desired data, for example: 'name' in salons.json
+   * @param {Function} callbackFn a function to run each time the view is rendered.
    * @memberof Renderer
    */
-  static bindViewWithJSON (
-    selector,
-    view,
-    url,
-    jsonUrl,
-    tagVariables,
-    tagVariableKey
-  ) {
-    if (!jsonUrl.startsWith('/')) {
-      jsonUrl = '/' + jsonUrl;
+  static bindViewWithJSON (selector, view, url, jsonUrl, dataName, dataKey = null, callbackFn) {
+    if (!Array.isArray(jsonUrl)) {
+      if (!jsonUrl.startsWith('/')) {
+        jsonUrl = '/' + jsonUrl;
+      }
+      Renderer.bindView(selector, view, url, function (Renderer, pathParams) {
+        // @ts-ignore
+        $.getJSON(jsonUrl, function (json) {
+          let contextData = { pathParams: pathParams };
+          if (!Array.isArray(dataName)) {
+            Object.assign(contextData, { [dataName]: json });
+          } else {
+            dataName.forEach((tagVariable, index) => {
+              !dataKey
+                ? Object.assign(contextData, { [tagVariable]: json[index] })
+                : Object.assign(contextData, {
+                  [tagVariable]: json[index][dataKey]
+                });
+            });
+          }
+          // console.log(contextData);
+          Renderer.renderView(view, contextData);
+          if (callbackFn) {
+            callbackFn();
+          }
+        });
+      });
+    } else if (Array.isArray(jsonUrl)) {
+      Renderer.bindView(selector, view, url, async () => {
+        let contextData = await Promise.all(
+          // @ts-ignore
+          jsonUrl.map((url) => {
+            return $.getJSON(url);
+          })
+        );
+        Renderer.renderView(view, { data: contextData });
+      });
     }
     Renderer.bindView(selector, view, url, function () {
       $.getJSON(jsonUrl, function (json) {
