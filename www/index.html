@@ -1,25 +1,72 @@
 <!DOCTYPE html>
 <html lang="sv">
-  <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Filmvisarna</title>
+<!-- Application specific CSS -->
+<link rel="stylesheet" href="/dist/css/style.min.css">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/libs/bootstrap-4-beta.css">
-    <!-- Application specific CSS -->
-    <link rel="stylesheet" href="/css/main.css">
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-  </head>
-  <body>
+      <div class="container">
+      <a class="navbar-brand pop" href="/"><img class="logo" src="/img/c.png" alt="picture" />Filmvisarna</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02"
+        aria-expanded="false" aria-label="Toggle navigation" style="">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link pop" id="pills-home" data-toggle="pill" href="/" role="tab" aria-controls="pills-home" aria-selected="true">Hem</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link pop" id="pills-current" data-toggle="pill" href="/current" role="tab" aria-controls="pills-current" aria-selected="false">Aktuella</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link pop" id="pills-salonger" data-toggle="pill" href="/salons" role="tab" aria-controls="pills-salonger" aria-selected="false">Salonger</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link pop" id="pills-visningar" data-toggle="pill" href="/visningar" role="tab" aria-controls="pills-visningar" aria-selected="false">Kommande visningar</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    </nav>
+  </header>
+  <div class="container mt-5">
+    <!-- old "navbar"
+      <div class="mx-auto" style="width: 500px; text-align: center">
+        <h1>Filmvisarna</h1>
+        <div class="mx-auto">
+          <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist" style="    padding-left: 40px; justify-content: center;">
+            <li class="nav-item">
+              <a class="nav-link active pop" id="pills-home" data-toggle="pill" href="/" role="tab" aria-controls="pills-home" aria-selected="true">Hem</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pop" id="pills-current" data-toggle="pill" href="/current" role="tab" aria-controls="pills-current"
+                aria-selected="false">Aktuella</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pop" id="pills-salonger" data-toggle="pill" href="/salons" role="tab" aria-controls="pills-salonger" aria-selected="false">Salonger</a>
+            </li>
+          </ul>
+        </div>
+      </div> -->
 
 
-    <!-- JavaScript libraries -->
-    <script src="/jsonflex.js"></script>
-    <script src="/js/libs/jquery-3.2.1.js"></script>
-    <script src="/js/libs/popper-1.11.0.js"></script>
-    <script src="/js/libs/bootstrap-4-beta.js"></script>
-    <!-- Application specific JavaScript -->
-    <script src="/js/main.js"></script>
-  </body>
+    <div class="mx-auto">
+      <main class="mt-4 text-center">
+        <div id="root"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- JavaScript libraries -->
+  <script src="/jsonflex.js"></script>
+  <script src="/dist/js/main.min.js"></script>
+</body>
+
 </html>

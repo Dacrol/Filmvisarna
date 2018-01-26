@@ -1,0 +1,10 @@
+<h2 class="mb-4">Kommande visningar</h2>
+
+<div class="container">
+  {{for screenings}}
+  <div class="mb-3">
+    <span class="h3">{{:dateString}}, {{:salonData[0].name}}: </span>
+    <a href="/film/{{:movieData[0].id}}" class="text-muted h3">{{:movie}}</a>
+  </div>
+  {{/for}}
+</div>
