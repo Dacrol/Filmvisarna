@@ -5,17 +5,14 @@
   "main": "app.js",
   "scripts": {
     "start": "gulp default && node app.js",
-    "sync":
-      "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, !**/src/*\"",
+    "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, !**/src/*\"",
     "eslint": "eslint **/*.js",
     "htmlhint": "htmlhint --config .htmlhintrc www/**/*.{htm,html}",
     "stylelint": "stylelint www/src/**/*.scss",
-    "lint":
-      "concurrently -s all \"npm run eslint\" \"npm run htmlhint\" \"npm run stylelint\"",
+    "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\" \"npm run stylelint\"",
     "test": "npm run lint",
     "compile": "gulp default",
-    "watch":
-      "gulp default && concurrently  --kill-others --allow-restart --restart-after 5000 --restart-tries 2 \"npm run sync\" \"gulp watch\""
+    "watch": "gulp default && concurrently  --kill-others --allow-restart --restart-after 5000 --restart-tries 2 \"npm run sync\" \"gulp watch\""
   },
   "author": "",
   "license": "ISC",
@@ -65,7 +62,9 @@
         "env",
         {
           "targets": {
-            "browsers": ["last 2 versions"]
+            "browsers": [
+              "last 2 versions"
+            ]
           }
         }
       ]
