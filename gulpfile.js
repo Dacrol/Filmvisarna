@@ -1,3 +1,4 @@
+// @ts-nocheck
 var gulp = require('gulp');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');

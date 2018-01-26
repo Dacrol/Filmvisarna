@@ -17,7 +17,7 @@ app.use(express.static('www'));
 // (so that single page apps work on page reload)
 app.get(/^[^.]*$/, (req, res) => {
   // res.sendFile(path.join(__dirname, '/wwww/index.html'));
-  res.sendFile(__dirname + '/www/index.html');
+  res.sendFile(path.join(__dirname, '/www/index.html'));
 });
 
 // Start server

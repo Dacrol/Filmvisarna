@@ -1,26 +1,24 @@
-// import jQuery from '../../../node_modules/jquery/dist/jquery.js';
+import 'babel-polyfill';
+import jQuery from '../../../node_modules/jquery/dist/jquery.js';
 import '../../../node_modules/popper.js/dist/umd/popper.js';
 import '../../../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import App from './classes/app.class.js';
 import viewsSetup from './helpers/views-setup';
 
-// global.jQuery = require("jquery");
- var $ = require('jquery');
-
+// @ts-ignore
+require('jsrender')(jQuery);
+// jQuery.views.settings.allowCode(true);
 
 // @ts-ignore
-require('jsrender')($);
+window.$ = window.jQuery = jQuery;
 // @ts-ignore
-window.$ = window.jQuery = $;
+require('../../../node_modules/owl.carousel/dist/owl.carousel');
 
-// console.log($,'fweew')
-
-
-require("../../../node_modules/owl.carousel/dist/owl.carousel");
 // classes
 let app = new App();
 
-
+// @ts-ignore
+window.$.owlCarousel = window.$.fn.owlCarousel;
 viewsSetup(app);
 $.owlCarousel = $.fn.owlCarousel;
 
