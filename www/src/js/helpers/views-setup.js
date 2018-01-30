@@ -7,7 +7,23 @@ export default function viewsSetup (app) {
     'home',
     '/',
     '/json/movie-data.json',
-    'movies'
+    'movies', () => {
+      $('.owl-carousel').owlCarousel({
+        items: 1,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+        URLhashListener: true,
+        startPosition: 'URLHash',
+        nav: true,
+        autoHeight: true,
+        video: true,
+        responsiveRefreshRate: 100,
+        onChange: function(prop) {
+          console.log(prop)
+          pauseYT();
+        }
+    });
+    }
   );
   app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
   app.bindViewWithJSON(

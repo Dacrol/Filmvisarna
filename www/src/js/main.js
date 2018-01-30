@@ -15,50 +15,33 @@ window.$ = window.jQuery = jQuery;
 require('../../../node_modules/owl.carousel/dist/owl.carousel');
 
 // classes
-let app = new App();
 
 // @ts-ignore
 window.$.owlCarousel = window.$.fn.owlCarousel;
 viewsSetup(app);
 $.owlCarousel = $.fn.owlCarousel;
 
+let app = new App();
+
 // setTimeout(function(){
 
 // $(document).ready(function() {
-  $('.owl-carousel').owlCarousel({
-    items: 1,
-    animateOut: 'fadeOut',
-    animateIn: 'fadeIn',
-    URLhashListener: true,
-    startPosition: 'URLHash',
-    nav: true,
-    autoHeight: true,
-    video: true,
-    responsiveRefreshRate: 100,
-    onChange: function(prop) {
-      console.log(prop)
-      pauseYT();
-    }
-});
 
 // });
 
 // }, 3000);
 
-function pauseYT(){
+function pauseYT () {
   let iframe = $('.owl-item').find('iframe');
 
   let command = {
-    "event": "command",
-    "func": "pauseVideo"
+    event: 'command',
+    func: 'pauseVideo'
   };
 
-  iframe.each(function() {
-    console.log(this,'derr');
-    console.log(this.contentWindow,'derr');
-  this.contentWindow.postMessage(JSON.stringify(command), "*");
+  iframe.each(function () {
+    console.log(this, 'derr');
+    console.log(this.contentWindow, 'derr');
+    this.contentWindow.postMessage(JSON.stringify(command), '*');
   });
 }
-
-
-
