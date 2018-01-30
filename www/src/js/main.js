@@ -14,34 +14,11 @@ window.$ = window.jQuery = jQuery;
 // @ts-ignore
 require('../../../node_modules/owl.carousel/dist/owl.carousel');
 
-// classes
-
 // @ts-ignore
 window.$.owlCarousel = window.$.fn.owlCarousel;
-viewsSetup(app);
+// @ts-ignore
 $.owlCarousel = $.fn.owlCarousel;
 
 let app = new App();
 
-// setTimeout(function(){
-
-// $(document).ready(function() {
-
-// });
-
-// }, 3000);
-
-function pauseYT () {
-  let iframe = $('.owl-item').find('iframe');
-
-  let command = {
-    event: 'command',
-    func: 'pauseVideo'
-  };
-
-  iframe.each(function () {
-    console.log(this, 'derr');
-    console.log(this.contentWindow, 'derr');
-    this.contentWindow.postMessage(JSON.stringify(command), '*');
-  });
-}
+viewsSetup(app);

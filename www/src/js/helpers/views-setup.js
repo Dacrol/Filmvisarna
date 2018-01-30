@@ -115,3 +115,19 @@ function stringToSlug (str) {
     .replace(/&/g, '-and-')
     .replace(/[\s\W-]+/g, '-');
 }
+
+
+function pauseYT () {
+  let iframe = $('.owl-item').find('iframe');
+
+  let command = {
+    event: 'command',
+    func: 'pauseVideo'
+  };
+
+  iframe.each(function () {
+    console.log(this, 'derr');
+    console.log(this.contentWindow, 'derr');
+    this.contentWindow.postMessage(JSON.stringify(command), '*');
+  });
+}
