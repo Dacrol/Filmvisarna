@@ -12,7 +12,8 @@
     "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\" \"npm run stylelint\"",
     "test": "npm run lint",
     "compile": "gulp default",
-    "watch": "gulp default && concurrently  --kill-others --allow-restart --restart-after 5000 --restart-tries 2 \"npm run sync\" \"gulp watch\""
+    "watch": "gulp default && concurrently  --kill-others --allow-restart --restart-after 5000 --restart-tries 6 \"npm run sync\" \"gulp watch\"",
+    "autofix": "echo \"Attempting to fix JS & SCSS errors...\" && eslint **/*.js --fix && stylelint www/src/**/*.scss --fix"
   },
   "author": "",
   "license": "ISC",
