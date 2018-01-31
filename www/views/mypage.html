@@ -1,9 +1,33 @@
-<!-- <div class="container"> -->
+<div class="container bg-success">
+
     <div class="row">
-        <div class="col">
+
+        <div class="card-group">
+            <div class="col-6">
+                <div class="card border-secondary mb-3">
+                    <div class="card-header">Aktuella bokningar</div>
+                    <div class="card-body text-secondary">
+                        <h4 class="card-title">Secondary card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card border-secondary mb-3 justify-content-end">
+                    <div class="card-header">Bokningshistorik</div>
+                    <div class="card-body text-secondary">
+                        <h4 class="card-title">Secondary card title</h4>
+                        <p class="card-text"><p>Salong 1: {{:salong1}}</p>
+                        <p>Salong 2: {{:salong2}}</p><p>Salong 1: {{:movies[0].title_sv}}</p>
+                        <p>Salong 2: {{:salong2}}</p><p>Visas idag: {{:movie}}</p>
+                        .</p>
+                    </div>
+                </div>
+            </div>
+
             <h1>Min Sida</h1>
-            <p>Salong 1: {{:salong1}}</p>
-<p>Salong 2: {{:salong2}}</p>
+            <h1>Mina aktuella bokningar</h1>
+            <h1>Bokningshistorik</h1>
         </div>
     </div>
 
