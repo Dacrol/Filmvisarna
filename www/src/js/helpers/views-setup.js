@@ -13,14 +13,14 @@ export default function viewsSetup (app) {
         items: 1,
         merge: false,
         loop: true,
-        margin: 10,
         video: true,
         nav: true,
         lazyLoad: true,
-        center: true,
         responsive: false,
         autoplay: true,
-        autoplayHoverPause: true
+        autoplayHoverPause: true,
+        navText: ['<', '>'],
+        dots: false
       });
     }
   );
