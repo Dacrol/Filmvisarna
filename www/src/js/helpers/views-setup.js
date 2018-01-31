@@ -7,22 +7,21 @@ export default function viewsSetup (app) {
     'home',
     '/',
     '/json/movie-data.json',
-    'movies', () => {
+    'movies',
+    () => {
       $('.owl-carousel').owlCarousel({
         items: 1,
-        animateOut: 'fadeOut',
-        animateIn: 'fadeIn',
-        URLhashListener: true,
-        startPosition: 'URLHash',
-        nav: true,
-        autoHeight: true,
+        merge: false,
+        loop: true,
+        margin: 10,
         video: true,
-        responsiveRefreshRate: 100,
-        onChange: function(prop) {
-          console.log(prop)
-          pauseYT();
-        }
-    });
+        nav: true,
+        lazyLoad: true,
+        center: true,
+        responsive: false,
+        autoplay: true,
+        autoplayHoverPause: true
+      });
     }
   );
   app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
@@ -116,18 +115,17 @@ function stringToSlug (str) {
     .replace(/[\s\W-]+/g, '-');
 }
 
+// function pauseYT () {
+//   let iframe = $('.owl-item').find('iframe');
 
-function pauseYT () {
-  let iframe = $('.owl-item').find('iframe');
+//   let command = {
+//     event: 'command',
+//     func: 'pauseVideo'
+//   };
 
-  let command = {
-    event: 'command',
-    func: 'pauseVideo'
-  };
-
-  iframe.each(function () {
-    console.log(this, 'derr');
-    console.log(this.contentWindow, 'derr');
-    this.contentWindow.postMessage(JSON.stringify(command), '*');
-  });
-}
+//   iframe.each(function () {
+//     console.log(this, 'derr');
+//     console.log(this.contentWindow, 'derr');
+//     this.contentWindow.postMessage(JSON.stringify(command), '*');
+//   });
+// }
