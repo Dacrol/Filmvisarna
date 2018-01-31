@@ -28,3 +28,5 @@ For template usage see JSDoc documentation in [renderer-base](https://github.com
 ```javascript
 Renderer.bindView('nav#some-id', 'some-view.html')
 ```
+
+<!-- TODO: add link to jsrender -->
