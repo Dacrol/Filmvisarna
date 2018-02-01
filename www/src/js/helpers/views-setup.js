@@ -16,11 +16,24 @@ export default function viewsSetup (app) {
         video: true,
         nav: true,
         lazyLoad: true,
-        responsive: false,
         autoplay: true,
         autoplayHoverPause: true,
         navText: ['<', '>'],
-        dots: false
+        dots: false,
+        responsive: {
+          0: {
+            items: 1,
+            nav: false
+          },
+          768: {
+            items: 1,
+            nav: false
+          },
+          1000: {
+            items: 1,
+            nav: true
+          }
+        }
       });
     }
   );
