@@ -15,7 +15,7 @@ export default function viewsSetup (app) {
         loop: true,
         video: true,
         nav: true,
-        lazyLoad: true,
+        lazyLoad: false,
         autoplay: true,
         autoplayHoverPause: true,
         navText: ['<', '>'],
