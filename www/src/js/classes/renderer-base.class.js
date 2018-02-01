@@ -58,6 +58,7 @@ class Renderer extends PopStateHandler {
    * @param {Function} [callbackFn] a function to run each time the view is rendered.
    * @param {string} [selector='#root'] default #root
    * @param {string} [viewsFolder='/views/'] default /views/
+   * @returns {Promise}
    * @memberof Renderer
    */
   renderView (
@@ -68,7 +69,7 @@ class Renderer extends PopStateHandler {
     viewsFolder = '/views/'
   ) {
     // @ts-ignore
-    Renderer.renderView(...arguments);
+    return Renderer.renderView(...arguments);
   }
 
   /**
@@ -195,6 +196,7 @@ class Renderer extends PopStateHandler {
    * @param {Function} [callbackFn] a function to run each time the view is rendered.
    * @param {string} [selector='#root'] default #root
    * @param {string} [viewsFolder='/views/'] default /views/
+   * @returns {Promise}
    * @memberof Renderer
    */
   static renderView (
@@ -204,23 +206,40 @@ class Renderer extends PopStateHandler {
     selector = '#root',
     viewsFolder = '/views/'
   ) {
-    // console.log(...arguments);
-    if (!(contextData instanceof Object)) {
-      contextData = {};
-    }
-    if (viewFile.startsWith('/')) {
-      viewFile = /[^/](.*)$/.exec(viewFile)[0];
-    }
-    if (!(viewFile.endsWith('.html') || viewFile.endsWith('.htm'))) {
-      viewFile = viewFile + '.html';
-    }
-    if (!viewsFolder.endsWith('/')) {
-      viewsFolder = viewsFolder + '/';
-    }
-    const url = viewsFolder + viewFile;
-    $.get(url, function (data) {
-      $(selector).html($.templates(data).render(contextData));
-      console.log(contextData);
+    return new Promise((resolve, reject) => {
+      if (viewFile) {
+        // console.log(...arguments);
+        if (!(contextData instanceof Object)) {
+          contextData = {};
+        }
+        if (viewFile.startsWith('/')) {
+          viewFile = /[^/](.*)$/.exec(viewFile)[0];
+        }
+        if (!(viewFile.endsWith('.html') || viewFile.endsWith('.htm'))) {
+          viewFile = viewFile + '.html';
+        }
+        if (!viewsFolder.endsWith('/')) {
+          viewsFolder = viewsFolder + '/';
+        }
+        const url = viewsFolder + viewFile;
+        $.get(url, function (data) {
+          try {
+            console.log(contextData);
+            $(selector).html($.templates(data).render(contextData));
+            if (callbackFn) {
+              callbackFn(contextData);
+            }
+            resolve();
+          } catch (e) {
+            reject(e);
+          }
+        });
+      } else if (callbackFn && typeof callbackFn === 'function') {
+        callbackFn(contextData);
+        resolve();
+      } else {
+        reject(new Error('No viewFile or function supplied'));
+      }
     });
   }
   /**
@@ -244,7 +263,7 @@ class Renderer extends PopStateHandler {
           Object.assign(contextData, { pathParams: urlParts[2] });
           // console.log(contextData);
           if (callbackFn) {
-            Renderer.renderView(view, contextData, callbackFn(urlParts[2]));
+            Renderer.renderView(view, contextData, callbackFn);
           } else {
             Renderer.renderView(view, contextData);
           }
