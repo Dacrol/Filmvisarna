@@ -12,21 +12,28 @@
     height: 45vw;
     max-height: 630px;
   }
+
   z-index: 0;
   position: relative;
 }
 
 .owl-carousel {
   .owl-video-tn {
-    background-size: cover;
+    // background-size: cover;
     background-image: none !important;
   }
+
+  .owl-video-wrapper {
+    background: transparent;
+  }
+
   .item-video {
+    background-color: black;
     position: absolute;
-    height: 70%;
-    @media (min-width: 768px){
-      height: 80%;
-    }
+    // height: 70%;
+    // @media (min-width: 768px){
+    //   height: 80%;
+    // }
     width: 100%;
     left: 0;
     right: 0;
@@ -36,7 +43,7 @@
 
   .owl-nav {
     position: absolute;
-    top: 40%;
+    top: 43%;
     transform: translateY(-50%);
     width: 100%;
 
@@ -67,5 +74,9 @@
     -webkit-box-shadow: 8px 2px 38px -3px rgba(0,0,0,0.75);
     -moz-box-shadow: 8px 2px 38px -3px rgba(0,0,0,0.75);
     box-shadow: 8px 2px 38px -3px rgba(0,0,0,0.75);
+  }
+
+  .owl-video-frame > iframe {
+    height: 100%;
   }
 }
