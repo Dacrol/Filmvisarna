@@ -4,6 +4,7 @@ import '../../../node_modules/popper.js/dist/umd/popper.js';
 import '../../../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import App from './classes/app.class.js';
 import viewsSetup from './helpers/views-setup';
+import patchOwlCarousel from './helpers/owl-patch';
 
 // @ts-ignore
 require('jsrender')(jQuery);
@@ -14,9 +15,14 @@ window.$ = window.jQuery = jQuery;
 // @ts-ignore
 require('../../../node_modules/owl.carousel/dist/owl.carousel');
 
-// classes
-let app = new App();
-
 // @ts-ignore
 window.$.owlCarousel = window.$.fn.owlCarousel;
+// @ts-ignore
+$.owlCarousel = $.fn.owlCarousel;
+
+let app = new App();
+
 viewsSetup(app);
+
+patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');
+
