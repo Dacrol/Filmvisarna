@@ -7,13 +7,19 @@ export default class LogInHandler extends Base {
     this.signInButton = $('#sign-in');
   }
 
-  logIn () {
-    // först plockar vi upp värdena i formuläret
+  async logIn () {
     let userName = $('#exampleInputEmail1').val();
     let passWord = $('#exampleInputPassword1').val();
-      console.log(userName);
-      console.log(passWord);
+    this.allUserNames = await JSON._load('users.json');
+    // först plockar vi upp värdena i formuläret
 
+    for (let user of this.allUserNames) {
+      if (user.id === userName) {
+        if (user.password === passWord) {
+          console.log('hefe');
+        }
+      }
+    }
 
     // sedan jämför vi värdena i json-filen
 
