@@ -17,15 +17,17 @@ export default class LogInHandler extends Base {
       if (user.id === userName) {
         if (user.password === passWord) {
           console.log('hefe');
+          // sedan om det matchar rendederar vi ut en ny vy
+
+          // och skapar en ny session
+
+          //redirecta till sidan som är mina sidor
         }
       }
     }
 
-    // sedan jämför vi värdena i json-filen
 
-    // sedan om det matchar rendederar vi ut en ny vy
 
-    // och skapar en ny session
   }
 
   template1 () {
