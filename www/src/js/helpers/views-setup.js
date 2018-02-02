@@ -54,11 +54,12 @@ export default function viewsSetup (app) {
     'name'
   );
   app.bindViewWithJSON(
-    null,
+    'a#pills-salon-template',
     'salon-template',
-    '/salon-template',
+    '/salontemplate',
     '/json/salong.json',
-    'seatsPerRow'
+    ['id', 'seatsPerRow'],
+    'id'
   );
   app.bindViewWithJSON(
     null,
