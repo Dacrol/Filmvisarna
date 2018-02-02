@@ -25,9 +25,13 @@ body {
 }
 
 .seat {
-	background-color: #ddd;
+	background-color: #888;
 	height: 40px;
 	width: 40px;
 	border-radius: 0 0 10px 10px;
 	margin: 5px;
+}
+
+.seat:hover {
+	background-color: #ddd;
 }
