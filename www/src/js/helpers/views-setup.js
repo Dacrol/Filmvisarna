@@ -33,6 +33,14 @@ export default function viewsSetup (app) {
             items: 1,
             nav: true
           }
+        },
+        onPlayVideo: function (event) {
+          $('.white-space').addClass('h-0');
+          $('.poster').fadeOut(1000);
+        },
+        onStopVideo: function (event) {
+          $('.white-space').removeClass('h-0');
+          $('.poster').fadeIn(1000);
         }
       });
     }
