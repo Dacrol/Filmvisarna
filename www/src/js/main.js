@@ -30,5 +30,8 @@ $('#sign-in').click(function () {
   app.LogInHandler.render('#root', 1);
   $('#exampleModal').modal();
 
-
+  $('#sign-in-submit').on('click', function (event) {
+    event.preventDefault();
+    app.LogInHandler.logIn();
+  });
 });
