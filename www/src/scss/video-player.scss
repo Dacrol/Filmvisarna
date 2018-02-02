@@ -39,6 +39,8 @@
     right: 0;
     top: 0;
     bottom: 0;
+    -webkit-transition: height 1s;
+    transition: height 1s;
   }
 
   .owl-nav {
@@ -79,4 +81,22 @@
   .owl-video-frame > iframe {
     height: 100%;
   }
+}
+
+.white-space {
+    background-color: white;
+    height: 30%;
+    @media (min-width: 768px){
+      height: 20%;
+    }
+    position: absolute;
+    bottom: 0;
+    z-index: 0;
+    width: 100%;
+}
+
+.h-0 {
+  height: 0%;
+  -webkit-transition: height 1s;
+  transition: height 1s;
 }
