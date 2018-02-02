@@ -10,6 +10,7 @@ export default function viewsSetup (app) {
     'movies'
   );
   app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
+  app.bindView(null, 'ommoss', '/about', {});
   app.bindViewWithJSON(
     'a#pills-salonger',
     'salonger',
