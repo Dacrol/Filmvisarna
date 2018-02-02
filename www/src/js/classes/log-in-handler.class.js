@@ -5,13 +5,17 @@ export default class LogInHandler extends Base {
     super();
     this.signedIn = false;
     this.signInButton = $('#sign-in');
-    console.log(this.signInButton)
   }
 
-  // behöver skapa en login metod
-  // logIn() {
+  logIn() {
+    //först plockar vi upp värdena i formuläret
 
-  // }
+    //sedan jämför vi värdena i json-filen
+
+    //sedan om det matchar rendederar vi ut en ny vy
+
+    //och skapar en ny session
+  }
 
 
   template1 () {
