@@ -7,16 +7,20 @@ export default class LogInHandler extends Base {
     this.signInButton = $('#sign-in');
   }
 
-  logIn() {
-    //först plockar vi upp värdena i formuläret
+  logIn () {
+    // först plockar vi upp värdena i formuläret
+    let userName = $('#exampleInputEmail1').val();
+    let passWord = $('#exampleInputPassword1').val();
+      console.log(userName);
+      console.log(passWord);
 
-    //sedan jämför vi värdena i json-filen
 
-    //sedan om det matchar rendederar vi ut en ny vy
+    // sedan jämför vi värdena i json-filen
 
-    //och skapar en ny session
+    // sedan om det matchar rendederar vi ut en ny vy
+
+    // och skapar en ny session
   }
-
 
   template1 () {
     return `
@@ -24,7 +28,7 @@ export default class LogInHandler extends Base {
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body">
-              <form>
+              <form id="test" action="post">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email address</label>
                   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
@@ -33,7 +37,7 @@ export default class LogInHandler extends Base {
                   <label for="exampleInputPassword1">Password</label>
                   <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <a id="sign-in-submit" href="#" role="button" class="btn btn-primary">Submit</a>
               </form>
             </div>
           </div>
