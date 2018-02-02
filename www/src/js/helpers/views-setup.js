@@ -55,6 +55,14 @@ export default function viewsSetup (app) {
   );
   app.bindViewWithJSON(
     null,
+    'salon-template',
+    '/salon-template',
+    '/json/salong.json',
+    'seatsPerRow',
+    'seats'
+  );
+  app.bindViewWithJSON(
+    null,
     'posterfilm',
     '/film',
     '/json/movie-data.json',
