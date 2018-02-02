@@ -59,7 +59,7 @@ export default function viewsSetup (app) {
     '/salontemplate',
     '/json/salong.json',
     ['id', 'seatsPerRow'],
-    'id'
+    'seatsPerRow'
   );
   app.bindViewWithJSON(
     null,
