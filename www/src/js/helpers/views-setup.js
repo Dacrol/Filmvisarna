@@ -36,7 +36,7 @@ export default function viewsSetup (app) {
         },
         onPlayVideo: function (event) {
           $('.white-space').addClass('h-0');
-          $('.poster').hide('puff', {percent: 135}, 400);
+          $('.poster').hide('puff', {percent: 125}, 400);
         },
         onStopVideo: function (event) {
           $('.white-space').removeClass('h-0');
