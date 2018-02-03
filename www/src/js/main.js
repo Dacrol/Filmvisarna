@@ -17,11 +17,11 @@ require('../../../node_modules/owl.carousel/dist/owl.carousel');
 // @ts-ignore
 require('jquery-ui/ui/effect');
 // @ts-ignore
-require('jquery-ui/ui/effects/effect-scale')
+require('jquery-ui/ui/effects/effect-scale');
 // @ts-ignore
-require('jquery-ui/ui/effects/effect-size')
+require('jquery-ui/ui/effects/effect-size');
 // @ts-ignore
-require('jquery-ui/ui/effects/effect-puff')
+require('jquery-ui/ui/effects/effect-puff');
 
 // @ts-ignore
 window.$.owlCarousel = window.$.fn.owlCarousel;
