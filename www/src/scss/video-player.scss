@@ -60,18 +60,18 @@
   }
   .poster {
     width: auto !important;
-    height: 100px !important;
+    height: 135px;
     position: absolute;
-    left: 10px;
+    left: 28px;
     @media (min-width: 768px){
-      height: 150px !important;
+      height: 185px;
     }
     @media (min-width: 1000px){
-      height: 300px !important;
-      left: 20px;
-      bottom: 25px;
+      height: 300px;
+      left: 35px;
+      bottom: 12px;
     }
-    bottom: 20px;
+    bottom: 8px;
     transition: position 2s ease-in-out;
     -webkit-box-shadow: 8px 2px 38px -3px rgba(0,0,0,0.75);
     -moz-box-shadow: 8px 2px 38px -3px rgba(0,0,0,0.75);
@@ -85,18 +85,23 @@
 
 .white-space {
     background-color: white;
-    height: 30%;
+    height: 9%;
     @media (min-width: 768px){
-      height: 20%;
+      height: 8%;
     }
     position: absolute;
-    bottom: 0;
     z-index: 0;
     width: 100%;
+    -webkit-transition: height 600ms;
+    transition: height 600ms;
+    &.top {
+      top: 0;
+    }
+    &.bottom {
+      bottom: 0;
+    }
 }
 
 .h-0 {
   height: 0%;
-  -webkit-transition: height 1s;
-  transition: height 1s;
 }

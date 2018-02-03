@@ -36,13 +36,14 @@ export default function viewsSetup (app) {
         },
         onPlayVideo: function (event) {
           $('.white-space').addClass('h-0');
-          $('.poster').fadeOut(1000);
+          $('.poster').hide('puff', {percent: 135}, 400);
         },
         onStopVideo: function (event) {
           $('.white-space').removeClass('h-0');
-          $('.poster').fadeIn(1000);
+          $('.poster').show('puff', {percent: 145}, 450);
         }
       });
+      // TODO: trigger stopVideo on the end of youtubes
     }
   );
   app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
