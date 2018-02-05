@@ -8,8 +8,13 @@
       "type": "chrome",
       "request": "attach",
       "name": "Attach to Chrome",
-      "port": 9222,
-      "webRoot": "${workspaceFolder}"
+      "port": 9666,
+      "url": "http://localhost:3001",
+      "sourceMaps": true,
+      "webRoot": "${workspaceFolder}/www",
+      "sourceMapPathOverrides": {
+        "www/*": "${workspaceFolder}/www/*"
+      }
     },
     {
       "type": "node",
