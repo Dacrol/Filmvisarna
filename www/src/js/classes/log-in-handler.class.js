@@ -38,11 +38,11 @@ export default class LogInHandler extends Base {
             <div class="modal-body">
               <form id="test" action="post">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
+                  <label for="exampleInputEmail1">E-post</label>
                   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
+                  <label for="exampleInputPassword1">Lösenord</label>
                   <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                 </div>
                 <a id="sign-in-submit" href="#" role="button" class="btn btn-primary">Submit</a>
@@ -52,6 +52,35 @@ export default class LogInHandler extends Base {
         </div>
       </div>
     `;
+  }
+
+  template2 () { 
+    return `
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form id="test" action="post">
+              <div class="form-group">
+                <label for="exampleInputEmail1">E-post address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Lösenord</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword2">Bekäfta ditt nya lösenord</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <a id="sign-in-submit" href="#" role="button" class="btn btn-primary">Submit</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
   }
 
   // behöver skapa en loggga ut metod
