@@ -9,7 +9,7 @@ export default function viewsSetup (app) {
     '/json/movie-data.json',
     'movies'
   );
-  app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
+  app.bindViewWithJSON('a#pills-current', 'aktuellfilmer', '/current', '/json/movie-data.json', 'movies');
   app.bindView(null, 'ommoss', '/about', {});
   app.bindViewWithJSON(
     'a#pills-salonger',
