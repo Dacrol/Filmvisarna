@@ -1,8 +1,10 @@
 import Base from './base.class';
+import App from './app.class.js';
 
 export default class LogInHandler extends Base {
-  constructor () {
+  constructor (App) {
     super();
+    this.app = App;
     this.signedIn = false;
     this.signInButton = $('#sign-in');
   }
@@ -16,23 +18,31 @@ export default class LogInHandler extends Base {
     for (let user of this.allUserNames) {
       if (user.id === userName) {
         if (user.password === passWord) {
-          console.log('hefe');
+          // $('#root').html();
+          $('.modal-backdrop').remove();
+          this.app.bindViewWithJSON(
+            '#sign-in-submit',
+            'mypage',
+            '/mypage',
+            '/json/movie-data.json',
+            'movies'
+          );
+          this.app.changePage('mypage');
+
+
           // sedan om det matchar rendederar vi ut en ny vy
 
           // och skapar en ny session
 
-          //redirecta till sidan som är mina sidor
+          // redirecta till sidan som är mina sidor
         }
       }
     }
-
-
-
   }
 
   template1 () {
     return `
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body">
