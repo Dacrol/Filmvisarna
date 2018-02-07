@@ -1,5 +1,8 @@
-class Salon {
+import App from './app.class.js';
+
+class Salon extends App {
 	constructor(){
+		super();
 		// Vilka parametrar behöver Salon-klassen?
 	}
 
