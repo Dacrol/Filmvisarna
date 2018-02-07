@@ -6,14 +6,14 @@ class Salon extends App {
 		// Vilka parametrar behöver Salon-klassen?
 	}
 
-	renderSeats(){
-		JSON._load('salong.json');
+	async renderSeats(){
+		let salonSeats = await JSON._load('salong.json');
 
 		// Första for-loopen skriver ut antalet rader i salongen (baserat på length)
-		for(let i = 0; i < {{:salons[0].seatsPerRow.length}}; i++){
+		for(let i = 0; i < salonSeats[0].seatsPerRow.length; i++){
 			let row = $('<div>');
 			// Andra for-loopen skriver ut sätena i respektive rad (adderar CSS-klassen 'seat')
-		  for(let j = 0; j < {{:salons[0].seatsPerRow[i]}}; j++){
+		  for(let j = 0; j < salonSeats[0].seatsPerRow[i]; j++){
 				let col = $('<div>').addClass('seat');
 				$(row).append(col);
 				}
@@ -21,3 +21,5 @@ class Salon extends App {
 		}
 	}
 }
+
+export default Salon;

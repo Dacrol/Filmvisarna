@@ -1,5 +1,6 @@
 // eslint-disable-next-line
 import Renderer from '../classes/renderer-base.class';
+import Salon from '../classes/salon.class';
 export default function viewsSetup (app) {
   // The first argument can be null if the selector already has the class pop
   app.bindViewWithJSON(
@@ -58,7 +59,12 @@ export default function viewsSetup (app) {
     'salon-template',
     '/salontemplate',
     '/json/salong.json',
-    'salons'
+    'salons',
+    null,
+    () => {
+      let salon = new Salon();
+      salon.renderSeats();
+    }
   );
   app.bindViewWithJSON(
     null,
