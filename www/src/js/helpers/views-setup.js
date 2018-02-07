@@ -1,5 +1,6 @@
 // eslint-disable-next-line
 import Renderer from '../classes/renderer-base.class';
+
 export default function viewsSetup (app) {
   // The first argument can be null if the selector already has the class pop
   app.bindViewWithJSON(
@@ -38,13 +39,21 @@ export default function viewsSetup (app) {
     }
   );
   app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
-  app.bindViewWithJSON(
-    'a#pills-current',
-    'mypage',
-    '/mypage',
-    '/json/movie-data.json',
-    'movies'
-  );
+  // app.bindView(
+  //   'a#sign-in',
+  //   'mypage',
+  //   '/mypage',
+  //   () => {
+  //     //kolla inloggning
+  //     if(){
+
+  //     } else {
+
+  //     }
+
+  //     //om du är inloggad så måste du göra ett nytt anrop till mina sidor viwen
+  //   }
+  // );
   app.bindViewWithJSON(
     'a#pills-salonger',
     'salonger',

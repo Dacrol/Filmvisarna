@@ -30,7 +30,11 @@ class PopStateHandler extends Base {
     });
   }
 
-  changePage () {
+  changePage (newUrl = '') {
+    if (newUrl) {
+      history.pushState(null, null, '/' + newUrl);
+    }
+    console.log('här',newUrl,this.viewMethods);
     let url = location.pathname;
     let urlParts = urlRegex.exec(url);
     $('header a').removeClass('active');
