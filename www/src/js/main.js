@@ -45,3 +45,17 @@ $('#sign-in').click(function () {
     app.LogInHandler.logIn();
   });
 });
+
+if (sessionStorage.getItem('signed-in')) {
+  $('#sign-in').parent().remove();
+  $('ul.navbar-nav').append(
+    '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
+  );
+  app.bindViewWithJSON(
+    '#sign-in',
+    'mypage',
+    '/mypage',
+    '/json/movie-data.json',
+    'movies'
+  );
+}
