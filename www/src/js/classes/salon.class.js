@@ -29,8 +29,8 @@ class Salon extends App {
 
 	selectSeat(){
 		$('.seat').on('click', function(){
+			$('.salon-container div').removeClass('selected');
 			$(this).addClass('selected');
-			console.log("selected");
 		});
 	}
 }
