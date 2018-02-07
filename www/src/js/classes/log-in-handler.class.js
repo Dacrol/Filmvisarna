@@ -46,6 +46,15 @@ export default class LogInHandler extends Base {
     }
   }
 
+  signOut () {
+    sessionStorage.removeItem('signed-in');
+    $('#sign-in').parent().remove();
+    $('ul.navbar-nav').append(
+      '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Logga in</a></li>'
+    );
+    this.app.changePage('/');
+  }
+
   template1 () {
     return `
       <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
