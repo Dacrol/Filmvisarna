@@ -36,8 +36,11 @@ body {
 }
 
 .seat:hover {
-	background-color: #ddd;
 	cursor: pointer;
+}
+
+.hovered {
+	background-color: #ddd;
 }
 
 .selected {

@@ -24,7 +24,18 @@ class Salon extends App {
 				}
 			$('.salon-container').append(row);
 		}
+		this.hoverSeat();
 		this.selectSeat();
+	}
+
+	hoverSeat(){
+		$('.seat').on('mouseover', function(){
+			$(this).addClass('hovered');
+		});
+
+		$('.seat').on('mouseleave', function(){
+			$(this).removeClass('hovered');
+		});
 	}
 
 	selectSeat(){
