@@ -5,7 +5,6 @@ export default class LogInHandler extends Base {
   constructor (App) {
     super();
     this.app = App;
-    this.signedIn = false;
     this.signInButton = $('#sign-in');
   }
 
@@ -27,14 +26,21 @@ export default class LogInHandler extends Base {
             '/json/movie-data.json',
             'movies'
           );
+          sessionStorage.setItem('signed-in', JSON.stringify(user));
           this.app.changePage('mypage');
-
-
-          // sedan om det matchar rendederar vi ut en ny vy
-
-          // och skapar en ny session
-
-          // redirecta till sidan som är mina sidor
+          if (sessionStorage.getItem('signed-in')) {
+            $('#sign-in').parent().remove();
+            $('ul.navbar-nav').append(
+              '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
+            );
+            this.app.bindViewWithJSON(
+              '#sign-in',
+              'mypage',
+              '/mypage',
+              '/json/movie-data.json',
+              'movies'
+            );
+          }
         }
       }
     }
@@ -64,7 +70,7 @@ export default class LogInHandler extends Base {
     `;
   }
 
-  template2 () { 
+  template2 () {
     return `
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -90,7 +96,6 @@ export default class LogInHandler extends Base {
       </div>
     </div>
   `;
-
   }
 
   // behöver skapa en loggga ut metod
