@@ -14,7 +14,6 @@ class Salon {
 					$(row).append(col);
 				}
 				$('.salon-container').append(row);
-				}
 			}
 		}
 	}
