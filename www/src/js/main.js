@@ -37,12 +37,12 @@ viewsSetup(app);
 patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');
 
 $('#sign-in').click(function () {
-  app.LogInHandler.render('#root', 1);
+  app.logInHandler.render('#root', 1);
   $('#login-modal').modal();
 
   $('#sign-in-submit').on('click', function (event) {
     event.preventDefault();
-    app.LogInHandler.logIn();
+    app.logInHandler.logIn();
   });
 });
 
@@ -63,9 +63,12 @@ if (sessionStorage.getItem('signed-in')) {
     () => {
 
       $('#sign-out').on('click', function (event) {
+        console.log('fewfewfewfwe')
         event.preventDefault();
-        app.LogInHandler.signOut();
+        app.logInHandler.signOut();
       });
+
+      $('#login-modal').modal('toggle');
     }
   );
 }

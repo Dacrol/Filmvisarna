@@ -48,21 +48,6 @@ export default function viewsSetup (app) {
     }
   );
   app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
-  // app.bindView(
-  //   'a#sign-in',
-  //   'mypage',
-  //   '/mypage',
-  //   () => {
-  //     //kolla inloggning
-  //     if(){
-
-  //     } else {
-
-  //     }
-
-  //     //om du är inloggad så måste du göra ett nytt anrop till mina sidor viwen
-  //   }
-  // );
   app.bindViewWithJSON(
     'a#pills-salonger',
     'salonger',

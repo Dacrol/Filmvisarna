@@ -18,37 +18,42 @@ export default class LogInHandler extends Base {
       if (user.id === userName) {
         if (user.password === passWord) {
           // $('#root').html();
-          $('.modal-backdrop').remove();
+          $('.modal-backdrop').css('display', 'none');
           this.app.bindViewWithJSON(
             '#sign-in-submit',
             'mypage',
             '/mypage',
             '/json/movie-data.json',
-            'movies'
+            'movies',
+            null,
+            () => {
+              let that = this;
+              $('#sign-out').on('click', function (event) {
+                console.log('fewfewfewfwe');
+                event.preventDefault();
+                that.signOut();
+              });
+            }
           );
           sessionStorage.setItem('signed-in', JSON.stringify(user));
           this.app.changePage('mypage');
           if (sessionStorage.getItem('signed-in')) {
-            $('#sign-in').parent().remove();
+            $('#sign-in')
+              .parent()
+              .remove();
             $('ul.navbar-nav').append(
               '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
-            );
-            this.app.bindViewWithJSON(
-              '#sign-in',
-              'mypage',
-              '/mypage',
-              '/json/movie-data.json',
-              'movies'
             );
           }
         }
       }
     }
   }
-
   signOut () {
     sessionStorage.removeItem('signed-in');
-    $('#sign-in').parent().remove();
+    $('#sign-in')
+      .parent()
+      .remove();
     $('ul.navbar-nav').append(
       '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Logga in</a></li>'
     );
