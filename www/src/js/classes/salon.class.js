@@ -3,7 +3,7 @@ import App from './app.class.js';
 class Salon extends App {
 	constructor(){
 		super();
-		// Vilka parametrar behöver Salon-klassen?
+		// Vilka properties behöver Salon-klassen?
 	}
 
 	// TODO: Lägg till parameter i renderSeats-metoden som väljer Stora eller Lilla salongen (just nu renderas bara Stora salongen (salonSeats[0]) ut)
@@ -24,6 +24,14 @@ class Salon extends App {
 				}
 			$('.salon-container').append(row);
 		}
+		this.selectSeat();
+	}
+
+	selectSeat(){
+		$('.seat').on('click', function(){
+			$(this).addClass('selected');
+			console.log("selected");
+		});
 	}
 }
 
