@@ -13,8 +13,10 @@ class Salon extends App {
 		for(let i = 0; i < salonSeats[0].seatsPerRow.length; i++){
 			let row = $('<div>');
 			// Andra for-loopen skriver ut sätena i respektive rad (adderar CSS-klassen 'seat')
-		  for(let j = 0; j < salonSeats[0].seatsPerRow[i]; j++){
-				let col = $('<div>').addClass('seat').attr('data-rownumber', i).attr('data-seatnumber', j);
+		  for(let j = salonSeats[0].seatsPerRow[i]; j > 0; j--){
+		  	// Varje individuellt säte får en unik koordinat med attributen data-rownumber och data-seatnumber i sitt element
+		  	// Dessa kan inspekteras i DOM:et
+				let col = $('<div>').addClass('seat').attr('data-rownumber', (i + 1)).attr('data-seatnumber', j);
 				$(row).append(col);
 				}
 			$('.salon-container').append(row);
