@@ -22,13 +22,15 @@ $.owlCarousel = $.fn.owlCarousel;
 
 let app = new App();
 
+window.app = app;
+
 viewsSetup(app);
 
 patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');
 
 $('#sign-in').click(function () {
   app.LogInHandler.render('#root', 1);
-  $('#exampleModal').modal();
+  $('#login-modal').modal();
 
   $('#sign-in-submit').on('click', function (event) {
     event.preventDefault();
