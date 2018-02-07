@@ -22,8 +22,6 @@ $.owlCarousel = $.fn.owlCarousel;
 
 let app = new App();
 
-// let salon = new Salon();
-
 viewsSetup(app);
 
 patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');

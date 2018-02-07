@@ -14,7 +14,7 @@ class Salon extends App {
 			let row = $('<div>');
 			// Andra for-loopen skriver ut sätena i respektive rad (adderar CSS-klassen 'seat')
 		  for(let j = 0; j < salonSeats[0].seatsPerRow[i]; j++){
-				let col = $('<div>').addClass('seat');
+				let col = $('<div>').addClass('seat').attr('data-rownumber', i).attr('data-seatnumber', j);
 				$(row).append(col);
 				}
 			$('.salon-container').append(row);
