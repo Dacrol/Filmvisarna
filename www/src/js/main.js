@@ -30,21 +30,26 @@ $.owlCarousel = $.fn.owlCarousel;
 
 let app = new App();
 
+// @ts-ignore
 window.app = app;
 
 viewsSetup(app);
 
 patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');
-
-$('#sign-in').click(function () {
-  app.logInHandler.render('#root', 1);
-  $('#login-modal').modal();
-
-  $('#sign-in-submit').on('click', function (event) {
+if (!sessionStorage.getItem('signed-in')) {
+  $('#sign-in').click(function (event) {
     event.preventDefault();
-    app.logInHandler.logIn();
+    app.logInHandler.render('#root', '1');
+    // @ts-ignore
+    $('#login-modal').modal();
+
+    $('#sign-in-submit').on('click', function (event) {
+      event.preventDefault();
+      app.logInHandler.logIn();
+    });
   });
-});
+
+}
 
 if (sessionStorage.getItem('signed-in')) {
   $('#sign-in')
@@ -63,12 +68,11 @@ if (sessionStorage.getItem('signed-in')) {
     () => {
 
       $('#sign-out').on('click', function (event) {
-        console.log('fewfewfewfwe')
         event.preventDefault();
         app.logInHandler.signOut();
       });
 
-      $('#login-modal').modal('toggle');
+      // $('#login-modal').modal('toggle');
     }
   );
 }

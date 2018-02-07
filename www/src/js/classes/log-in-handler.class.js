@@ -11,6 +11,7 @@ export default class LogInHandler extends Base {
   async logIn () {
     let userName = $('#exampleInputEmail1').val();
     let passWord = $('#exampleInputPassword1').val();
+    // @ts-ignore
     this.allUserNames = await JSON._load('users.json');
     // först plockar vi upp värdena i formuläret
 
@@ -54,9 +55,21 @@ export default class LogInHandler extends Base {
     $('#sign-in')
       .parent()
       .remove();
-    $('ul.navbar-nav').append(
-      '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Logga in</a></li>'
-    );
+    $('ul.navbar-nav')
+      .append(
+        '<li class="nav-item"><a class="nav-link" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Logga in</a></li>'
+      )
+      .on('click', (event) => {
+        this.app.render('#root', 1);
+        // @ts-ignore
+        $('#login-modal').modal();
+
+        $('#sign-in-submit').on('click', (event) => {
+          event.preventDefault();
+          this.logIn();
+        });
+      });
+
     this.app.changePage('/');
   }
 
