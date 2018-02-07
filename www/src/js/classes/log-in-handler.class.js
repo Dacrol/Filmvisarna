@@ -60,7 +60,7 @@ export default class LogInHandler extends Base {
         '<li class="nav-item"><a class="nav-link" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Logga in</a></li>'
       )
       .on('click', (event) => {
-        this.app.render('#root', 1);
+        this.render('#root', 1);
         // @ts-ignore
         $('#login-modal').modal();
 
