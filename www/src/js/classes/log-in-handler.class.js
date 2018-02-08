@@ -62,10 +62,14 @@ export default class LogInHandler extends Base {
 
       $('#sign-in-submit').on('click', event => {
         event.preventDefault();
-        // @ts-ignore
-        $('#login-modal').modal('toggle');
         this.logIn();
       });
+      // $('#login-modal').keyup(e => {
+      //   if (e.which === 13) {
+      //     event.preventDefault();
+      //     this.app.logInHandler.logIn();
+      //   }
+      // });
     });
 
     this.app.changePage('/');
