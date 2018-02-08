@@ -8,6 +8,27 @@ export default class LogInHandler extends Base {
     this.app = App;
     this.signInButton = $('#sign-in');
     this.render('body', '1');
+    this.setupEventHandlers();
+  }
+
+  setupEventHandlers () {
+    $('#sign-in').click(function (event) {
+      event.preventDefault();
+
+      // @ts-ignore
+      $('#login-modal').modal('toggle');
+
+      $('#sign-in-submit').on('click', function (event) {
+        event.preventDefault();
+        this.app.logInHandler.logIn();
+      });
+      $('#login-modal').keyup(function (event) {
+        if (event.which === 13) {
+          event.preventDefault();
+          this.app.logInHandler.logIn();
+        }
+      });
+    });
   }
 
   async logIn () {
@@ -57,7 +78,7 @@ export default class LogInHandler extends Base {
     $('ul.navbar-nav').append(
       '<li class="nav-item"><a class="nav-link" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Logga in</a></li>'
     );
-    $('#sign-in').on('click', event => {
+    $('#sign-in').on('click', (event) => {
       // @ts-ignore
       $('#login-modal').modal('toggle');
 

@@ -40,25 +40,6 @@ viewsSetup(app);
 JSON._classes(User);
 
 patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');
-if (!sessionStorage.getItem('signed-in')) {
-  $('#sign-in').click(function (event) {
-    event.preventDefault();
-
-    // @ts-ignore
-    $('#login-modal').modal('toggle');
-
-    $('#sign-in-submit').on('click', function (event) {
-      event.preventDefault();
-      app.logInHandler.logIn();
-    });
-    $('#login-modal').keyup(function (event) {
-      if (event.which === 13) {
-        event.preventDefault();
-        app.logInHandler.logIn();
-      }
-    });
-  });
-}
 
 if (sessionStorage.getItem('signed-in')) {
   $('#sign-in')
