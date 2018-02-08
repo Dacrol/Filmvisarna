@@ -38,8 +38,9 @@ class PopStateHandler extends Base {
     }
     let url = location.pathname;
     let urlParts = urlRegex.exec(url);
+    // console.log(urlParts[1])
     $('header a').removeClass('active');
-    $(`header a[href="${url}"]`).addClass('active');
+    $(`header a[href="${urlParts[1]}"]`).addClass('active');
     let urlPart = urlParts[1];
     this.viewMethods[urlPart]();
     this.addEventHandler();
