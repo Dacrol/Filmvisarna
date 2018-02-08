@@ -19,11 +19,16 @@ body {
 	color: black;	
 }
 
+.salon-wrapper {
+  overflow: hidden;
+}
+
 .salon-container {
 	background-color: #343a40;
-	min-height: 60vh;
-	padding: 10px;
-	margin-bottom: 20px;
+	/*min-height: 60vh;*/
+	/*padding: 10px;*/
+	/*margin-bottom: 20px;*/
+  transform-origin: 0 0;
 }
 
 .seat {

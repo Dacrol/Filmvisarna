@@ -21,7 +21,7 @@ class Salon extends App {
     let hScale = h / salonContainerHeight;
     let scaling = Math.min(wScale, hScale);
     $('.salon-container').css('transform', `scale(${scaling})`).show();
-    $('.salon-container').width(salonContainerWidth * scaling).height(salonContainerHeight * scaling);
+    $('.salon-wrapper').width(salonContainerWidth * scaling).height(salonContainerHeight * scaling);
   }
 
   // Parametern hos renderSeats() ska antingen vara 0 för Stora salongen eller 1 för Lilla salongen (se salong.json)
