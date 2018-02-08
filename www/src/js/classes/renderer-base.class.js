@@ -1,5 +1,5 @@
 import PopStateHandler from './pop-state-handler.class.js';
-const urlRegex = /(\W\w*)\W?(.*)/;
+const urlRegex = /(\W[^/]*)\/?(.*)/;
 /** Class for rendering views */
 class Renderer extends PopStateHandler {
   /**
