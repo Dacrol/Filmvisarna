@@ -10,8 +10,8 @@ declare namespace OwlCarousel {
 }
 
 interface JSON {
-  _load(...args: any[]): Promise<any>;
-  _save(...args: any[]): Promise<any>;
+  _load(filename: string, ...args: any[]): Promise<any>;
+  _save(filename: string, data: any, ...args: any[]): Promise<any>;
   _classes(...args: any[]): void;
   _stringify(...args: any[]): string;
   _parse(...args: any[]): any;
