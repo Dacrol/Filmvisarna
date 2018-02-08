@@ -1,12 +1,37 @@
 [
   {
-    "date": "Jan 28 2018 19:00:00",
+    "date": "Jan 28 2018 18:30:00",
     "salon": 0,
+    "movie": "Jumanji: Welcome to the Jungle"
+  },
+  {
+    "date": "Jan 28 2018 21:30:00",
+    "salon": 0,
+    "movie": "Fifty Shades Darker"
+  },
+  {
+    "date": "Jan 29 2018 14:30:00",
+    "salon": 1,
+    "movie": "Smurfarna: Den försvunna byn"
+  },
+   {
+    "date": "Jan 29 2018 16:30:00",
+    "salon": 1,
+    "movie": "Ferdinand"
+  },
+   {
+    "date": "Jan 29 2018 21:30:00",
+    "salon": 1,
     "movie": "Pacific Rim"
   },
   {
-    "date": "Jan 29 2018 22:00:00",
-    "salon": 1,
-    "movie": "Fifty Shades Darker"
+    "date": "Jan 30 2018 18:00:00",
+    "salon": 0,
+    "movie": "Borg"
+  },
+   {
+    "date": "Jan 30 2018 21:30:00",
+    "salon": 0,
+    "movie": "The Commuter"
   }
 ]
