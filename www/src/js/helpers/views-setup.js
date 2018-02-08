@@ -16,7 +16,7 @@ export default function viewsSetup (app) {
         loop: true,
         video: true,
         nav: true,
-        lazyLoad: true,
+        lazyLoad: false,
         autoplay: true,
         autoplayHoverPause: true,
         navText: ['<', '>'],
@@ -34,26 +34,20 @@ export default function viewsSetup (app) {
             items: 1,
             nav: true
           }
+        },
+        onPlayVideo: function (event) {
+          $('.white-space').addClass('h-0');
+          $('.poster').hide('puff', {percent: 125}, 400);
+        },
+        onStopVideo: function (event) {
+          $('.white-space').removeClass('h-0');
+          $('.poster').show('puff', {percent: 145}, 450);
         }
       });
+      // TODO: trigger stopVideo on the end of youtubes
     }
   );
   app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
-  // app.bindView(
-  //   'a#sign-in',
-  //   'mypage',
-  //   '/mypage',
-  //   () => {
-  //     //kolla inloggning
-  //     if(){
-
-  //     } else {
-
-  //     }
-
-  //     //om du är inloggad så måste du göra ett nytt anrop till mina sidor viwen
-  //   }
-  // );
   app.bindViewWithJSON(
     'a#pills-salonger',
     'salonger',

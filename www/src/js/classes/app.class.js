@@ -5,7 +5,7 @@ import LogInHandler from '../classes/log-in-handler.class.js';
 class App extends Renderer {
   constructor () {
     super();
-    this.LogInHandler = new LogInHandler(this);
+    this.logInHandler = new LogInHandler(this);
   }
 }
 

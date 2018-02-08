@@ -1,41 +1,52 @@
 .video {
   height: 220px;
 
-  @media (min-width: 375px){
+  @media (min-width: 375px) {
     height: 250px;
   }
 
-  @media (min-width: 768px){
+  @media (min-width: 768px) {
     height: 400px;
   }
-  @media (min-width: 1000px){
+
+  @media (min-width: 1000px) {
     height: 45vw;
     max-height: 630px;
   }
+
   z-index: 0;
   position: relative;
 }
 
 .owl-carousel {
   .owl-video-tn {
-    background-size: cover;
+    // background-size: cover;
+    background-image: none !important;
   }
+
+  .owl-video-wrapper {
+    background: transparent;
+  }
+
   .item-video {
+    background-color: black;
     position: absolute;
-    height: 70%;
-    @media (min-width: 768px){
-      height: 80%;
-    }
+    // height: 70%;
+    // @media (min-width: 768px){
+    //   height: 80%;
+    // }
     width: 100%;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
+    -webkit-transition: height 1s;
+    transition: height 1s;
   }
 
   .owl-nav {
     position: absolute;
-    top: 40%;
+    top: 43%;
     transform: translateY(-50%);
     width: 100%;
 
@@ -43,28 +54,64 @@
       position: absolute;
       left: -40px;
     }
+
     .owl-next {
       position: absolute;
       right: -40px;
     }
   }
+
   .poster {
     width: auto !important;
-    height: 100px !important;
+    height: 135px;
     position: absolute;
-    left: 10px;
-    @media (min-width: 768px){
-      height: 150px !important;
+    left: 28px;
+
+    @media (min-width: 768px) {
+      height: 185px;
     }
-    @media (min-width: 1000px){
-      height: 300px !important;
-      left: 20px;
-      bottom: 25px;
+
+    @media (min-width: 1000px) {
+      height: 300px;
+      left: 35px;
+      bottom: 12px;
     }
-    bottom: 20px;
+
+    bottom: 8px;
     transition: position 2s ease-in-out;
-    -webkit-box-shadow: 8px 2px 38px -3px rgba(0,0,0,0.75);
-    -moz-box-shadow: 8px 2px 38px -3px rgba(0,0,0,0.75);
-    box-shadow: 8px 2px 38px -3px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 8px 2px 38px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 8px 2px 38px -3px rgba(0, 0, 0, 0.75);
+    box-shadow: 8px 2px 38px -3px rgba(0, 0, 0, 0.75);
   }
+
+  .owl-video-frame > iframe {
+    height: 100%;
+  }
+}
+
+.white-space {
+  background-color: white;
+  height: 9%;
+
+  @media (min-width: 768px) {
+    height: 8%;
+  }
+
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  -webkit-transition: height 600ms;
+  transition: height 600ms;
+
+  &.top {
+    top: 0;
+  }
+
+  &.bottom {
+    bottom: 0;
+  }
+}
+
+.h-0 {
+  height: 0%;
 }
