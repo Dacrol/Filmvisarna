@@ -4,6 +4,7 @@ class Salon extends App {
 	constructor(){
 		super();
 		// Vilka properties behöver Salon-klassen?
+
     $(window).on('resize', () => this.scale());
     this.scale();
 	}
@@ -14,14 +15,16 @@ class Salon extends App {
     
     let w = $(window).width();
     let h = $(window).height();
-    w -= 10 * 2;
-    h -= 10 * 2;
+    // w -= 10 * 2;
+    // h -= 10 * 2;
 
-    let wScale = w / salonContainerWidth; 
-    let hScale = h / salonContainerHeight;
-    let scaling = Math.min(wScale, hScale);
+    let wScale = w / salonContainerWidth; // wScale = 1,1851851 
+    let hScale = h / salonContainerHeight; // hScale = 1,2729166
+    let scaling = Math.min(wScale, hScale); // scaling = 1,185
     $('.salon-container').css('transform', `scale(${scaling})`).show();
-    $('.salon-wrapper').width(salonContainerWidth * scaling).height(salonContainerHeight * scaling);
+    $('.salon-wrapper').width(salonContainerWidth * scaling);
+    $('.salon-wrapper').height(salonContainerHeight * scaling);
+    console.log("wrapper width :" + $('.salon-wrapper').width());
   }
 
   // Parametern hos renderSeats() ska antingen vara 0 för Stora salongen eller 1 för Lilla salongen (se salong.json)
