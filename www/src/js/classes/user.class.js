@@ -4,9 +4,11 @@ const SHA256 = require('crypto-js/sha256');
 export default class User {
   constructor (id, password) {
     // kolla om användarnamnet finns redan i listan
-    if (!this.checkIfUserExists(id)) {
-      this.createUser(id, password);
-    }
+    this.checkIfUserExists(id).then(userExists => {
+      if (!userExists) {
+        this.createUser(id, password);
+      }
+    });
   }
 
   encrypt (password) {
@@ -16,7 +18,7 @@ export default class User {
 
   async checkIfUserExists (id) {
     let userNames = await JSON._load('users.json');
-    for (let user of userNames) {
+    for (let user in userNames) {
       if (user.id === id) {
         return true;
       }
@@ -32,10 +34,12 @@ export default class User {
       id: this.id,
       password: this.passWord
     };
-
-    // @ts-ignore
-    JSON._save('users.json', user).then(() => {
-      console.log('Saved!');
+    JSON._load('users.json').then(users => {
+      users.push(user);
+      // @ts-ignore
+      JSON._save('users.json', users).then(() => {
+        console.log('Saved!');
+      });
     });
 
     // skicka in det i json filen

@@ -82,3 +82,9 @@ if (sessionStorage.getItem('signed-in')) {
     }
   );
 }
+
+
+$('#register-user-submit').on('click', (e) => {
+  e.preventDefault();
+  app.logInHandler.registerUser();
+});

@@ -1,5 +1,6 @@
 import Base from './base.class';
 import App from './app.class.js';
+import User from './user.class.js';
 
 export default class LogInHandler extends Base {
   constructor (App) {
@@ -10,8 +11,8 @@ export default class LogInHandler extends Base {
   }
 
   async logIn () {
-    let userName = $('#exampleInputEmail1').val();
-    let passWord = $('#exampleInputPassword1').val();
+    let userName = $('#email').val();
+    let passWord = $('#password').val();
     // @ts-ignore
     this.allUserNames = await JSON._load('users.json');
     for (let user of this.allUserNames) {
@@ -75,6 +76,16 @@ export default class LogInHandler extends Base {
     this.app.changePage('/');
   }
 
+  registerUser () {
+    let userName = $('#email').val();
+    let passWord = $('#password').val();
+    let passWordMatch = $('#password-match').val();
+
+    if (passWord === passWordMatch) {
+      this.user = new User(userName, passWord);
+    }
+  }
+
   template1 () {
     return `
       <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -83,47 +94,25 @@ export default class LogInHandler extends Base {
             <div class="modal-body">
               <form id="test" action="post">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">E-post</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  <label for="email">E-post</label>
+                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Lösenord</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <label for="password">Lösenord</label>
+                  <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                  <label for="password-match">Lösenord</label>
+                  <input type="password" class="form-control" id="password-match" placeholder="Password">
                 </div>
                 <a id="sign-in-submit" href="#" role="button" class="btn btn-primary">Submit</a>
+                <a id="register-user" href="#" role="button" class="btn btn-primary">Registrera dig</a>
+                <a id="register-user-submit" href="#" role="button" class="btn btn-primary">Submit reg</a>
               </form>
             </div>
           </div>
         </div>
       </div>
     `;
-  }
-
-  template2 () {
-    return `
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <form id="test" action="post">
-              <div class="form-group">
-                <label for="exampleInputEmail1">E-post address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Lösenord</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword2">Bekäfta ditt nya lösenord</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
-              <a id="sign-in-submit" href="#" role="button" class="btn btn-primary">Submit</a>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
   }
 }
