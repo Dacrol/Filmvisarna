@@ -1,5 +1,5 @@
 import Base from './base.class';
-const urlRegex = /(\W\w*)\W?(.*)/;
+const urlRegex = /(\W[^/]*)\/?(.*)/;
 class PopStateHandler extends Base {
   constructor () {
     super();
