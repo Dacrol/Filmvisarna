@@ -18,19 +18,18 @@ export default class LogInHandler extends Base {
       if (user.id === userName) {
         if (user.password === passWord) {
           this.app.bindViewWithJSON(
-            '#sign-in-submit',
             'mypage',
             '/mypage',
             '/json/movie-data.json',
             'movies',
-            null,
             () => {
               let that = this;
               $('#sign-out').on('click', function (event) {
                 event.preventDefault();
                 that.signOut();
               });
-            }
+            },
+            '#sign-in-submit'
           );
           sessionStorage.setItem('signed-in', JSON.stringify(user));
           if (sessionStorage.getItem('signed-in')) {

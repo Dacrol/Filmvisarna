@@ -26,7 +26,7 @@ If it is not classes i.e just js-files then it seems like it is working just typ
 For template usage see JSDoc documentation in [renderer-base](https://github.com/Dacrol/Filmvisarna/blob/develop/www/src/js/classes/renderer-base.class.js). The basic usage is to simply bind a view template to a selector as follows: 
 
 ```javascript
-Renderer.bindView('nav#some-id', 'some-view.html')
+Renderer.bindView('some-view.html', 'some-url', data)
 ```
 
 <!-- TODO: add link to jsrender -->

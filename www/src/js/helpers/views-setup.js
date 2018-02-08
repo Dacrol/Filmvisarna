@@ -50,24 +50,20 @@ export default function viewsSetup (app) {
       // TODO: trigger stopVideo on the end of youtubes
     }
   );
-  app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
+  app.bindView('aktuellfilmer', '/current');
   app.bindViewWithJSON(
-    'a#pills-salonger',
     'salonger',
     '/salons',
     '/json/salong.json',
-    ['salong1', 'salong2'],
-    'name'
+    'salons'
   );
   app.bindViewWithJSON(
-    null,
     'posterfilm',
     '/film',
     '/json/movie-data.json',
     'movies'
   );
   app.bindView(
-    null,
     'screenings',
     '/visningar',
     /** @param {Renderer} Renderer */ async (Renderer, pathParams) => {
