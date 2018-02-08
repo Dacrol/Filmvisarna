@@ -47,7 +47,6 @@ if (!sessionStorage.getItem('signed-in')) {
       app.logInHandler.logIn();
     });
   });
-
 }
 
 if (sessionStorage.getItem('signed-in')) {
@@ -65,7 +64,6 @@ if (sessionStorage.getItem('signed-in')) {
     'movies',
     null,
     () => {
-
       $('#sign-out').on('click', function (event) {
         event.preventDefault();
         app.logInHandler.signOut();
@@ -73,4 +71,20 @@ if (sessionStorage.getItem('signed-in')) {
     }
   );
 }
+
+// Function som randomerar ett 10 tecken långt nummer/tecken.
+window.randomBookNumber = randomBookNumber; //  Gör funktionen global
+
+function randomBookNumber () {
+  let text = '';
+  let randomCode =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < 10; i++) {
+    text += randomCode.charAt(Math.floor(Math.random() * randomCode.length));
+  }
+  return text;
+}
+console.log(randomBookNumber());
+
 
