@@ -68,6 +68,12 @@ export default class LogInHandler extends Base {
           event.preventDefault();
           this.logIn();
         });
+        $('#login-modal').keyup((e) => {
+          if (e.which === 13) {
+            event.preventDefault();
+            this.app.logInHandler.logIn();
+          }
+        });
       });
 
     this.app.changePage('/');
