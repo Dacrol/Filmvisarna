@@ -1,10 +1,13 @@
 // eslint-disable-next-line
 import Renderer from '../classes/renderer-base.class';
 
+/**
+ * @export
+ * @param {Renderer} app
+ */
 export default function viewsSetup (app) {
   // The first argument can be null if the selector already has the class pop
   app.bindViewWithJSON(
-    'a#pills-home',
     'home',
     '/',
     '/json/movie-data.json',
