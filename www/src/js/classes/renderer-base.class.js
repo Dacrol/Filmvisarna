@@ -1,6 +1,11 @@
 import PopStateHandler from './pop-state-handler.class.js';
 const urlRegex = /(\W[^/]*)\/?(.*)/;
-/** Class for rendering views */
+
+/**
+ * Class for binding and rendering views
+ * @version 0.0.2
+ * @see {@link https://github.com/Dacrol/weekend-spa/tree/develop} or README.md for more info and usage.
+*/
 class Renderer extends PopStateHandler {
   /**
    * Binds a view to a URL
