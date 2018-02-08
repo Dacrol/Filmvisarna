@@ -12,22 +12,21 @@ export default class LogInHandler extends Base {
   }
 
   setupEventHandlers () {
+    const that = this;
     $('#sign-in').click(function (event) {
       event.preventDefault();
-
       // @ts-ignore
       $('#login-modal').modal('toggle');
-
-      $('#sign-in-submit').on('click', function (event) {
+    });
+    $('#sign-in-submit').on('click', function (event) {
+      event.preventDefault();
+      that.logIn();
+    });
+    $('#login-modal').keyup(function (event) {
+      if (event.which === 13) {
         event.preventDefault();
-        this.app.logInHandler.logIn();
-      });
-      $('#login-modal').keyup(function (event) {
-        if (event.which === 13) {
-          event.preventDefault();
-          this.app.logInHandler.logIn();
-        }
-      });
+        that.logIn();
+      }
     });
   }
 
@@ -64,6 +63,7 @@ export default class LogInHandler extends Base {
             $('#login-modal').modal('hide');
             this.app.changePage('mypage');
           }
+          return user;
         }
       }
     }
