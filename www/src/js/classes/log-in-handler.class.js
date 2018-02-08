@@ -82,7 +82,9 @@ export default class LogInHandler extends Base {
     let passWordMatch = $('#password-match').val();
 
     if (passWord === passWordMatch) {
-      this.user = new User(userName, passWord);
+      User.createNewUser(userName, passWord).then(function (user) {
+        console.log(user);
+      });
     }
   }
 
