@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "gulp default && node app.js",
-    "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --reload-debounce 250 --reload-delay 0 --no-reload-on-restart --files --no-open \"www, !**/src/*\"",
+    "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-reload-on-restart  --no-open --files \"www, !**/src/*, !**/*.map\"",
     "eslint": "eslint **/*.js",
     "htmlhint": "htmlhint --config .htmlhintrc www/**/*.{htm,html}",
     "stylelint": "stylelint www/src/**/*.scss",
