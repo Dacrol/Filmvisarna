@@ -63,12 +63,10 @@ if (sessionStorage.getItem('signed-in')) {
     '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
   );
   app.bindViewWithJSON(
-    '#sign-in',
     'mypage',
     '/mypage',
     '/json/movie-data.json',
     'movies',
-    null,
     () => {
       $('#sign-out').on('click', function (event) {
         event.preventDefault();
