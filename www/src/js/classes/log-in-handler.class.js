@@ -6,6 +6,7 @@ export default class LogInHandler extends Base {
     super();
     this.app = App;
     this.signInButton = $('#sign-in');
+    this.render('body', '1');
   }
 
   async logIn () {
@@ -13,13 +14,9 @@ export default class LogInHandler extends Base {
     let passWord = $('#exampleInputPassword1').val();
     // @ts-ignore
     this.allUserNames = await JSON._load('users.json');
-    // först plockar vi upp värdena i formuläret
-
     for (let user of this.allUserNames) {
       if (user.id === userName) {
         if (user.password === passWord) {
-          // $('#root').html();
-          $('.modal-backdrop').css('display', 'none');
           this.app.bindViewWithJSON(
             '#sign-in-submit',
             'mypage',
@@ -55,20 +52,21 @@ export default class LogInHandler extends Base {
     $('#sign-in')
       .parent()
       .remove();
-    $('ul.navbar-nav')
-      .append(
-        '<li class="nav-item"><a class="nav-link" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Logga in</a></li>'
-      )
-      .on('click', (event) => {
-        this.render('#root', 1);
-        // @ts-ignore
-        $('#login-modal').modal();
 
-        $('#sign-in-submit').on('click', (event) => {
-          event.preventDefault();
-          this.logIn();
-        });
+    $('ul.navbar-nav').append(
+      '<li class="nav-item"><a class="nav-link" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Logga in</a></li>'
+    );
+    $('#sign-in').on('click', event => {
+      // @ts-ignore
+      $('#login-modal').modal('toggle');
+
+      $('#sign-in-submit').on('click', event => {
+        event.preventDefault();
+        // @ts-ignore
+        $('#login-modal').modal('toggle');
+        this.logIn();
       });
+    });
 
     this.app.changePage('/');
   }
@@ -124,10 +122,4 @@ export default class LogInHandler extends Base {
     </div>
   `;
   }
-
-  // behöver skapa en loggga ut metod
-
-  // en metod som kollar om du är inloggad
-
-  // renedera ut formuläret
 }

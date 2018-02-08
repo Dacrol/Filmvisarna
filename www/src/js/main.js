@@ -8,7 +8,6 @@ import patchOwlCarousel from './helpers/owl-patch';
 
 // @ts-ignore
 require('jsrender')(jQuery);
-// jQuery.views.settings.allowCode(true);
 
 // @ts-ignore
 window.$ = window.jQuery = jQuery;
@@ -39,9 +38,9 @@ patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');
 if (!sessionStorage.getItem('signed-in')) {
   $('#sign-in').click(function (event) {
     event.preventDefault();
-    app.logInHandler.render('#root', '1');
+
     // @ts-ignore
-    $('#login-modal').modal();
+    $('#login-modal').modal('toggle');
 
     $('#sign-in-submit').on('click', function (event) {
       event.preventDefault();
@@ -71,8 +70,6 @@ if (sessionStorage.getItem('signed-in')) {
         event.preventDefault();
         app.logInHandler.signOut();
       });
-
-      // $('#login-modal').modal('toggle');
     }
   );
 }
