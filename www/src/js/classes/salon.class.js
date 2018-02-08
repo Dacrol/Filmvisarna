@@ -6,16 +6,18 @@ class Salon extends App {
 		// Vilka properties behöver Salon-klassen?
 	}
 
-	// TODO: Lägg till parameter i renderSeats-metoden som väljer Stora eller Lilla salongen (just nu renderas bara Stora salongen (salonSeats[0]) ut)
-	async renderSeats(){
+  // Parametern hos renderSeats() ska antingen vara 0 för Stora salongen eller 1 för Lilla salongen (se salong.json)
+  // Just nu ges parametern värdet 0 när metoden anropas i view-setup.js
+  // Detta måste ändras senare då man istället ska anropa salon.renderSeats() beroende på vilken salong filmen man vill se går i
+	async renderSeats(salongNr){
 		let salonSeats = await JSON._load('salong.json');
 
 		let seatNr = 0;
 		// Första for-loopen skriver ut antalet rader i salongen (baserat på length)
-		for(let i = 0; i < salonSeats[0].seatsPerRow.length; i++){
+		for(let i = 0; i < salonSeats[salongNr].seatsPerRow.length; i++){
 			let row = $('<div>');
 			// Andra for-loopen skriver ut sätena i respektive rad (adderar CSS-klassen 'seat')
-		  for(let j = salonSeats[0].seatsPerRow[i]; j > 0; j--){
+		  for(let j = salonSeats[salongNr].seatsPerRow[i]; j > 0; j--){
 		  	// Varje individuellt säte får en unik koordinat med attributen data-rownumber och data-seatnumber i sitt element
 		  	// Dessa kan inspekteras i DOM:et
 		  	seatNr++;

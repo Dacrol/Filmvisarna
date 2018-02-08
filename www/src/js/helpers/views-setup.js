@@ -63,7 +63,7 @@ export default function viewsSetup (app) {
     null,
     () => {
       let salon = new Salon();
-      salon.renderSeats();
+      salon.renderSeats(0);
     }
   );
   app.bindViewWithJSON(
