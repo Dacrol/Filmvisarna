@@ -4,7 +4,25 @@ class Salon extends App {
 	constructor(){
 		super();
 		// Vilka properties behöver Salon-klassen?
+    $(window).on('resize', () => this.scale());
+    this.scale();
 	}
+
+  scale(){
+    let salonContainerWidth = 1080;
+    let salonContainerHeight = 480;
+    
+    let w = $(window).width();
+    let h = $(window).height();
+    w -= 10 * 2;
+    h -= 10 * 2;
+
+    let wScale = w / salonContainerWidth; 
+    let hScale = h / salonContainerHeight;
+    let scaling = Math.min(wScale, hScale);
+    $('.salon-container').css('transform', `scale(${scaling})`).show();
+    $('.salon-container').width(salonContainerWidth * scaling).height(salonContainerHeight * scaling);
+  }
 
   // Parametern hos renderSeats() ska antingen vara 0 för Stora salongen eller 1 för Lilla salongen (se salong.json)
   // Just nu ges parametern värdet 0 när metoden anropas i view-setup.js
