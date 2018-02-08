@@ -15,8 +15,8 @@ class Salon extends App {
     
     let w = $(window).width();
     let h = $(window).height();
-    // w -= 10 * 2;
-    // h -= 10 * 2;
+    w -= 100 * 2;
+    h -= 50 * 2;
 
     let wScale = w / salonContainerWidth; // wScale = 1,1851851 
     let hScale = h / salonContainerHeight; // hScale = 1,2729166
@@ -24,7 +24,6 @@ class Salon extends App {
     $('.salon-container').css('transform', `scale(${scaling})`).show();
     $('.salon-wrapper').width(salonContainerWidth * scaling);
     $('.salon-wrapper').height(salonContainerHeight * scaling);
-    console.log("wrapper width :" + $('.salon-wrapper').width());
   }
 
   // Parametern hos renderSeats() ska antingen vara 0 för Stora salongen eller 1 för Lilla salongen (se salong.json)
