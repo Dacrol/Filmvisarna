@@ -2,55 +2,51 @@ import LogInHandler from './log-in-handler.class.js';
 const SHA256 = require('crypto-js/sha256');
 
 export default class User {
-  // constructor (id, password) {
-  //   // kolla om användarnamnet finns redan i listan
-  //   this.checkIfUserExists(id).then(userExists => {
-  //     if (!userExists) {
-  //       this.createUser(id, password);
-  //     }
-  //   });
-  // }
-
-  encrypt (password) {
-    password = SHA256(password);
-    return password;
-  }
-
-  async checkIfUserExists (id) {
-    let userNames = await JSON._load('users.json');
-    for (let user in userNames) {
-      if (user.id === id) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  async createUser (id, password) {
+  constructor (id, password) {
     this.id = id;
-    this.passWord = this.encrypt(password);
-
-    let user = {
-      id: this.id,
-      password: this.passWord
-    };
-    await JSON._load('users.json').then(users => {
-      users.push(user);
-      // @ts-ignore
-      JSON._save('users.json', users).then(() => {
-        console.log('hej', user);
-        // return user;
-      });
-    });
-    return user;
-    // skicka in det i json filen
+    this.password = password;
   }
-  static async createNewUser (id, passWord) {
-    const user = new User();
-    let exists = await user.checkIfUserExists(id);
 
-    return user.createUser(id, passWord);
+  set password (password) {
+    this.passwordHash = User.encrypt(password);
+  }
+
+  get password () {
+    return this.passwordHash;
+  }
+
+  async save () {
+    const users = await JSON._load('users.json');
+    users.push(this);
+    return JSON._save('users.json', users);
+  }
+
+  static async createAndSaveNewUser (id, password) {
+    let exists = await User.checkIfUserExists(id);
+    if (!exists) {
+      const user = new User(id, password);
+      await user.save();
+      return user;
+    } else {
+      throw new Error('Username taken');
+    }
+  }
+
+  static async checkIfUserExists (id, userNames = null) {
+    if (!userNames) {
+      userNames = await JSON._load('users.json');
+    }
+    if (Array.isArray(userNames)) {
+      return userNames.some((user) => user.id === id);
+    } else {
+      throw new Error('Not an array');
+    }
+  }
+
+  static encrypt (str) {
+    return SHA256(str);
   }
 }
 
+// @ts-ignore
 window.User = User;

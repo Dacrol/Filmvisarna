@@ -32,12 +32,12 @@ export default class LogInHandler extends Base {
 
   async logIn () {
     let userName = $('#email').val();
-    let passWord = $('#password').val();
+    let password = $('#password').val();
     // @ts-ignore
     this.allUserNames = await JSON._load('users.json');
     for (let user of this.allUserNames) {
       if (user.id === userName) {
-        if (user.password === passWord) {
+        if (user.password === password) {
           this.app.bindViewWithJSON(
             'mypage',
             '/mypage',
@@ -98,13 +98,18 @@ export default class LogInHandler extends Base {
 
   registerUser () {
     let userName = $('#email').val();
-    let passWord = $('#password').val();
-    let passWordMatch = $('#password-match').val();
+    let password = $('#password').val();
+    let passwordMatch = $('#password-match').val();
 
-    if (passWord === passWordMatch) {
-      User.createNewUser(userName, passWord).then(function (user) {
-        console.log(user);
-      });
+    if (password === passwordMatch) {
+      User.createAndSaveNewUser(userName, password)
+        .then((user) => {
+          console.log('User created:', user);
+        })
+        .catch((error) => {
+          console.log('Username taken');
+          console.log(error);
+        });
     }
   }
 
