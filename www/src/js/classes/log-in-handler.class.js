@@ -27,14 +27,12 @@ export default class LogInHandler extends Base {
             () => {
               let that = this;
               $('#sign-out').on('click', function (event) {
-                console.log('fewfewfewfwe');
                 event.preventDefault();
                 that.signOut();
               });
             }
           );
           sessionStorage.setItem('signed-in', JSON.stringify(user));
-          this.app.changePage('mypage');
           if (sessionStorage.getItem('signed-in')) {
             $('#sign-in')
               .parent()
@@ -42,6 +40,8 @@ export default class LogInHandler extends Base {
             $('ul.navbar-nav').append(
               '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
             );
+            $('#login-modal').modal('hide');
+            this.app.changePage('mypage');
           }
         }
       }
@@ -60,10 +60,10 @@ export default class LogInHandler extends Base {
       // @ts-ignore
       $('#login-modal').modal('toggle');
 
-      $('#sign-in-submit').on('click', event => {
+      /*  $('#sign-in-submit').on('click', event => {
         event.preventDefault();
         this.logIn();
-      });
+      }); */
       // $('#login-modal').keyup(e => {
       //   if (e.which === 13) {
       //     event.preventDefault();

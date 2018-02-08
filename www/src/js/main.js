@@ -46,8 +46,13 @@ if (!sessionStorage.getItem('signed-in')) {
       event.preventDefault();
       app.logInHandler.logIn();
     });
+    $('#login-modal').keyup(function (event) {
+      if (event.which === 13) {
+        event.preventDefault();
+        app.logInHandler.logIn();
+      }
+    });
   });
-
 }
 
 if (sessionStorage.getItem('signed-in')) {
@@ -65,7 +70,6 @@ if (sessionStorage.getItem('signed-in')) {
     'movies',
     null,
     () => {
-
       $('#sign-out').on('click', function (event) {
         event.preventDefault();
         app.logInHandler.signOut();
@@ -73,4 +77,3 @@ if (sessionStorage.getItem('signed-in')) {
     }
   );
 }
-
