@@ -1,5 +1,5 @@
 import Base from './base.class';
-const urlRegex = /(\W\w*)\W?(.*)/;
+const urlRegex = /(\W[^/]*)\/?(.*)/;
 class PopStateHandler extends Base {
   constructor () {
     super();
@@ -30,11 +30,17 @@ class PopStateHandler extends Base {
     });
   }
 
-  changePage () {
+  changePage (newUrl) {
+    if (newUrl && newUrl.length > 1) {
+      history.pushState(null, null, '/' + newUrl);
+    } else if (newUrl) {
+      history.pushState(null, null, newUrl);
+    }
     let url = location.pathname;
     let urlParts = urlRegex.exec(url);
+    // console.log(urlParts[1])
     $('header a').removeClass('active');
-    $(`header a[href="${url}"]`).addClass('active');
+    $(`header a[href="${urlParts[1]}"]`).addClass('active');
     let urlPart = urlParts[1];
     this.viewMethods[urlPart]();
     this.addEventHandler();

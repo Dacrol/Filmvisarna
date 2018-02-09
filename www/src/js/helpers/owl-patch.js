@@ -18,7 +18,6 @@ export default function patchOwlCarousel (additionalParams) {
       .children()
       .first()
       .prop('src');
-    console.log(src);
     $('.owl-video-frame')
       .children()
       .first()

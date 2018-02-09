@@ -1,10 +1,14 @@
 // eslint-disable-next-line
 import Renderer from '../classes/renderer-base.class';
 import Salon from '../classes/salon.class';
+
+/**
+ * @export
+ * @param {Renderer} app
+ */
 export default function viewsSetup (app) {
   // The first argument can be null if the selector already has the class pop
   app.bindViewWithJSON(
-    'a#pills-home',
     'home',
     '/',
     '/json/movie-data.json',
@@ -16,7 +20,7 @@ export default function viewsSetup (app) {
         loop: true,
         video: true,
         nav: true,
-        lazyLoad: true,
+        lazyLoad: false,
         autoplay: true,
         autoplayHoverPause: true,
         navText: ['<', '>'],
@@ -34,47 +38,43 @@ export default function viewsSetup (app) {
             items: 1,
             nav: true
           }
+        },
+        onPlayVideo: function (event) {
+          $('.white-space').addClass('h-0');
+          $('.poster').hide('puff', {percent: 125}, 400);
+        },
+        onStopVideo: function (event) {
+          $('.white-space').removeClass('h-0');
+          $('.poster').show('puff', {percent: 145}, 450);
         }
       });
+      // TODO: trigger stopVideo on the end of youtubes
     }
   );
-  app.bindView('a#pills-current', 'aktuellfilmer', '/current', {});
+  app.bindView('aktuellfilmer', '/current');
   app.bindViewWithJSON(
-    'a#pills-current',
-    'mypage',
-    '/mypage',
-    '/json/movie-data.json',
-    'movies'
-  );
-  app.bindViewWithJSON(
-    'a#pills-salonger',
     'salonger',
     '/salons',
     '/json/salong.json',
-    ['salong1', 'salong2'],
-    'name'
+    'salons'
   );
   app.bindViewWithJSON(
-    'a#pills-salon-template',
     'salon-template',
     '/salontemplate',
     '/json/salong.json',
     'salons',
-    null,
     () => {
       let salon = new Salon();
       salon.renderSeats(0);
     }
   );
   app.bindViewWithJSON(
-    null,
     'posterfilm',
     '/film',
     '/json/movie-data.json',
     'movies'
   );
   app.bindView(
-    null,
     'screenings',
     '/visningar',
     /** @param {Renderer} Renderer */ async (Renderer, pathParams) => {
