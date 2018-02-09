@@ -56,8 +56,11 @@ export default function viewsSetup (app) {
     () => {
       let salon = new Salon();
       salon.renderSeats(0);
-      $('#booking').on('click', function () {
-
+      $('.booking').on('click', function () {
+        if (sessionStorage.getItem('signed-in')) {
+          let user = sessionStorage.getItem('signed-in');
+          console.log(user);
+        }
       });
     }
   );

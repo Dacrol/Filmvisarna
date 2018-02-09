@@ -11,6 +11,7 @@ class Booking extends Base {
   // visa ut priset
 
   // vilken film
+  // skapa en booknings json fil
 
   async screenings (index) {
     let screenings = await JSON._load('screenings.json');

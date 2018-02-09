@@ -21,6 +21,12 @@ export default class User {
     return JSON._save('users.json', users);
   }
 
+  getBookings () {
+    //ladda in booknongar från json o kolla om man finns med
+  }
+
+
+
   static async createAndSaveNewUser (id, password) {
     let exists = await User.checkIfUserExists(id);
     if (!exists) {

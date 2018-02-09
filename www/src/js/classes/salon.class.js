@@ -11,7 +11,7 @@ class Salon extends Base {
       let saloonHeight = $('.salon-wrapper').outerHeight();
       console.log(saloonHeight);
 
-      $('button#booking').css('margin-top', saloonHeight + 20);
+      $('button.booking').css('margin-top', saloonHeight + 20);
     }).trigger('resize');
   }
 
