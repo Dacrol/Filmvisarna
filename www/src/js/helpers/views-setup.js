@@ -59,12 +59,10 @@ export default function viewsSetup (app) {
     'salons'
   );
   app.bindViewWithJSON(
-    'a#pills-salon-template',
     'salon-template',
     '/salontemplate',
     '/json/salong.json',
     'salons',
-    null,
     () => {
       let salon = new Salon();
       salon.renderSeats(0);
