@@ -87,19 +87,7 @@ export default class LogInHandler extends Base {
     $('#sign-in').on('click', (event) => {
       // @ts-ignore
       $('#login-modal').modal('toggle');
-
-      /*  $('#sign-in-submit').on('click', event => {
-        event.preventDefault();
-        this.logIn();
-      }); */
-      // $('#login-modal').keyup(e => {
-      //   if (e.which === 13) {
-      //     event.preventDefault();
-      //     this.app.logInHandler.logIn();
-      //   }
-      // });
     });
-
     this.app.changePage('/');
   }
 
@@ -111,11 +99,13 @@ export default class LogInHandler extends Base {
     if (password === passwordMatch) {
       User.createAndSaveNewUser(userName, password)
         .then((user) => {
-          console.log('User created:', user);
+          // console.log('User created:', user);
+          this.confirmLogIn(user);
         })
-        .catch((error) => {
+        .catch(() => {
           console.log('Username taken');
-          console.log(error);
+          $('#email').addClass(' is-invalid')
+          // console.log(error);
         });
     }
   }
