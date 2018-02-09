@@ -99,6 +99,39 @@ class Salon extends Base {
       $(this).addClass('selected');
     });
   }
+
+  /**
+   * Gets adjacent seats
+   *
+   * @param {number} start the seat number to start from
+   * @param {number} amount total amount of desired seats
+   * @param {Array.<number>} seatsPerRow array with seats per row
+   * @param {number} row current row. 1-indexed.
+   * @returns {Array.<number>} selected seats
+   * @memberof Salon
+   */
+  getAdjacent (start, amount, seatsPerRow, row) {
+    let seatNumbers = [];
+    row -= 1;
+    const max = seatsPerRow.reduce((acc, seats, index) => {
+      return index <= row ? acc + seats : acc;
+    });
+    const min = max - seatsPerRow[row];
+    for (let count = 0; count < amount * 2; count++) {
+      let offset = count % 2 !== 0 ? (count + 1) / 2 : -(count / 2);
+      let seat = start + offset;
+      if (!(seat > max || seat < min)) {
+        seatNumbers.push(seat);
+        if (seatNumbers.length === amount) {
+          break;
+        }
+      }
+    }
+    seatNumbers.sort((a, b) => {
+      return a - b;
+    });
+    return seatNumbers;
+  }
 }
 
 export default Salon;
