@@ -24,28 +24,27 @@
     <p class="text-left pr-5 mb-3">{{:movies[pathParams].plot_sv}}</p>
     <div>
       <span>
-        <span class="h5">TMdb Betyg</span>: {{:movies[pathParams].vote_average}}</span>
+        <span class="h5">TMdb Betyg</span>2050</span>
     </div>
     <div>
       <span>
-        <span class="h5">Director</span>: {{:movies[pathParams].credits.crew[0].name}}</span>
+        <span class="h5">Director</span>Lorem ipsum dolor sit amet, tincidunt dolor. </span>
     </div>
     <div>
       <span>
-        <span class="h5">Actors</span>: {{:movies[pathParams].credits.cast[0].name}}, {{:movies[pathParams].credits.cast[1].name}}, {{:movies[pathParams].credits.cast[2].name}}</span>
+        <span class="h5">Actors</span>Lorem ipsum dolor sit amet, tincidunt dolor.</span>
     </div>
     <div>
       <span>
-        <span class="h5">Release Date</span></span>
+        <span class="h5">Release Date</span>Lorem ipsum dolor sit amet, tincidunt dolor.</span>
     </div>
     <div>
       <span>
-        <span class="h5">Length</span>: {{:movies[pathParams].runtime}} min</span>
+        <span class="h5">Length</span> 78 min</span>
     </div>
     <div>
       <span>
-        <span class="h5">Genres</span>: {{for movies[pathParams].genres ~movie=movies[pathParams]}} {{:name}}{{if ~movie.genres[#index+1]}},
-        {{/if}} {{/for}}
+        <span class="h5">Genres</span>Action
       </span>
     </div>
   </div>
