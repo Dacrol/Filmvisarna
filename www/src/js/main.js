@@ -8,12 +8,19 @@ import patchOwlCarousel from './helpers/owl-patch';
 
 // @ts-ignore
 require('jsrender')(jQuery);
-// jQuery.views.settings.allowCode(true);
 
 // @ts-ignore
 window.$ = window.jQuery = jQuery;
 // @ts-ignore
 require('../../../node_modules/owl.carousel/dist/owl.carousel');
+// @ts-ignore
+require('jquery-ui/ui/effect');
+// @ts-ignore
+require('jquery-ui/ui/effects/effect-scale');
+// @ts-ignore
+require('jquery-ui/ui/effects/effect-size');
+// @ts-ignore
+require('jquery-ui/ui/effects/effect-puff');
 
 // @ts-ignore
 window.$.owlCarousel = window.$.fn.owlCarousel;
@@ -22,7 +29,49 @@ $.owlCarousel = $.fn.owlCarousel;
 
 let app = new App();
 
+// @ts-ignore
+window.app = app;
+
 viewsSetup(app);
 
 patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');
+if (!sessionStorage.getItem('signed-in')) {
+  $('#sign-in').click(function (event) {
+    event.preventDefault();
 
+    // @ts-ignore
+    $('#login-modal').modal('toggle');
+
+    $('#sign-in-submit').on('click', function (event) {
+      event.preventDefault();
+      app.logInHandler.logIn();
+    });
+    $('#login-modal').keyup(function (event) {
+      if (event.which === 13) {
+        event.preventDefault();
+        app.logInHandler.logIn();
+      }
+    });
+  });
+}
+
+if (sessionStorage.getItem('signed-in')) {
+  $('#sign-in')
+    .parent()
+    .remove();
+  $('ul.navbar-nav').append(
+    '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
+  );
+  app.bindViewWithJSON(
+    'mypage',
+    '/mypage',
+    '/json/movie-data.json',
+    'movies',
+    () => {
+      $('#sign-out').on('click', function (event) {
+        event.preventDefault();
+        app.logInHandler.signOut();
+      });
+    }
+  );
+}
