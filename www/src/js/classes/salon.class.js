@@ -86,6 +86,8 @@ class Salon extends Base {
     });
   }
 
+    //kunna returnera hur många platser i salongen som en visning har
+
   selectSeat (seats = null) {
     $('.seat').on('click', function () {
       $('.salon-container div').removeClass('selected');

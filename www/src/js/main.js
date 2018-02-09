@@ -76,19 +76,4 @@ if (sessionStorage.getItem('signed-in')) {
   );
 }
 
-// Function som randomerar ett 10 tecken långt nummer/tecken.
-window.randomBookNumber = randomBookNumber; //  Gör funktionen global
-
-function randomBookNumber () {
-  let text = '';
-  let randomCode =
-    '0123456789';
-
-  for (let i = 0; i < 10; i++) {
-    text += randomCode.charAt(Math.floor(Math.random() * randomCode.length));
-  }
-  return text;
-}
-console.log(randomBookNumber());
-
 
