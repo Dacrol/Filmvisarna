@@ -1,6 +1,6 @@
 body {
   overflow-y: scroll;
-  background-color: $body-color;
+  background-color: black;
 }
 
 .logo {
@@ -8,12 +8,13 @@ body {
   height: 75px;
 }
 
-// .nav-item {
-//    $navbar-light-color:red;
-// }
-
 .nav-item {
   font-size: 15px;
+ // background-color: #d9534f;
+}
+
+header {
+  background-color: #d9534f
 }
 
 .card {
