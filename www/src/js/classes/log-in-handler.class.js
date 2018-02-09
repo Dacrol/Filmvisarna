@@ -32,12 +32,13 @@ export default class LogInHandler extends Base {
 
   async logIn () {
     let userName = $('#email').val();
-    let password = $('#password').val();
+    // @ts-ignore
+    let password = User.encrypt($('#password').val()).words.join();
     // @ts-ignore
     this.allUserNames = await JSON._load('users.json');
     for (let user of this.allUserNames) {
       if (user.id === userName) {
-        if (user.password === password) {
+        if (user.password.words.join() === password) {
           this.app.bindViewWithJSON(
             'mypage',
             '/mypage',
