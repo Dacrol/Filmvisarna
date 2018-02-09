@@ -1,9 +1,9 @@
 import Base from './base.class.js';
 
 class Salon extends Base {
-	constructor(){
-		super();
-		// Vilka properties behöver Salon-klassen?
+  constructor () {
+    super();
+    // Vilka properties behöver Salon-klassen?
 
     $(window).on('resize', () => this.scale());
     this.scale();
@@ -32,6 +32,7 @@ class Salon extends Base {
   // Just nu ges parametern värdet 0 när metoden anropas i view-setup.js
   // Detta måste ändras senare då man istället ska anropa salon.renderSeats() beroende på vilken salong filmen man vill se går i
   async renderSeats (salongNr) {
+    // @ts-ignore
     let salonSeats = await JSON._load('salong.json');
 
     let seatNr = 0;
@@ -51,18 +52,32 @@ class Salon extends Base {
       }
       $('.salon-container').append(row);
     }
-    this.hoverSeat(this.amountOfSeats());
-    this.selectSeat(this.amountOfSeats());
+
+    this.amountOfSeats();
+
+    this.hoverSeat(
+      $('#number-of-visitors')
+        .val()
+        .toString()
+    );
+    this.selectSeat();
   }
 
   amountOfSeats () {
+    let that = this;
     $('#number-of-visitors').on('change', function () {
-      return $(this).val();
+      let seats = $(this)
+        .val()
+        .toString();
+      that.hoverSeat(seats);
     });
   }
 
-  hoverSeat (seats) {
+  hoverSeat (seats = '') {
+    // console.log(seats);
+    $('.seat').off('mouseover mouseleave');
     $('.seat').on('mouseover', function () {
+
       $(this).addClass('hovered');
     });
 
@@ -71,7 +86,7 @@ class Salon extends Base {
     });
   }
 
-  selectSeat (seats) {
+  selectSeat (seats = null) {
     $('.seat').on('click', function () {
       $('.salon-container div').removeClass('selected');
       $(this).addClass('selected');

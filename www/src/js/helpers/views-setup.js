@@ -8,56 +8,46 @@ import Salon from '../classes/salon.class';
  */
 export default function viewsSetup (app) {
   // The first argument can be null if the selector already has the class pop
-  app.bindViewWithJSON(
-    'home',
-    '/',
-    '/json/movie-data.json',
-    'movies',
-    () => {
-      $('.owl-carousel').owlCarousel({
-        items: 1,
-        merge: false,
-        loop: true,
-        video: true,
-        nav: true,
-        lazyLoad: false,
-        autoplay: true,
-        autoplayHoverPause: true,
-        navText: ['<', '>'],
-        dots: false,
-        responsive: {
-          0: {
-            items: 1,
-            nav: false
-          },
-          768: {
-            items: 1,
-            nav: false
-          },
-          1000: {
-            items: 1,
-            nav: true
-          }
+  app.bindViewWithJSON('home', '/', '/json/movie-data.json', 'movies', () => {
+    // @ts-ignore
+    $('.owl-carousel').owlCarousel({
+      items: 1,
+      merge: false,
+      loop: true,
+      video: true,
+      nav: true,
+      lazyLoad: false,
+      autoplay: true,
+      autoplayHoverPause: true,
+      navText: ['<', '>'],
+      dots: false,
+      responsive: {
+        0: {
+          items: 1,
+          nav: false
         },
-        onPlayVideo: function (event) {
-          $('.white-space').addClass('h-0');
-          $('.poster').hide('puff', {percent: 125}, 400);
+        768: {
+          items: 1,
+          nav: false
         },
-        onStopVideo: function (event) {
-          $('.white-space').removeClass('h-0');
-          $('.poster').show('puff', {percent: 145}, 450);
+        1000: {
+          items: 1,
+          nav: true
         }
-      });
-      // TODO: trigger stopVideo on the end of youtubes
-    }
-  );
+      },
+      onPlayVideo: function (event) {
+        $('.white-space').addClass('h-0');
+        $('.poster').hide('puff', { percent: 125 }, 400);
+      },
+      onStopVideo: function (event) {
+        $('.white-space').removeClass('h-0');
+        $('.poster').show('puff', { percent: 145 }, 450);
+      }
+    });
+    // TODO: trigger stopVideo on the end of youtubes
+  });
   app.bindView('aktuellfilmer', '/current');
-  app.bindViewWithJSON(
-    'salonger',
-    '/salons',
-    '/json/salong.json',
-    'salons'
-  );
+  app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
   app.bindViewWithJSON(
     'salon-template',
     '/salontemplate',
