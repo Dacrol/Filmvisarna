@@ -77,6 +77,12 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
+"@types/bootstrap@^3.3.37":
+  version "3.3.37"
+  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-3.3.37.tgz#35a83106cb1131972977cf075a8d95cc05e895b0"
+  dependencies:
+    "@types/jquery" "*"
+
 "@types/jquery@*":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.0.tgz#6316ac20a1a13c5d521a2dc661befc7184f73f5b"
