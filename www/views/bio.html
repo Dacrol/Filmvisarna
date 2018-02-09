@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-4">
+
+
+    <!-- Wrapper för affisch och kortfattad information om filmen -->
+    <div class="film-info" style="min-height: 450px;">
+      <!-- inline-stylingen är temporär -->
+      <!-- Filmens affisch -->
+
+      <div class="container mt-5 mb-5">
+        <iframe class="mx-auto mt-0 mb-3" width="1110" height="550" src="https://www.youtube.com/embed/{{:movies[pathParams].videos.results[0].key}}"
+          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+
+      <figure class="figure d-inline-block float-left pr-5" style="height: 500px; width: 300px; display:">
+        <img src="https://image.tmdb.org/t/p/original{{:movies[pathParams].images.posters[0].file_path}}" class="figure-img img-fluid rounded"
+          alt="A generic square placeholder image with rounded corners in a figure.">
+      </figure>
+    </div>
+  </div>
+  <div class="col-4 text-left">
+    <!-- Kortfattad text om filmen -->
+    <h1 class="pr-5">{{:movies[pathParams].title_sv}}</h1>
+    <p class="text-left pr-5 mb-3">{{:movies[pathParams].plot_sv}}</p>
+    <div>
+      <span>
+        <span class="h5">TMdb Betyg</span>: {{:movies[pathParams].vote_average}}</span>
+    </div>
+    <div>
+      <span>
+        <span class="h5">Director</span>: {{:movies[pathParams].credits.crew[0].name}}</span>
+    </div>
+    <div>
+      <span>
+        <span class="h5">Actors</span>: {{:movies[pathParams].credits.cast[0].name}}, {{:movies[pathParams].credits.cast[1].name}}, {{:movies[pathParams].credits.cast[2].name}}</span>
+    </div>
+    <div>
+      <span>
+        <span class="h5">Release Date</span></span>
+    </div>
+    <div>
+      <span>
+        <span class="h5">Length</span>: {{:movies[pathParams].runtime}} min</span>
+    </div>
+    <div>
+      <span>
+        <span class="h5">Genres</span>: {{for movies[pathParams].genres ~movie=movies[pathParams]}} {{:name}}{{if ~movie.genres[#index+1]}},
+        {{/if}} {{/for}}
+      </span>
+    </div>
+  </div>
+  
+</div>
