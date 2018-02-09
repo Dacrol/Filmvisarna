@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "gulp default && node app.js",
-    "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, !**/src/*\"",
+    "sync": "node --inspect app.js | browser-sync start --proxy localhost:3000 --no-online --no-reload-on-restart  --no-open --files \"www, !**/src/*, !**/*.map, !**/*.json\"",
     "eslint": "eslint **/*.js",
     "htmlhint": "htmlhint --config .htmlhintrc www/**/*.{htm,html}",
     "stylelint": "stylelint www/src/**/*.scss",
@@ -20,6 +20,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0-beta.3",
     "compression": "^1.7.1",
+    "crypto-js": "^3.1.9-1",
     "express": "^4.16.2",
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
