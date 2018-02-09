@@ -52,6 +52,12 @@ export default function viewsSetup (app) {
   );
   app.bindViewWithJSON('aktuellfilmer', '/current', '/json/movie-data.json', 'movies');
   app.bindViewWithJSON(
+  'bio', 
+  '/bios', 
+  '/json/movie-data.json', 
+  'movies'
+  );
+  app.bindViewWithJSON(
     'salonger',
     '/salons',
     '/json/salong.json',
