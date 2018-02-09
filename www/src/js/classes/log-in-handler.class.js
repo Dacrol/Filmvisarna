@@ -39,34 +39,40 @@ export default class LogInHandler extends Base {
     for (let user of this.allUserNames) {
       if (user.id === userName) {
         if (user.password.words.join() === password) {
-          this.app.bindViewWithJSON(
-            'mypage',
-            '/mypage',
-            '/json/movie-data.json',
-            'movies',
-            () => {
-              let that = this;
-              $('#sign-out').on('click', function (event) {
-                event.preventDefault();
-                that.signOut();
-              });
-            },
-            '#sign-in-submit'
-          );
-          sessionStorage.setItem('signed-in', JSON.stringify(user));
-          if (sessionStorage.getItem('signed-in')) {
-            $('#sign-in')
-              .parent()
-              .remove();
-            $('ul.navbar-nav').append(
-              '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
-            );
-            $('#login-modal').modal('hide');
-            this.app.changePage('mypage');
-          }
-          return user;
+          this.confirmLogIn(user);
         }
       }
+    }
+  }
+  confirmLogIn (user) {
+    this.app.bindViewWithJSON(
+      'mypage',
+      '/mypage',
+      '/json/movie-data.json',
+      'movies',
+      () => {
+        let that = this;
+        $('#sign-out').on('click', function (event) {
+          event.preventDefault();
+          that.signOut();
+        });
+      },
+      '#sign-in-submit'
+    );
+    sessionStorage.setItem('signed-in', JSON.stringify(user));
+    this.checkIfLoggedIn();
+    $('#login-modal').modal('hide');
+    this.app.changePage('mypage');
+  }
+
+  checkIfLoggedIn () {
+    if (sessionStorage.getItem('signed-in')) {
+      $('#sign-in')
+        .parent()
+        .remove();
+      $('ul.navbar-nav').append(
+        '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
+      );
     }
   }
   signOut () {
