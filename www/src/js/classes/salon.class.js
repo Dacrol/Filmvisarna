@@ -1,6 +1,6 @@
-import App from './app.class.js';
+import Base from './base.class.js';
 
-class Salon extends App {
+class Salon extends Base {
 	constructor(){
 		super();
 		// Vilka properties behöver Salon-klassen?
