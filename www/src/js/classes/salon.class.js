@@ -7,6 +7,12 @@ class Salon extends Base {
 
     $(window).on('resize', () => this.scale());
     this.scale();
+    $(window).on('resize', function () {
+      let saloonHeight = $('.salon-wrapper').outerHeight();
+      console.log(saloonHeight);
+
+      $('button#booking').css('margin-top', saloonHeight + 20);
+    }).trigger('resize');
   }
 
   scale () {
@@ -77,7 +83,6 @@ class Salon extends Base {
     // console.log(seats);
     $('.seat').off('mouseover mouseleave');
     $('.seat').on('mouseover', function () {
-
       $(this).addClass('hovered');
     });
 
@@ -86,7 +91,7 @@ class Salon extends Base {
     });
   }
 
-    //kunna returnera hur många platser i salongen som en visning har
+  // kunna returnera hur många platser i salongen som en visning har
 
   selectSeat (seats = null) {
     $('.seat').on('click', function () {

@@ -4,6 +4,8 @@ class Booking extends Base {
 
   // visa ut salongen du valt
 
+  //vilken rad o number kanske via att ta emot salongobjektet
+
   // visa ut tiden
 
   // visa ut priset
