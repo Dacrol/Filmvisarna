@@ -21,6 +21,9 @@ body {
 
 .salon-wrapper {
   overflow: hidden;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .salon-container {
