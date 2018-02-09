@@ -7,21 +7,23 @@ class Salon extends Base {
 
     $(window).on('resize', () => this.scale());
     this.scale();
-	}
+  }
 
-  scale(){
+  scale () {
     let salonContainerWidth = 1080;
     let salonContainerHeight = 480;
-    
+
     let w = $(window).width();
     let h = $(window).height();
     w -= 100 * 2;
     h -= 50 * 2;
 
-    let wScale = w / salonContainerWidth; // wScale = 1,1851851 
+    let wScale = w / salonContainerWidth; // wScale = 1,1851851
     let hScale = h / salonContainerHeight; // hScale = 1,2729166
     let scaling = Math.min(wScale, hScale); // scaling = 1,185
-    $('.salon-container').css('transform', `scale(${scaling})`).show();
+    $('.salon-container')
+      .css('transform', `scale(${scaling})`)
+      .show();
     $('.salon-wrapper').width(salonContainerWidth * scaling);
     $('.salon-wrapper').height(salonContainerHeight * scaling);
   }
@@ -29,43 +31,52 @@ class Salon extends Base {
   // Parametern hos renderSeats() ska antingen vara 0 för Stora salongen eller 1 för Lilla salongen (se salong.json)
   // Just nu ges parametern värdet 0 när metoden anropas i view-setup.js
   // Detta måste ändras senare då man istället ska anropa salon.renderSeats() beroende på vilken salong filmen man vill se går i
-	async renderSeats(salongNr){
-		let salonSeats = await JSON._load('salong.json');
+  async renderSeats (salongNr) {
+    let salonSeats = await JSON._load('salong.json');
 
-		let seatNr = 0;
-		// Första for-loopen skriver ut antalet rader i salongen (baserat på length)
-		for(let i = 0; i < salonSeats[salongNr].seatsPerRow.length; i++){
-			let row = $('<div>');
-			// Andra for-loopen skriver ut sätena i respektive rad (adderar CSS-klassen 'seat')
-		  for(let j = salonSeats[salongNr].seatsPerRow[i]; j > 0; j--){
-		  	// Varje individuellt säte får en unik koordinat med attributen data-rownumber och data-seatnumber i sitt element
-		  	// Dessa kan inspekteras i DOM:et
-		  	seatNr++;
-				let col = $('<div>').addClass('seat').attr('data-rownumber', (i + 1)).attr('data-seatnumber', seatNr);
-				$(row).prepend(col);
-				}
-			$('.salon-container').append(row);
-		}
-		this.hoverSeat();
-		this.selectSeat();
-	}
+    let seatNr = 0;
+    // Första for-loopen skriver ut antalet rader i salongen (baserat på length)
+    for (let i = 0; i < salonSeats[salongNr].seatsPerRow.length; i++) {
+      let row = $('<div>');
+      // Andra for-loopen skriver ut sätena i respektive rad (adderar CSS-klassen 'seat')
+      for (let j = salonSeats[salongNr].seatsPerRow[i]; j > 0; j--) {
+        // Varje individuellt säte får en unik koordinat med attributen data-rownumber och data-seatnumber i sitt element
+        // Dessa kan inspekteras i DOM:et
+        seatNr++;
+        let col = $('<div>')
+          .addClass('seat')
+          .attr('data-rownumber', i + 1)
+          .attr('data-seatnumber', seatNr);
+        $(row).prepend(col);
+      }
+      $('.salon-container').append(row);
+    }
+    this.hoverSeat(this.amountOfSeats());
+    this.selectSeat(this.amountOfSeats());
+  }
 
-	hoverSeat(){
-		$('.seat').on('mouseover', function(){
-			$(this).addClass('hovered');
-		});
+  amountOfSeats () {
+    $('#number-of-visitors').on('change', function () {
+      return $(this).val();
+    });
+  }
 
-		$('.seat').on('mouseleave', function(){
-			$(this).removeClass('hovered');
-		});
-	}
+  hoverSeat (seats) {
+    $('.seat').on('mouseover', function () {
+      $(this).addClass('hovered');
+    });
 
-	selectSeat(){
-		$('.seat').on('click', function(){
-			$('.salon-container div').removeClass('selected');
-			$(this).addClass('selected');
-		});
-	}
+    $('.seat').on('mouseleave', function () {
+      $(this).removeClass('hovered');
+    });
+  }
+
+  selectSeat (seats) {
+    $('.seat').on('click', function () {
+      $('.salon-container div').removeClass('selected');
+      $(this).addClass('selected');
+    });
+  }
 }
 
 export default Salon;
