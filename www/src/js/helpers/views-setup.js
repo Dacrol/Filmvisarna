@@ -56,6 +56,9 @@ export default function viewsSetup (app) {
     () => {
       let salon = new Salon();
       salon.renderSeats(0);
+      $('#booking').on('click', function () {
+
+      });
     }
   );
   app.bindViewWithJSON(
