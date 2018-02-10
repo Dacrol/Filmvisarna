@@ -69,54 +69,53 @@ class Salon extends Base {
       $('.salon-container').append(row);
     }
 
-    this.amountOfSeats();
-    this.selectSeat();
+    this.setAmountOfSeats();
   }
 
-  amountOfSeats () {
+  setAmountOfSeats () {
     let that = this;
     $('#number-of-visitors')
       .on('change', function () {
         let seats = $(this).val();
-        if (typeof seats === 'string') that.hoverSeat(parseInt(seats));
+        if (typeof seats === 'string') that.refreshSeatEvents(parseInt(seats));
       })
       .trigger('change');
   }
 
-  hoverSeat (seats = 1) {
+  refreshSeatEvents (seats = 1) {
     let that = this;
     // console.log(seats);
     $('.seat').off('mouseenter mouseleave');
-    $('.seat').hover(
-      function () {
-        let row = $(this).attr('data-rownumber');
-        let seat = $(this).attr('data-seatnumber');
-        // console.log(row, seat);
-        let seatNumbers = that.getAdjacent(+seat, seats, that.salonSeats, +row);
-        // console.log(seatNumbers);
-        $(this)
-          .siblings()
-          .addBack()
-          .filter(function () {
-            let seat = $(this).attr('data-seatnumber');
-            return seatNumbers.includes(+seat);
-          })
-          .addClass('hovered');
-      },
-      function () {
-        $('.seat').removeClass('hovered');
-      }
-    );
+
+    $('.seat').each(function () {
+      let row = $(this).attr('data-rownumber');
+      let seat = $(this).attr('data-seatnumber');
+      // console.log(row, seat);
+      let seatNumbers = that.getAdjacent(+seat, seats, that.salonSeats, +row);
+      let targetSeats = $(this)
+        .siblings()
+        .addBack()
+        .filter(function () {
+          let seat = $(this).attr('data-seatnumber');
+          return seatNumbers.includes(+seat);
+        });
+      $(this)
+        .hover(
+          function () {
+            targetSeats.addClass('hovered');
+          },
+          function () {
+            targetSeats.removeClass('hovered');
+          }
+        )
+        .click(function () {
+          $('.seat').removeClass('selected');
+          targetSeats.addClass('selected');
+        });
+    });
   }
 
   // kunna returnera hur många platser i salongen som en visning har
-
-  selectSeat (seats = null) {
-    $('.seat').on('click', function () {
-      $('.salon-container div').removeClass('selected');
-      $(this).addClass('selected');
-    });
-  }
 
   /**
    * Gets adjacent seats
