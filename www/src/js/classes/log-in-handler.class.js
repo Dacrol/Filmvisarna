@@ -1,11 +1,10 @@
 import Base from './base.class';
-import App from './app.class.js';
 import User from './user.class.js';
 
 export default class LogInHandler extends Base {
-  constructor (App) {
+  constructor (app) {
     super();
-    this.app = App;
+    this.app = app;
     this.signInButton = $('#sign-in');
     this.render('body', '1');
     this.setupEventHandlers();
