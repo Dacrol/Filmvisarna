@@ -103,39 +103,47 @@ export default class LogInHandler extends Base {
         })
         .catch(() => {
           console.log('Username taken');
-          $('#email').addClass(' is-invalid')
+          $('#email').addClass(' is-invalid');
           // console.log(error);
         });
     }
   }
 
   template1 () {
-    return `
-      <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <form id="test" action="post">
-                <div class="form-group">
-                  <label for="email">E-post</label>
-                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                  <label for="password">Lösenord</label>
-                  <input type="password" class="form-control" id="password" placeholder="Password">
-                </div>
-                <div class="form-group">
-                  <label for="password-match">Lösenord</label>
-                  <input type="password" class="form-control" id="password-match" placeholder="Password">
-                </div>
-                <a id="sign-in-submit" href="#" role="button" class="btn btn-primary">Submit</a>
-                <a id="register-user" href="#" role="button" class="btn btn-primary">Registrera dig</a>
-                <a id="register-user-submit" href="#" role="button" class="btn btn-primary">Submit reg</a>
-              </form>
-            </div>
+    return `<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <ul class="nav nav-tabs nav-fill">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#login">Logga in</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#register">Registrera dig</a>
+        </li>
+      </ul>
+
+      <div class="modal-body">
+        <form id="test" action="post">
+          <div class="form-group">
+            <label for="email">E-post</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
           </div>
-        </div>
+          <div class="form-group">
+            <label for="password">Lösenord</label>
+            <input type="password" class="form-control" id="password" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="password-match">Lösenord</label>
+            <input type="password" class="form-control" id="password-match" placeholder="Password">
+          </div>
+          <a id="sign-in-submit" href="#" role="button" class="btn btn-primary">Submit</a>
+          <a id="register-user" href="#" role="button" class="btn btn-primary">Registrera dig</a>
+          <a id="register-user-submit" href="#" role="button" class="btn btn-primary">Submit reg</a>
+        </form>
       </div>
-    `;
+    </div>
+  </div>
+</div>`;
   }
 }
