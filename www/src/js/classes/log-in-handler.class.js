@@ -44,20 +44,6 @@ export default class LogInHandler extends Base {
     }
   }
   confirmLogIn (user) {
-    this.app.bindViewWithJSON(
-      'mypage',
-      '/mypage',
-      '/json/movie-data.json',
-      'movies',
-      () => {
-        let that = this;
-        $('#sign-out').on('click', function (event) {
-          event.preventDefault();
-          that.signOut();
-        });
-      },
-      '#sign-in-submit'
-    );
     sessionStorage.setItem('signed-in', JSON.stringify(user));
     this.checkIfLoggedIn();
     $('#login-modal').modal('hide');
@@ -70,7 +56,7 @@ export default class LogInHandler extends Base {
         .parent()
         .remove();
       $('ul.navbar-nav').append(
-        '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
+        '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
       );
     }
   }
@@ -79,7 +65,6 @@ export default class LogInHandler extends Base {
     $('#sign-in')
       .parent()
       .remove();
-
     $('ul.navbar-nav').append(
       '<li class="nav-item"><a class="nav-link" id="sign-in" data-toggle="pill" href="/mypage" role="tab" data-target="#login-modal" aria-controls="pills-mypage" aria-selected="false">Logga in</a></li>'
     );

@@ -6,7 +6,21 @@ import Renderer from '../classes/renderer-base.class';
  * @param {Renderer} app
  */
 export default function viewsSetup (app) {
-  // The first argument can be null if the selector already has the class pop
+
+  app.bindViewWithJSON(
+    'mypage',
+    '/mypage',
+    '/json/movie-data.json',
+    'movies',
+    () => {
+      $('#sign-out').on('click', function (event) {
+        event.preventDefault();
+        // @ts-ignore
+        app.logInHandler.signOut();
+      });
+    }
+  );
+
   app.bindViewWithJSON(
     'home',
     '/',
@@ -137,17 +151,3 @@ function stringToSlug (str) {
     .replace(/[\s\W-]+/g, '-');
 }
 
-// function pauseYT () {
-//   let iframe = $('.owl-item').find('iframe');
-
-//   let command = {
-//     event: 'command',
-//     func: 'pauseVideo'
-//   };
-
-//   iframe.each(function () {
-//     console.log(this, 'derr');
-//     console.log(this.contentWindow, 'derr');
-//     this.contentWindow.postMessage(JSON.stringify(command), '*');
-//   });
-// }
