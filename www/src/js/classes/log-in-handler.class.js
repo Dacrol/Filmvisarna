@@ -85,6 +85,7 @@ export default class LogInHandler extends Base {
         .then((user) => {
           // console.log('User created:', user);
           this.confirmLogIn(user);
+          $('#login-modal .tab-pane').toggleClass('show active');
         })
         .catch(() => {
           console.log('Username taken');
