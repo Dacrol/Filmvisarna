@@ -6,6 +6,7 @@ export default class LogInHandler extends Base {
     super();
     this.app = app;
     this.signInButton = $('#sign-in');
+    this.currentUser = null;
     this.render('body', '1');
     this.setupEventHandlers();
   }
@@ -45,6 +46,7 @@ export default class LogInHandler extends Base {
   }
   confirmLogIn (user) {
     sessionStorage.setItem('signed-in', JSON.stringify(user));
+    this.currentUser = user;
     this.checkIfLoggedIn();
     $('#login-modal').modal('hide');
     this.app.changePage('mypage');
