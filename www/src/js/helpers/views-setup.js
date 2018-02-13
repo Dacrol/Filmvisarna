@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import Renderer from '../classes/renderer-base.class';
 import Salon from '../classes/salon.class';
+import Booking from '../classes/booking.class';
 
 /**
  * @export
@@ -46,7 +47,12 @@ export default function viewsSetup (app) {
     });
     // TODO: trigger stopVideo on the end of youtubes
   });
-  app.bindView('aktuellfilmer', '/current');
+  app.bindViewWithJSON(
+    'aktuellfilmer',
+    '/current',
+    '/json/movie-data.json',
+    'movies'
+  );
   app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
   app.bindViewWithJSON(
     'salon-template',
@@ -64,11 +70,62 @@ export default function viewsSetup (app) {
       });
     }
   );
+  app.bindViewWithJSON('bio', '/bios', '/json/movie-data.json', 'movies');
+  app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
   app.bindViewWithJSON(
     'posterfilm',
     '/film',
     '/json/movie-data.json',
-    'movies'
+    'movies',
+    async data => {
+      let screenings = await JSON._load('screenings.json');
+      let movies = await JSON._load('movie-data.json');
+      let list = screenings.filter(screening => {
+        if (movies[data.pathParams].title_sv === screening.movie) {
+          return true;
+        }
+      });
+      // if there is more then 3 dates then change to today and tomorrow and last on date of the movie
+      list.forEach(screening => {
+        $('#up-coming-movies')
+          .append(
+            `<a class="dropdown-item pop" href="/salontemplate/${
+              screening.salon
+            }">${screening.date}</a>`
+          )
+          .children()
+          .last()
+          .on('click', function () {
+
+            // @ts-ignore
+            app.currentBooking = booking;
+          });
+      });
+
+      // $('#up-coming-movies').each(function (event) {
+      //   $(this).on('click', func;
+      // });
+
+      // app.bindViewWithJSON(
+      //   'salon-template',
+      //   '/salontemplate',
+      //   '/json/salong.json',
+      //   'salons',
+      //   () => {
+      //     let salon = new Salon();
+      //     salon.renderSeats(0);
+      //     $('.booking').on('click', () => {
+      //       if (sessionStorage.getItem('signed-in')) {
+      //         let user = sessionStorage.getItem('signed-in');
+      //         let booking = new Booking(1, 2, ['1,2,3,4'], 200);
+      //       } else {
+      //         $('#root').html('');
+      //         $('#root').append(`You have to sign in`);
+      //       }
+      //     });
+      //   }
+      // );
+    }
   );
   app.bindView(
     'screenings',
@@ -86,6 +143,9 @@ export default function viewsSetup (app) {
         return Object.assign(
           screening,
           {
+            movieId: data[0].findIndex(movie => {
+              return movie.title_sv === screening.movie;
+            }),
             movieData: data[0].filter(movie => {
               return movie.title_sv === screening.movie;
             })
