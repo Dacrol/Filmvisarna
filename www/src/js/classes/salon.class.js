@@ -24,7 +24,6 @@ class Salon extends Base {
 
     let w = $(window).width();
     let h = $(window).height();
-    w -= 100 * 2;
     h -= 50 * 2;
 
     let wScale = w / salonContainerWidth; // wScale = 1,1851851
