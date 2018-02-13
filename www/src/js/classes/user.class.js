@@ -1,4 +1,4 @@
-import LogInHandler from './log-in-handler.class.js';
+// import LogInHandler from './log-in-handler.class.js';
 const SHA256 = require('crypto-js/sha256');
 
 export default class User {

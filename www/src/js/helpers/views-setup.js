@@ -148,6 +148,9 @@ export default function viewsSetup (app) {
             }),
             movieData: data[0].filter(movie => {
               return movie.title_sv === screening.movie;
+            }),
+            movieData: data[0].filter((movie) => {
+              return movie.title_sv === screening.movie;
             })
           },
           {
@@ -204,17 +207,3 @@ function stringToSlug (str) {
     .replace(/[\s\W-]+/g, '-');
 }
 
-// function pauseYT () {
-//   let iframe = $('.owl-item').find('iframe');
-
-//   let command = {
-//     event: 'command',
-//     func: 'pauseVideo'
-//   };
-
-//   iframe.each(function () {
-//     console.log(this, 'derr');
-//     console.log(this.contentWindow, 'derr');
-//     this.contentWindow.postMessage(JSON.stringify(command), '*');
-//   });
-// }
