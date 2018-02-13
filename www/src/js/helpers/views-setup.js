@@ -21,7 +21,7 @@ export default function viewsSetup (app) {
       autoplay: true,
       autoplayHoverPause: true,
       navText: ['<', '>'],
-      dots: false,
+      dots: true,
       responsive: {
         0: {
           items: 1,
