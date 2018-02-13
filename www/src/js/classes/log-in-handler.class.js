@@ -1,5 +1,6 @@
 import Base from './base.class';
 import User from './user.class.js';
+const MD5 = require('crypto-js/md5');
 
 export default class LogInHandler extends Base {
   constructor (app) {
@@ -53,7 +54,8 @@ export default class LogInHandler extends Base {
   }
 
   checkIfLoggedIn () {
-    if (sessionStorage.getItem('signed-in')) {
+    let session = sessionStorage.getItem('signed-in')
+    if (session) {
       $('#sign-in')
         .parent()
         .remove();
