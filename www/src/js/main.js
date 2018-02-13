@@ -31,6 +31,7 @@ $.owlCarousel = $.fn.owlCarousel;
 
 
 let app = new App();
+app.initializePage();
 
 // @ts-ignore
 window.app = app;

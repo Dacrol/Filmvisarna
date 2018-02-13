@@ -6,6 +6,20 @@ class App extends Renderer {
   constructor () {
     super();
     this.logInHandler = new LogInHandler(this);
+    this.currentUser = null;
+  }
+
+  /**
+   * Loads currentUser from session, etc.
+   *
+   * @memberof App
+   */
+  initializePage () {
+    this.logInHandler.checkIfLoggedIn().then((user) => {
+      if (user) {
+        this.currentUser = user;
+      }
+    });
   }
 }
 
