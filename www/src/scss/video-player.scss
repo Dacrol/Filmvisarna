@@ -90,7 +90,7 @@
 }
 
 .white-space {
-  background-color: white;
+  background-color: black;
   height: 9%;
 
   @media (min-width: 768px) {
@@ -114,4 +114,12 @@
 
 .h-0 {
   height: 0%;
+}
+
+.owl-theme .owl-nav [class*='owl-'] {
+  background-color: transparent;
+}
+
+.owl-theme .owl-dots {
+  margin-bottom: 20px;
 }
