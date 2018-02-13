@@ -52,9 +52,9 @@ export default function viewsSetup (app) {
   );
   app.bindViewWithJSON('aktuellfilmer', '/current', '/json/movie-data.json', 'movies');
   app.bindViewWithJSON(
-  'bio', 
-  '/bios', 
-  '/json/movie-data.json', 
+  'bio',
+  '/bios',
+  '/json/movie-data.json',
   'movies'
   );
   app.bindViewWithJSON(
@@ -67,7 +67,10 @@ export default function viewsSetup (app) {
     'posterfilm',
     '/film',
     '/json/movie-data.json',
-    'movies'
+    'movies',
+    async () => {
+      let screenings = JSON._load('')
+    }
   );
   app.bindView(
     'screenings',
