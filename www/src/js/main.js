@@ -55,11 +55,12 @@ $('#register-user-submit').on('click', (e) => {
   let form = $('#register-form')
     .first()
     .get()[0];
-  form.classList.add('was-validated');
+  // form.classList.add('was-validated');
   // @ts-ignore
   if (form.checkValidity()) {
     app.logInHandler.registerUser();
   } else {
+    $('#email-register').addClass('is-invalid');
     $('#register-email-feedback').text('Ogiltig e-post.');
   }
 });
