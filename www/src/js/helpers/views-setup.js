@@ -2,10 +2,12 @@
 import Renderer from '../classes/renderer-base.class';
 import Salon from '../classes/salon.class';
 import Booking from '../classes/booking.class';
+// eslint-disable-next-line
+import App from '../classes/app.class';
 
 /**
  * @export
- * @param {Renderer} app
+ * @param {App} app
  */
 export default function viewsSetup (app) {
   app.bindViewWithJSON(
@@ -168,9 +170,6 @@ export default function viewsSetup (app) {
           screening,
           {
             movieId: data[0].findIndex(movie => {
-              return movie.title_sv === screening.movie;
-            }),
-            movieData: data[0].filter(movie => {
               return movie.title_sv === screening.movie;
             }),
             movieData: data[0].filter(movie => {

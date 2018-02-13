@@ -49,7 +49,7 @@ export default class LogInHandler extends Base {
     return null;
   }
   confirmLogIn (user) {
-    let session = this.makeSession(user);
+    this.makeSession(user);
     this.currentUser = user;
     this.verifySession(user).then((user) => {
       if (user) {
@@ -72,8 +72,8 @@ export default class LogInHandler extends Base {
             );
           }
           return text;
-          // @ts-ignore
         })()
+      // @ts-ignore
     ).words.join('');
     user.session = newSession;
     user.save();
