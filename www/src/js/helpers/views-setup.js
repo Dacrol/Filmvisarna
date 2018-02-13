@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import Renderer from '../classes/renderer-base.class';
 import Salon from '../classes/salon.class';
+import Booking from '../classes/booking.class';
 
 /**
  * @export
@@ -95,7 +96,9 @@ export default function viewsSetup (app) {
           .children()
           .last()
           .on('click', function () {
-            //create booking here
+
+            // @ts-ignore
+            app.currentBooking = booking;
           });
       });
 

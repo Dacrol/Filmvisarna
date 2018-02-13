@@ -1,7 +1,8 @@
 import Base from './base.class';
 
-class Booking extends Base {
+export default class Booking extends Base {
   constructor (screening, app) {
+    console.log(...arguments);
     super();
     this.screening = screening;
     this.user = app.currentUser;

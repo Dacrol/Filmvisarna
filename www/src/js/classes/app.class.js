@@ -6,6 +6,8 @@ class App extends Renderer {
   constructor () {
     super();
     this.logInHandler = new LogInHandler(this);
+    this.currentBooking = null;
+    this.allBookings = [];
   }
 }
 
