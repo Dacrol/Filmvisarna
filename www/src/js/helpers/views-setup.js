@@ -65,13 +65,36 @@ export default function viewsSetup (app) {
           return true;
         }
       });
-      //if there is more then 3 dates then change to today and tomorrow and last on date of the movie
-      list.forEach(movie => {
+      // if there is more then 3 dates then change to today and tomorrow and last on date of the movie
+      list.forEach(screening => {
         $('#up-coming-movies').append(
-          `<a class="dropdown-item" href="#">${movie.date}</a>`
+          `<a class="dropdown-item pop" href="/salontemplate/${screening.salon}">${screening.date}</a>`
         );
       });
 
+      // $('#up-coming-movies').each(function (event) {
+      //   $(this).on('click', func;
+      // });
+
+      // app.bindViewWithJSON(
+      //   'salon-template',
+      //   '/salontemplate',
+      //   '/json/salong.json',
+      //   'salons',
+      //   () => {
+      //     let salon = new Salon();
+      //     salon.renderSeats(0);
+      //     $('.booking').on('click', () => {
+      //       if (sessionStorage.getItem('signed-in')) {
+      //         let user = sessionStorage.getItem('signed-in');
+      //         let booking = new Booking(1, 2, ['1,2,3,4'], 200);
+      //       } else {
+      //         $('#root').html('');
+      //         $('#root').append(`You have to sign in`);
+      //       }
+      //     });
+      //   }
+      // );
     }
   );
   app.bindView(
