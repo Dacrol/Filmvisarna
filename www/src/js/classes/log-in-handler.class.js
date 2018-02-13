@@ -49,33 +49,42 @@ export default class LogInHandler extends Base {
     let session = MD5(user.id);
     user.session = session;
     sessionStorage.setItem('signed-in', JSON.stringify(session));
-    this.currentUser = user;
-    this.checkIfLoggedIn();
-    $('#login-modal').modal('hide');
-    this.app.changePage('mypage');
+    // this.currentUser = user;
+    this.checkIfLoggedIn(user).then((user) => {
+      if (user) {
+        $('#login-modal').modal('hide');
+        this.app.changePage('mypage');
+      }
+    });
   }
 
-  async checkIfLoggedIn () {
+  async checkIfLoggedIn (user = null) {
     let session = sessionStorage.getItem('signed-in');
     if (session) {
       let allUserNames = await JSON._load('users.json');
-      let user = allUserNames.filter((user) => {
-        return user.session === session;
-      });
+      if (!user) {
+        user = allUserNames.filter((user) => {
+          return user.session === session;
+        });
+      }
       if (user) {
+        this.currentUser = user;
         $('#sign-in')
           .parent()
           .remove();
         $('ul.navbar-nav').append(
           '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
         );
+        return user;
       } else {
         this.signOut();
+        return null;
       }
     }
   }
   signOut () {
     sessionStorage.removeItem('signed-in');
+    this.currentUser = null;
     $('#sign-in')
       .parent()
       .remove();
