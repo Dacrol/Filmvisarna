@@ -1,7 +1,7 @@
 import Base from './base.class.js';
 
 class Salon extends Base {
-  constructor (salongNr) {
+  constructor (app, salongNr = undefined) {
     super();
     // Vilka properties behöver Salon-klassen?
     this.salongNr = salongNr;

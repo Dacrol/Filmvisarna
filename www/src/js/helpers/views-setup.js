@@ -8,6 +8,20 @@ import Booking from '../classes/booking.class';
  * @param {Renderer} app
  */
 export default function viewsSetup (app) {
+  app.bindViewWithJSON(
+    'mypage',
+    '/mypage',
+    '/json/movie-data.json',
+    'movies',
+    () => {
+      $('#sign-out').on('click', function (event) {
+        event.preventDefault();
+        // @ts-ignore
+        app.logInHandler.signOut();
+      });
+    }
+  );
+
   // The first argument can be null if the selector already has the class pop
   app.bindViewWithJSON('home', '/', '/json/movie-data.json', 'movies', () => {
     // @ts-ignore
@@ -60,12 +74,23 @@ export default function viewsSetup (app) {
     '/json/salong.json',
     'salons',
     () => {
-      let salon = new Salon();
-      salon.renderSeats(0);
+      let salon;
+      if (!app.currentBooking === null) {
+        salon = new Salon(app, app.currentBooking.screening.salon);
+      } else {
+        salon = new Salon(app, 0);
+      }
+      salon.renderSeats();
+
+      if (!app.logInHandler.currentUser) {
+        $('#booking').prop('disabled', true);
+      }
+
       $('.booking').on('click', function () {
         if (sessionStorage.getItem('signed-in')) {
-          let user = sessionStorage.getItem('signed-in');
-          console.log(user);
+          console.log(app);
+          app.allBookings.push(app.currentBooking);
+          console.log(app);
         }
       });
     }
@@ -96,9 +121,8 @@ export default function viewsSetup (app) {
           .children()
           .last()
           .on('click', function () {
-
             // @ts-ignore
-            app.currentBooking = booking;
+            app.currentBooking = new Booking(screening, app);
           });
       });
 
@@ -149,7 +173,7 @@ export default function viewsSetup (app) {
             movieData: data[0].filter(movie => {
               return movie.title_sv === screening.movie;
             }),
-            movieData: data[0].filter((movie) => {
+            movieData: data[0].filter(movie => {
               return movie.title_sv === screening.movie;
             })
           },
@@ -206,4 +230,3 @@ function stringToSlug (str) {
     .replace(/&/g, '-and-')
     .replace(/[\s\W-]+/g, '-');
 }
-

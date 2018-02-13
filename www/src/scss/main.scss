@@ -22,7 +22,7 @@ header {
 }
 
 .card-text {
-	color: black;	
+	color: black;
 }
 
 .salon-wrapper {
@@ -76,11 +76,16 @@ button.booking {
   font-size: 15px;
   box-shadow: inset 0 -0.35rem 0 0 rgba(0,0,0,.2), 0 0.125rem 2px 0 rgba(0,0,0,.24), 0 8px 8px 0 rgba(0,0,0,.24);
   border: none;
+
+  &:hover {
+    background-color: #f81f32;
+  }
+  &[disabled] {
+    background: #cc0020;;
+  }
 }
 
-button.booking:hover {
-  background-color: #f81f32;
-}
+
 .film-info {
   background-color: #eee;
   min-height: 250px;

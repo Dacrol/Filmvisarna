@@ -61,7 +61,7 @@ export default class LogInHandler extends Base {
     let session = MD5(user.id);
     user.session = session;
     sessionStorage.setItem('signed-in', JSON.stringify(session));
-    // this.currentUser = user;
+    this.currentUser = user;
     this.checkIfLoggedIn(user).then((user) => {
       if (user) {
         $('#login-modal').modal('hide');
@@ -81,8 +81,8 @@ export default class LogInHandler extends Base {
       );
       if (!user) {
         let allUserNames = await JSON._load('users.json');
-        user = allUserNames.filter((user) => {
-          return user.session === session;
+        user = allUserNames.find((user) => {
+          return MD5(user.id) === session;
         });
       }
       if (user) {
