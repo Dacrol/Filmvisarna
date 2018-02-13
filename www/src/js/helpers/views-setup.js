@@ -7,69 +7,71 @@ import Renderer from '../classes/renderer-base.class';
  */
 export default function viewsSetup (app) {
   // The first argument can be null if the selector already has the class pop
-  app.bindViewWithJSON(
-    'home',
-    '/',
-    '/json/movie-data.json',
-    'movies',
-    () => {
-      $('.owl-carousel').owlCarousel({
-        items: 1,
-        merge: false,
-        loop: true,
-        video: true,
-        nav: true,
-        lazyLoad: false,
-        autoplay: true,
-        autoplayHoverPause: true,
-        navText: ['<', '>'],
-        dots: false,
-        responsive: {
-          0: {
-            items: 1,
-            nav: false
-          },
-          768: {
-            items: 1,
-            nav: false
-          },
-          1000: {
-            items: 1,
-            nav: true
-          }
+  app.bindViewWithJSON('home', '/', '/json/movie-data.json', 'movies', () => {
+    $('.owl-carousel').owlCarousel({
+      items: 1,
+      merge: false,
+      loop: true,
+      video: true,
+      nav: true,
+      lazyLoad: false,
+      autoplay: true,
+      autoplayHoverPause: true,
+      navText: ['<', '>'],
+      dots: false,
+      responsive: {
+        0: {
+          items: 1,
+          nav: false
         },
-        onPlayVideo: function (event) {
-          $('.white-space').addClass('h-0');
-          $('.poster').hide('puff', {percent: 125}, 400);
+        768: {
+          items: 1,
+          nav: false
         },
-        onStopVideo: function (event) {
-          $('.white-space').removeClass('h-0');
-          $('.poster').show('puff', {percent: 145}, 450);
+        1000: {
+          items: 1,
+          nav: true
         }
-      });
-      // TODO: trigger stopVideo on the end of youtubes
-    }
-  );
-  app.bindViewWithJSON('aktuellfilmer', '/current', '/json/movie-data.json', 'movies');
+      },
+      onPlayVideo: function (event) {
+        $('.white-space').addClass('h-0');
+        $('.poster').hide('puff', { percent: 125 }, 400);
+      },
+      onStopVideo: function (event) {
+        $('.white-space').removeClass('h-0');
+        $('.poster').show('puff', { percent: 145 }, 450);
+      }
+    });
+    // TODO: trigger stopVideo on the end of youtubes
+  });
   app.bindViewWithJSON(
-  'bio',
-  '/bios',
-  '/json/movie-data.json',
-  'movies'
+    'aktuellfilmer',
+    '/current',
+    '/json/movie-data.json',
+    'movies'
   );
-  app.bindViewWithJSON(
-    'salonger',
-    '/salons',
-    '/json/salong.json',
-    'salons'
-  );
+  app.bindViewWithJSON('bio', '/bios', '/json/movie-data.json', 'movies');
+  app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
   app.bindViewWithJSON(
     'posterfilm',
     '/film',
     '/json/movie-data.json',
     'movies',
-    async () => {
-      let screenings = JSON._load('')
+    async data => {
+      let screenings = await JSON._load('screenings.json');
+      let movies = await JSON._load('movie-data.json');
+      let list = screenings.filter(screening => {
+        if (movies[data.pathParams].title_sv === screening.movie) {
+          return true;
+        }
+      });
+      //if there is more then 3 dates then change to today and tomorrow and last on date of the movie
+      list.forEach(movie => {
+        $('#up-coming-movies').append(
+          `<a class="dropdown-item" href="#">${movie.date}</a>`
+        );
+      });
+
     }
   );
   app.bindView(
@@ -88,6 +90,9 @@ export default function viewsSetup (app) {
         return Object.assign(
           screening,
           {
+            movieId: data[0].findIndex(movie => {
+              return movie.title_sv === screening.movie;
+            }),
             movieData: data[0].filter(movie => {
               return movie.title_sv === screening.movie;
             })
