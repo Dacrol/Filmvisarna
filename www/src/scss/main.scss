@@ -1,6 +1,6 @@
 body {
   overflow-y: scroll;
-  background-color:black;
+  background-color: black;
 }
 
 .logo {
@@ -10,11 +10,28 @@ body {
 
 .nav-item {
   font-size: 15px;
- // background-color: #d9534f;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: black;
+  border-radius: 10%;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #919aa1;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #c0cbd9;
+}
+
+.navbar-nav .nav-link {
+  padding-left: 15px;
+  color: black;
 }
 
 header {
-  background-color: #cc0020
+  background-color: #cc0020;
 }
 
 .card {
@@ -30,11 +47,10 @@ header {
   min-height: 250px;
 }
 
-h2{
-  color:#919aa1;
+h2 {
+  color: #919aa1;
 }
 
-span.h3{
-  color:#919aa1;
-
+span.h3 {
+  color: #919aa1;
 }
