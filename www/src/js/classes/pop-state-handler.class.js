@@ -31,7 +31,7 @@ class PopStateHandler extends Base {
   }
 
   changePage (newUrl) {
-    if (newUrl && newUrl.length > 1) {
+    if (newUrl && !(newUrl.startsWith('/'))) {
       history.pushState(null, null, '/' + newUrl);
     } else if (newUrl) {
       history.pushState(null, null, newUrl);
