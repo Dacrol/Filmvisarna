@@ -93,7 +93,10 @@ export default function viewsSetup (app) {
         return Object.assign(
           screening,
           {
-            movieData: data[0].filter(movie => {
+            movieId: data[0].findIndex((movie) => {
+              return movie.title_sv === screening.movie;
+            }),
+            movieData: data[0].filter((movie) => {
               return movie.title_sv === screening.movie;
             })
           },

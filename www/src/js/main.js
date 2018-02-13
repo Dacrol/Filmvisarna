@@ -28,8 +28,6 @@ window.$.owlCarousel = window.$.fn.owlCarousel;
 // @ts-ignore
 $.owlCarousel = $.fn.owlCarousel;
 
-
-
 let app = new App();
 app.initializePage();
 
@@ -51,8 +49,16 @@ patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');
   );
 } */
 
-
 $('#register-user-submit').on('click', (e) => {
   e.preventDefault();
-  app.logInHandler.registerUser();
+  let form = $('#register-form')
+    .first()
+    .get()[0];
+  form.classList.add('was-validated');
+  // @ts-ignore
+  if (form.checkValidity()) {
+    app.logInHandler.registerUser();
+  } else {
+    $('#register-email-feedback').text('Ogiltig e-post.');
+  }
 });

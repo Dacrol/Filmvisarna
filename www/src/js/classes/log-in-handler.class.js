@@ -21,12 +21,22 @@ export default class LogInHandler extends Base {
     });
     $('#sign-in-submit').on('click', function (event) {
       event.preventDefault();
-      that.logIn();
+      that.logIn().then((user) => {
+        console.log(user);
+        if (user === null) {
+          $('#login-form input').addClass('is-invalid');
+        }
+      });
     });
     $('#login-modal').keyup(function (event) {
       if (event.which === 13) {
         event.preventDefault();
-        that.logIn();
+        that.logIn().then((user) => {
+          console.log(user);
+          if (user === null) {
+            $('#login-form input').addClass('is-invalid');
+          }
+        });
       }
     });
   }
@@ -41,9 +51,11 @@ export default class LogInHandler extends Base {
       if (user.id === userName) {
         if (user.password.words.join() === password) {
           this.confirmLogIn(user);
+          return user;
         }
       }
     }
+    return null;
   }
   confirmLogIn (user) {
     let session = MD5(user.id);
@@ -108,13 +120,20 @@ export default class LogInHandler extends Base {
         .then((user) => {
           // console.log('User created:', user);
           this.confirmLogIn(user);
-          $('#login-modal .tab-pane, #login-modal .nav-link').toggleClass('show active');
+          $('#login-modal .tab-pane, #login-modal .nav-link').toggleClass(
+            'show active'
+          );
         })
         .catch(() => {
-          console.log('Username taken');
-          $('#email-register').addClass(' is-invalid');
+          $('#register-form').removeClass('was-validated');
+          // console.log('Username taken');
+          $('#email-register').addClass('is-invalid');
+          $('#register-email-feedback').text('E-posten används redan.');
           // console.log(error);
         });
+    } else {
+      $('#register-form').removeClass('was-validated');
+      $('#password-match').addClass('is-invalid');
     }
   }
 
@@ -138,10 +157,14 @@ export default class LogInHandler extends Base {
                 <div class="form-group">
                   <label for="email">E-post</label>
                   <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-post">
+
                 </div>
                 <div class="form-group">
                   <label for="password">Lösenord</label>
                   <input type="password" class="form-control" id="password" placeholder="Lösenord">
+                  <div class="invalid-feedback">
+                  Lösenord eller e-post stämmer inte.
+                </div>
                 </div>
                 <button id="sign-in-submit" class="btn btn-primary" type="submit">Logga in</button>
               </form>
@@ -149,10 +172,14 @@ export default class LogInHandler extends Base {
           </div>
           <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
               <div class="modal-body">
-                  <form id="register-form">
+                  <form id="register-form"  class="needs-validation" novalidate>
                     <div class="form-group">
                       <label for="email-register">E-post</label>
-                      <input type="email" class="form-control" id="email-register" aria-describedby="emailHelp" placeholder="E-post">
+                      <input type="email" class="form-control" pattern=".+@.+..+" required id="email-register" aria-describedby="emailHelp" placeholder="E-post">
+
+                  <div class="invalid-feedback" id="register-email-feedback">
+                  Ogiltig e-post.
+                </div>
                     </div>
                     <div class="form-group">
                       <label for="password-register">Lösenord</label>
@@ -161,6 +188,9 @@ export default class LogInHandler extends Base {
                     <div class="form-group">
                       <label for="password-match">Upprepa lösenord</label>
                       <input type="password" class="form-control" id="password-match" placeholder="Upprepa lösenord">
+                      <div class="invalid-feedback">
+                  Lösenorden matchar inte.
+                </div>
                     </div>
                     <button id="register-user-submit" class="btn btn-primary" type="submit">Registrera dig</button>
                   </form>
