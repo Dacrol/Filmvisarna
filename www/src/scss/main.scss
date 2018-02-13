@@ -1,5 +1,6 @@
 body {
   overflow-y: scroll;
+  background-color:black;
 }
 
 .logo {
@@ -8,7 +9,12 @@ body {
 }
 
 .nav-item {
-  font-size: 20px;
+  font-size: 15px;
+ // background-color: #d9534f;
+}
+
+header {
+  background-color: #cc0020
 }
 
 .card {
@@ -17,4 +23,18 @@ body {
 
 .card-text {
   color: black;
+}
+
+.film-info {
+  background-color: #eee;
+  min-height: 250px;
+}
+
+h2{
+  color:#919aa1;
+}
+
+span.h3{
+  color:#919aa1;
+
 }
