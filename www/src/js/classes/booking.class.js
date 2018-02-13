@@ -1,10 +1,14 @@
 import Base from './base.class';
 
 class Booking extends Base {
-
+  constructor (screening, app) {
+    super();
+    this.screening = screening;
+    this.user = app.currentUser;
+  }
   // visa ut salongen du valt
 
-  //vilken rad o number kanske via att ta emot salongobjektet
+  // vilken rad o number kanske via att ta emot salongobjektet
 
   // visa ut tiden
 
@@ -12,19 +16,6 @@ class Booking extends Base {
 
   // vilken film
   // skapa en booknings json fil
-
-  async screenings (index) {
-    let screenings = await JSON._load('screenings.json');
-
-    let c = 0;
-    for (let movie of screenings) {
-      if (c === index) {
-        console.log(movie);
-        this.render('#root', '1');
-      }
-      c++;
-    }
-  }
 
   randomBookNumber () {
     let text = '';

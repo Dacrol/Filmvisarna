@@ -46,7 +46,12 @@ export default function viewsSetup (app) {
     });
     // TODO: trigger stopVideo on the end of youtubes
   });
-  app.bindView('aktuellfilmer', '/current');
+  app.bindViewWithJSON(
+    'aktuellfilmer',
+    '/current',
+    '/json/movie-data.json',
+    'movies'
+  );
   app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
   app.bindViewWithJSON(
     'salon-template',
@@ -81,9 +86,17 @@ export default function viewsSetup (app) {
       });
       // if there is more then 3 dates then change to today and tomorrow and last on date of the movie
       list.forEach(screening => {
-        $('#up-coming-movies').append(
-          `<a class="dropdown-item pop" href="/salontemplate/${screening.salon}">${screening.date}</a>`
-        );
+        $('#up-coming-movies')
+          .append(
+            `<a class="dropdown-item pop" href="/salontemplate/${
+              screening.salon
+            }">${screening.date}</a>`
+          )
+          .children()
+          .last()
+          .on('click', function () {
+            //create booking here
+          });
       });
 
       // $('#up-coming-movies').each(function (event) {
