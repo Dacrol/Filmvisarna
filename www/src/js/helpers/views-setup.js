@@ -1,5 +1,6 @@
 // eslint-disable-next-line
 import Renderer from '../classes/renderer-base.class';
+import Salon from '../classes/salon.class';
 
 /**
  * @export
@@ -8,6 +9,7 @@ import Renderer from '../classes/renderer-base.class';
 export default function viewsSetup (app) {
   // The first argument can be null if the selector already has the class pop
   app.bindViewWithJSON('home', '/', '/json/movie-data.json', 'movies', () => {
+    // @ts-ignore
     $('.owl-carousel').owlCarousel({
       items: 1,
       merge: false,
@@ -44,11 +46,23 @@ export default function viewsSetup (app) {
     });
     // TODO: trigger stopVideo on the end of youtubes
   });
+  app.bindView('aktuellfilmer', '/current');
+  app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
   app.bindViewWithJSON(
-    'aktuellfilmer',
-    '/current',
-    '/json/movie-data.json',
-    'movies'
+    'salon-template',
+    '/salontemplate',
+    '/json/salong.json',
+    'salons',
+    () => {
+      let salon = new Salon();
+      salon.renderSeats(0);
+      $('.booking').on('click', function () {
+        if (sessionStorage.getItem('signed-in')) {
+          let user = sessionStorage.getItem('signed-in');
+          console.log(user);
+        }
+      });
+    }
   );
   app.bindViewWithJSON('bio', '/bios', '/json/movie-data.json', 'movies');
   app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
