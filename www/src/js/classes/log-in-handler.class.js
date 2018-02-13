@@ -46,22 +46,32 @@ export default class LogInHandler extends Base {
     }
   }
   confirmLogIn (user) {
-    sessionStorage.setItem('signed-in', JSON.stringify(user));
+    let session = MD5(user.id);
+    user.session = session;
+    sessionStorage.setItem('signed-in', JSON.stringify(session));
     this.currentUser = user;
     this.checkIfLoggedIn();
     $('#login-modal').modal('hide');
     this.app.changePage('mypage');
   }
 
-  checkIfLoggedIn () {
-    let session = sessionStorage.getItem('signed-in')
+  async checkIfLoggedIn () {
+    let session = sessionStorage.getItem('signed-in');
     if (session) {
-      $('#sign-in')
-        .parent()
-        .remove();
-      $('ul.navbar-nav').append(
-        '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
-      );
+      let allUserNames = await JSON._load('users.json');
+      let user = allUserNames.filter((user) => {
+        return user.session === session;
+      });
+      if (user) {
+        $('#sign-in')
+          .parent()
+          .remove();
+        $('ul.navbar-nav').append(
+          '<li class="nav-item"><a class="nav-link pop" id="sign-in" data-toggle="pill" href="/mypage" role="tab" aria-controls="pills-mypage" aria-selected="false">Mina sidor</a></li>'
+        );
+      } else {
+        this.signOut();
+      }
     }
   }
   signOut () {
