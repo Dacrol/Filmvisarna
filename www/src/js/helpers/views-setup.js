@@ -106,6 +106,8 @@ export default function viewsSetup (app) {
       Renderer.renderView('boka', app.currentBooking, () => {
         console.log('Success');
       });
+    } else {
+      app.changePage('/visningar'); // Redirect if not actually booking
     }
   });
   app.bindViewWithJSON('bio', '/bios', '/json/movie-data.json', 'movies');
