@@ -6,21 +6,26 @@ class Salon extends Base {
     // Vilka properties behöver Salon-klassen?
     this.salongNr = salongNr;
     this.salonSeats = [];
+    this.salonContainerHeight = 480;
     $(window).on('resize', () => this.scale());
     this.scale();
-    $(window)
-      .on('resize', function () {
-        let saloonHeight = $('.salon-wrapper').outerHeight();
-        console.log(saloonHeight);
-
-        $('button.booking').css('margin-top', saloonHeight + 20);
-      })
-      .trigger('resize');
+    JSON._load('salong.json').then(
+      ((data) => {
+        let thisSalon = this;
+        this.salonSeats = data.find(
+          (salon) => +salon.id === (+thisSalon.salongNr || 0)
+        ).seatsPerRow;
+        this.scale();
+        // eslint-disable-next-line
+      }).bind(this)
+    );
   }
 
   scale () {
     let salonContainerWidth = 1080;
-    let salonContainerHeight = 480;
+
+    let rows = this.salonSeats.length;
+    let salonContainerHeight = rows * 73.3 - 1.667 * rows ** 2 || 480;
 
     let w = $(window).width();
     let h = $(window).height();
@@ -34,6 +39,12 @@ class Salon extends Base {
       .show();
     $('.salon-wrapper').width(salonContainerWidth * scaling);
     $('.salon-wrapper').height(salonContainerHeight * scaling);
+    this.moveButton();
+  }
+
+  moveButton () {
+    let saloonHeight = $('.salon-wrapper').outerHeight();
+    $('button.booking').css('margin-top', saloonHeight + 20);
   }
 
   // Parametern hos renderSeats() ska antingen vara 0 för Stora salongen eller 1 för Lilla salongen (se salong.json)
