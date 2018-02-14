@@ -75,24 +75,26 @@ export default function viewsSetup (app) {
     '/salontemplate',
     '/json/salong.json',
     'salons',
-    () => {
+    (contextData) => {
+      console.log(app.currentBooking);
       let salon;
       if (!app.currentBooking === null) {
         salon = new Salon(app, app.currentBooking.screening.salon);
       } else {
-        salon = new Salon(app, 0);
+        salon = new Salon(app, contextData.pathParams || 0);
       }
       salon.renderSeats();
 
-      if (!app.logInHandler.currentUser) {
+      if (!app.logInHandler.currentUser || !app.currentBooking) {
         $('#booking').prop('disabled', true);
       }
 
-      $('.booking').on('click', function () {
+      $('.booking').on('click', function (event) {
+        event.preventDefault();
         if (sessionStorage.getItem('signed-in')) {
-          console.log(app);
           app.allBookings.push(app.currentBooking);
-          console.log(app);
+          // console.log(app);
+          app.changePage('/boka');
         }
       });
     }
@@ -104,16 +106,22 @@ export default function viewsSetup (app) {
     '/film',
     '/json/movie-data.json',
     'movies',
-    async data => {
+    async (data) => {
       let screenings = await JSON._load('screenings.json');
-      let movies = await JSON._load('movie-data.json');
-      let list = screenings.filter(screening => {
+      // let movies = await JSON._load('movie-data.json');
+      let movies = data.movies;
+      if (isNaN(data.pathParams)) {
+        data.pathParams = movies.findIndex((movie) => {
+          return data.pathParams === stringToSlug(movie.title_sv);
+        });
+      }
+      let list = screenings.filter((screening) => {
         if (movies[data.pathParams].title_sv === screening.movie) {
           return true;
         }
       });
       // if there is more then 3 dates then change to today and tomorrow and last on date of the movie
-      list.forEach(screening => {
+      list.forEach((screening) => {
         $('#up-coming-movies')
           .append(
             `<a class="dropdown-item pop" href="/salontemplate/${
@@ -122,35 +130,13 @@ export default function viewsSetup (app) {
           )
           .children()
           .last()
-          .on('click', function () {
+          .on('click', function (event) {
+            event.preventDefault();
             // @ts-ignore
             app.currentBooking = new Booking(screening, app);
+            app.changePage('/salontemplate');
           });
       });
-
-      // $('#up-coming-movies').each(function (event) {
-      //   $(this).on('click', func;
-      // });
-
-      // app.bindViewWithJSON(
-      //   'salon-template',
-      //   '/salontemplate',
-      //   '/json/salong.json',
-      //   'salons',
-      //   () => {
-      //     let salon = new Salon();
-      //     salon.renderSeats(0);
-      //     $('.booking').on('click', () => {
-      //       if (sessionStorage.getItem('signed-in')) {
-      //         let user = sessionStorage.getItem('signed-in');
-      //         let booking = new Booking(1, 2, ['1,2,3,4'], 200);
-      //       } else {
-      //         $('#root').html('');
-      //         $('#root').append(`You have to sign in`);
-      //       }
-      //     });
-      //   }
-      // );
     }
   );
   app.bindView(
@@ -165,19 +151,19 @@ export default function viewsSetup (app) {
       data[0].forEach((movie, index) => {
         Object.assign(movie, { id: index });
       });
-      let contextData = data[1].map(screening => {
+      let contextData = data[1].map((screening) => {
         return Object.assign(
           screening,
           {
-            movieId: data[0].findIndex(movie => {
+            movieId: data[0].findIndex((movie) => {
               return movie.title_sv === screening.movie;
             }),
-            movieData: data[0].filter(movie => {
+            movieData: data[0].filter((movie) => {
               return movie.title_sv === screening.movie;
             })
           },
           {
-            salonData: data[2].filter(salon => {
+            salonData: data[2].filter((salon) => {
               return salon.id === screening.salon;
             })
           }
@@ -190,7 +176,7 @@ export default function viewsSetup (app) {
         hour: 'numeric',
         minute: 'numeric'
       };
-      contextData.forEach(screening => {
+      contextData.forEach((screening) => {
         const date = new Date(screening.date).toLocaleDateString(
           'sv-SE',
           dateOptions
