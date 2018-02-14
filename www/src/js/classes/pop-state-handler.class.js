@@ -44,6 +44,7 @@ class PopStateHandler extends Base {
     let urlPart = urlParts[1];
     this.viewMethods[urlPart]();
     this.addEventHandler();
+    window.scrollTo(0, 0);
   }
 }
 

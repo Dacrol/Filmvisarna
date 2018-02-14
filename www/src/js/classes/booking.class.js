@@ -1,22 +1,9 @@
-import Base from './base.class';
-
-export default class Booking extends Base {
+export default class Booking {
   constructor (screening, app) {
-    console.log(...arguments);
-    super();
     this.screening = screening;
-    this.user = app.currentUser;
+    this.user = app.logInHandler.currentUser;
   }
-  // visa ut salongen du valt
 
-  // vilken rad o number kanske via att ta emot salongobjektet
-
-  // visa ut tiden
-
-  // visa ut priset
-
-  // vilken film
-  // skapa en booknings json fil
 
   randomBookNumber () {
     let text = '';
@@ -28,15 +15,5 @@ export default class Booking extends Base {
     return text;
   }
 
-  template1 () {
-    return `
 
-      <div>
-        ${this.randomBookNumber()}
-      </div>
-
-
-
-    `;
-  }
 }
