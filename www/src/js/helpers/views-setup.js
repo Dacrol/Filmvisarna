@@ -78,20 +78,21 @@ export default function viewsSetup (app) {
     (contextData) => {
       console.log(app.currentBooking);
       let salon;
-      if (!app.currentBooking === null) {
+      if (app.currentBooking) {
         salon = new Salon(app, app.currentBooking.screening.salon);
       } else {
         salon = new Salon(app, contextData.pathParams || 0);
       }
+      console.log(salon);
       salon.renderSeats();
 
       if (!app.logInHandler.currentUser || !app.currentBooking) {
         $('#booking').prop('disabled', true);
       }
 
-      $('.booking').on('click', function (event) {
+      $('#booking').on('click', function (event) {
         event.preventDefault();
-        if (sessionStorage.getItem('signed-in')) {
+        if (app.currentUser) {
           app.allBookings.push(app.currentBooking);
           // console.log(app);
           app.changePage('/boka');
@@ -99,6 +100,14 @@ export default function viewsSetup (app) {
       });
     }
   );
+  app.bindView('boka', '/boka', (Renderer, pathParams) => {
+    console.log(app.currentBooking);
+    if (app.currentBooking) {
+      Renderer.renderView('boka', app.currentBooking, () => {
+        console.log('Success');
+      });
+    }
+  });
   app.bindViewWithJSON('bio', '/bios', '/json/movie-data.json', 'movies');
   app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
   app.bindViewWithJSON(
@@ -124,7 +133,7 @@ export default function viewsSetup (app) {
       list.forEach((screening) => {
         $('#up-coming-movies')
           .append(
-            `<a class="dropdown-item pop" href="/salontemplate/${
+            `<a class="dropdown-item" href="/salontemplate/${
               screening.salon
             }">${screening.date}</a>`
           )
