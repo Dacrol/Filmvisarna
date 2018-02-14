@@ -18,3 +18,18 @@ body {
 .card-text {
   color: black;
 }
+
+.jumbotron {
+
+	background: url(/image/cin.jpg) top center;
+	background-size: cover;
+	margin-top: 1em;
+	padding-top: 300px;
+	padding-bottom: 3em;
+}
+
+.jumbotron h1 {
+
+font-size: 1em;
+color: white;
+}
