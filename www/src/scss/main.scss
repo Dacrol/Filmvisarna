@@ -117,3 +117,28 @@ h1, h2, {
 span.h3, span.h5 {
   color: #919aa1;
 }
+
+.btn.plus-minus {
+  padding: 0;
+  margin: 0 3px;
+  width: 2.88em;
+  height: 2.7em;
+  border-radius: 50%;
+}
+
+.special-tickets {
+  padding: 0 10px;
+}
+
+.text-light {
+  color: #ccc !important;
+}
+
+.text-lighter {
+  color: #ddd !important;
+}
+
+.text-inherit {
+  color: inherit;
+}
+

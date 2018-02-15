@@ -25,7 +25,7 @@ class Salon extends Base {
     let salonContainerWidth = 1080;
 
     let rows = this.salonSeats.length;
-    let salonContainerHeight = rows * 73.3 - 1.667 * rows ** 2 || 480;
+    let salonContainerHeight = 65.4 * rows - 0.675 * (rows ** 2) || 480; // Andragradspolynom för att scala height efter varierande antal rows
 
     let w = $(window).width();
     let h = $(window).height();

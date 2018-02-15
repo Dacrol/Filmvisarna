@@ -102,9 +102,37 @@ export default function viewsSetup (app) {
   );
   app.bindView('boka', '/boka', (Renderer, pathParams) => {
     console.log(app.currentBooking);
+    // ! TODO: Remove this
+    app.currentBooking = app.currentBooking || JSON.parse('{"screening":{"date":"Feb 24 2018 21:30:00","salon":1,"movie":"Fifty Shades Darker"},"user":{"id":"test@test.com","passwordHash":{"words":[1803989619,-13304607,-1653899186,-10862761,1202562282,-1573970615,-1071754531,-1215866037],"sigBytes":32},"session":"2028036453-20884762-182915439-706389771"}}')
     if (app.currentBooking) {
-      Renderer.renderView('boka', app.currentBooking, () => {
-        console.log('Success');
+      Renderer.renderView('boka', app.currentBooking, async (booking) => {
+
+        $('.quantity-right-plus').click(function (e) {
+          // Stop acting like a button
+          e.preventDefault();
+          // Get the field name
+          var quantity = parseInt($('#quantity').val());
+
+          // If is not undefined
+
+          $('#quantity').val(quantity + 1);
+
+          // Increment
+        });
+
+        $('.quantity-left-minus').click(function (e) {
+          // Stop acting like a button
+          e.preventDefault();
+          // Get the field name
+          var quantity = parseInt($('#quantity').val());
+
+          // If is not undefined
+
+          // Increment
+          if (quantity > 0) {
+            $('#quantity').val(quantity - 1);
+          }
+        });
       });
     } else {
       app.changePage('/visningar'); // Redirect if not actually booking
