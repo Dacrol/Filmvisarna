@@ -1,12 +1,15 @@
 // eslint-disable-next-line
 import Renderer from '../classes/renderer-base.class';
+import Salon from '../classes/salon.class';
+import Booking from '../classes/booking.class';
+// eslint-disable-next-line
+import App from '../classes/app.class';
 
 /**
  * @export
- * @param {Renderer} app
+ * @param {App} app
  */
 export default function viewsSetup (app) {
-
   app.bindViewWithJSON(
     'mypage',
     '/mypage',
@@ -21,67 +24,196 @@ export default function viewsSetup (app) {
     }
   );
 
-  app.bindViewWithJSON(
-    'home',
-    '/',
-    '/json/movie-data.json',
-    'movies',
-    () => {
-      $('.owl-carousel').owlCarousel({
-        items: 1,
-        merge: false,
-        loop: true,
-        video: true,
-        nav: true,
-        lazyLoad: false,
-        autoplay: true,
-        autoplayHoverPause: true,
-        navText: ['<', '>'],
-        dots: true,
-        responsive: {
-          0: {
-            items: 1,
-            nav: false
-          },
-          768: {
-            items: 1,
-            nav: false
-          },
-          1000: {
-            items: 1,
-            nav: true
-          }
+  // The first argument can be null if the selector already has the class pop
+  app.bindViewWithJSON('home', '/', '/json/movie-data.json', 'movies', () => {
+    // @ts-ignore
+    $('.owl-carousel').owlCarousel({
+      items: 1,
+      merge: false,
+      loop: true,
+      video: true,
+      nav: true,
+      lazyLoad: false,
+      autoplay: true,
+      autoplayHoverPause: true,
+      navText: ['<', '>'],
+      dots: true,
+      responsive: {
+        0: {
+          items: 1,
+          nav: false
         },
-        onPlayVideo: function (event) {
-          $('.white-space').addClass('h-0');
-          $('.poster').hide('puff', {percent: 125}, 400);
+        768: {
+          items: 1,
+          nav: false
         },
-        onStopVideo: function (event) {
-          $('.white-space').removeClass('h-0');
-          $('.poster').show('puff', {percent: 145}, 450);
+        1000: {
+          items: 1,
+          nav: true
         }
+      },
+      onPlayVideo: function (event) {
+        $('.white-space').addClass('h-0');
+        $('.poster').hide('puff', { percent: 125 }, 400);
+      },
+      onStopVideo: function (event) {
+        $('.white-space').removeClass('h-0');
+        $('.poster').show('puff', { percent: 145 }, 450);
+      }
+    });
+    // TODO: trigger stopVideo on the end of youtubes
+  });
+  app.bindViewWithJSON(
+    'aktuellfilmer',
+    '/current',
+    '/json/movie-data.json',
+    'movies'
+  );
+  app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
+  app.bindViewWithJSON(
+    'salon-template',
+    '/salontemplate',
+    '/json/salong.json',
+    'salons',
+    (contextData) => {
+      console.log(app.currentBooking);
+      let salon;
+      if (app.currentBooking) {
+        salon = new Salon(app, app.currentBooking.screening.salon);
+      } else {
+        salon = new Salon(app, contextData.pathParams || 0);
+      }
+      console.log(salon);
+      salon.renderSeats();
+
+      if (!app.logInHandler.currentUser) {
+        $('#booking').addClass('disabled');
+      }
+
+      if (!app.currentBooking){
+        $('#booking').prop('disabled', true);
+      }
+
+      $('#booking').on('click', function (event) {
+        event.preventDefault();
+        if (app.currentUser && app.currentBooking) {
+          let seats = $('.selected')
+            .map(function () {
+              return $(this).data();
+            })
+            .get();
+          app.currentBooking.seats = seats;
+          // console.log(app);
+          app.changePage('/boka');
+        } else if (!app.currentUser) {
+        $('#login-modal').modal('toggle');
+      }
       });
-      // TODO: trigger stopVideo on the end of youtubes
     }
   );
-  app.bindViewWithJSON('aktuellfilmer', '/current', '/json/movie-data.json', 'movies');
-  app.bindViewWithJSON(
-  'bio', 
-  '/bios', 
-  '/json/movie-data.json', 
-  'movies'
-  );
-  app.bindViewWithJSON(
-    'salonger',
-    '/salons',
-    '/json/salong.json',
-    'salons'
-  );
+  app.bindView('boka', '/boka', (Renderer, pathParams) => {
+    console.log(app.currentBooking);
+    // ! TODO: Remove this
+    app.currentBooking =
+      app.currentBooking ||
+      JSON.parse(
+        '{"screening":{"date":"Feb 24 2018 21:30:00","salon":1,"movie":"Fifty Shades Darker"},"user":{"id":"test@test.com","passwordHash":{"words":[1803989619,-13304607,-1653899186,-10862761,1202562282,-1573970615,-1071754531,-1215866037],"sigBytes":32},"session":"2028036453-20884762-182915439-706389771"}}'
+      );
+    if (app.currentBooking) {
+      Renderer.renderView('boka', app.currentBooking, async (booking) => {
+        // console.log(booking);
+        let tickets = booking.seats.length;
+        booking.ticketTypes = { adults: tickets, juniors: 0, seniors: 0 };
+        console.log(booking, app.currentBooking);
+        let updatePrice;
+        (updatePrice = () => {
+          $('#price').text(booking.price)
+        })();
+        // updatePrice();
+        $('.plus-minus.plus').click(function (e) {
+          e.preventDefault();
+          let quantity = parseInt(
+            $(this)
+              .siblings('.quantity')
+              .first()
+              .text()
+              .toString()
+          );
+          if (+$('#juniors').text() + +$('#seniors').text() < tickets) {
+            let type = $(this)
+              .siblings('.quantity')
+              .text(quantity + 1)
+              .prop('id');
+            booking.ticketTypes[type] = quantity + 1;
+            booking.ticketTypes.adults--;
+            updatePrice();
+            // console.log(booking);
+          }
+        });
+
+        $('.plus-minus.minus').click(function (e) {
+          e.preventDefault();
+          let quantity = parseInt(
+            $(this)
+              .siblings('.quantity')
+              .text()
+              .toString()
+          );
+          if (quantity > 0) {
+            let type = $(this)
+              .siblings('.quantity')
+              .text(quantity - 1)
+              .prop('id');
+            booking.ticketTypes[type] = quantity - 1;
+            booking.ticketTypes.adults++;
+            updatePrice();
+            // console.log(booking);
+          }
+        });
+      });
+    } else {
+      app.changePage('/visningar'); // Redirect if not actually booking
+    }
+  });
+  app.bindViewWithJSON('bio', '/bios', '/json/movie-data.json', 'movies');
+  app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
   app.bindViewWithJSON(
     'posterfilm',
     '/film',
     '/json/movie-data.json',
-    'movies'
+    'movies',
+    async (data) => {
+      let screenings = await JSON._load('screenings.json');
+      // let movies = await JSON._load('movie-data.json');
+      let movies = data.movies;
+      if (isNaN(data.pathParams)) {
+        data.pathParams = movies.findIndex((movie) => {
+          return data.pathParams === stringToSlug(movie.title_sv);
+        });
+      }
+      let list = screenings.filter((screening) => {
+        if (movies[data.pathParams].title_sv === screening.movie) {
+          return true;
+        }
+      });
+      // if there is more then 3 dates then change to today and tomorrow and last on date of the movie
+      list.forEach((screening) => {
+        $('#up-coming-movies')
+          .append(
+            `<a class="dropdown-item" href="/salontemplate/${
+              screening.salon
+            }">${screening.date}</a>`
+          )
+          .children()
+          .last()
+          .on('click', function (event) {
+            event.preventDefault();
+            // @ts-ignore
+            app.currentBooking = new Booking(screening, app);
+            app.changePage('/salontemplate');
+          });
+      });
+    }
   );
   app.bindView(
     'screenings',
@@ -95,7 +227,7 @@ export default function viewsSetup (app) {
       data[0].forEach((movie, index) => {
         Object.assign(movie, { id: index });
       });
-      let contextData = data[1].map(screening => {
+      let contextData = data[1].map((screening) => {
         return Object.assign(
           screening,
           {
@@ -107,7 +239,7 @@ export default function viewsSetup (app) {
             })
           },
           {
-            salonData: data[2].filter(salon => {
+            salonData: data[2].filter((salon) => {
               return salon.id === screening.salon;
             })
           }
@@ -120,7 +252,7 @@ export default function viewsSetup (app) {
         hour: 'numeric',
         minute: 'numeric'
       };
-      contextData.forEach(screening => {
+      contextData.forEach((screening) => {
         const date = new Date(screening.date).toLocaleDateString(
           'sv-SE',
           dateOptions
@@ -159,4 +291,3 @@ function stringToSlug (str) {
     .replace(/&/g, '-and-')
     .replace(/[\s\W-]+/g, '-');
 }
-

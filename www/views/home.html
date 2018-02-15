@@ -1,9 +1,5 @@
-
-
 <div class="row">
 	<div class="col-12">
-		<!-- Put carousel here -->
-
     <div class="owl-carousel owl-theme">
       {{for movies}}
       <div class="video">
@@ -21,24 +17,26 @@
 		<!-- Wrapper för affisch och kortfattad information om filmen -->
 		<div class="film-info mb-3">
 			<!-- Filmens affisch -->
-			<div class="card border-dark d-inline-block float-md-left mr-md-5" style="max-width: 20rem;">
+			<div class="card bg-transparent d-inline-block float-md-left mr-md-5" style="max-width: 20rem;">
 			  <div class="card-body text-dark">
-			  	<img class="card-img-top" src="/image/salong.jpg" alt="theatre">
+			  	<img class="card-img-top" style="box-shadow: 0px 0 40px rgba(217,83,79,0.5);" src="/image/salong.jpg" alt="theatre">
 			  </div>
 			</div>
 			<!-- Kortfattad text om filmen -->
-			<h1 class="pt-2">About Us</h1>
-			<p class="px-5 pb-3 mb-3">Landmark Theatres is a recognized leader in the industry for providing its customers consistently diverse and entertaining film products in a sophisticated adult-oriented atmosphere. Our theatres showcase a wide variety of films — ranging from independent and foreign film to 3-D movies and smart films from Hollywood. Landmark Theatres is the nation's largest theatre chain dedicated to exhibiting and marketing independent film.</p>
+			<h1 class="pt-2">Om Filmvisarna</h1>
+			<p class="px-5 pb-3 mb-3">Filmvisarna AB är en ideell förening som driver biografen Filmvisarna i Storstad. På den dagliga repertoaren finns film från Sverige och hela världen, med premiärer på nya filmer varje vecka. Dessutom erbjuder vi flera arrangemang som bland annat film och samtal, regissörsbesök, filmserier och festivaler. Vi är anslutna till Riksföreningen Folkets Bio som har lokalavdelningar på 15 orter, med totalt 30 biosalonger. I våra två salonger bjuder vi på flera visningar varje kväll, så vi är övertygade om att du hittar något som passar just dig.</p>
 		</div>
 
 		<!-- Wrapper för topp 3-filmer -->
-		<div class="film-info mb-3" style="min-height: 350px; background-color: #eee; border-bottom: 1px solid #ccc"><!-- inline-stylingen är temporär -->
+		<div class="film-info mb-3" style="min-height: 350px;">
+      <div class="text-center h2 text-lighter">Topp 3-filmer</div>
 			<div class="row">
 				<div class="col-12 col-md-4">
-					<div class="card border-secondary m-3 mr-md-0">
-					  <div class="card-header">Topp 3-filmer</div>
+					<div class="card bg-transparent m-3 mr-md-0">
 					  <div class="card-body text-secondary">
-					    <img class="card-img-top" src="https://image.tmdb.org/t/p/original{{:movies[1].images.posters[0].file_path}}" alt="Card image cap">
+              <a href="/film/1" class="pop">
+					     <img class="card-img-top" src="https://image.tmdb.org/t/p/original{{:movies[1].images.posters[0].file_path}}" alt="Card image cap">
+              </a>
 					    <a class="pop" href="/film/1"><h4 class="card-title mt-4">{{:movies[1].title_sv}}</h4></a>
 					    <p class="card-text">5/5</p>
 					    <p class="card-text">{{:movies[1].plot_sv}}</p>
@@ -46,10 +44,11 @@
 					</div>
 				</div>
 				<div class="col-12 col-md-4">
-					<div class="card border-secondary m-3 mx-md-0">
-					  <div class="card-header">Topp 3-filmer</div>
+					<div class="card bg-transparent m-3 mx-md-0">
 					  <div class="card-body text-secondary">
-					    <img class="card-img-top" src="https://image.tmdb.org/t/p/original{{:movies[2].images.posters[0].file_path}}" alt="Card image cap">
+              <a href="/film/2" class="pop">
+					     <img class="card-img-top" src="https://image.tmdb.org/t/p/original{{:movies[2].images.posters[0].file_path}}" alt="Card image cap">
+              </a>
 					    <a class="pop" href="/film/2"><h4 class="card-title mt-4">{{:movies[2].title_sv}}</h4></a>
 					    <p class="card-text">4/5</p>
 					    <p class="card-text">{{:movies[2].plot_sv}}</p>
@@ -57,10 +56,11 @@
 					</div>
 				</div>
 				<div class="col-12 col-md-4">
-					<div class="card border-secondary m-3 ml-md-0">
-					  <div class="card-header">Topp 3-filmer</div>
+					<div class="card m-3 bg-transparent ml-md-0">
 					  <div class="card-body text-secondary">
-					  <img class="card-img-top" src="https://image.tmdb.org/t/p/original{{:movies[3].images.posters[0].file_path}}" alt="Card image cap">
+              <a href="/film/3" class="pop">
+					     <img class="card-img-top" src="https://image.tmdb.org/t/p/original{{:movies[3].images.posters[0].file_path}}" alt="Card image cap">
+              </a>
 					    <a class="pop" href="/film/3"><h4 class="card-title mt-4">{{:movies[3].title_sv}}</h4></a>
 					    <p class="card-text">3/5</p>
 					    <p class="card-text">{{:movies[3].plot_sv}}</p>

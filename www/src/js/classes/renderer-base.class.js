@@ -292,6 +292,7 @@ class Renderer extends PopStateHandler {
     selector = '#root',
     viewsFolder = '/views/'
   ) {
+    console.log(contextData);
     return new Promise((resolve, reject) => {
       if (typeof viewFile === 'function' && !callbackFn) {
         callbackFn = viewFile;

@@ -49,16 +49,18 @@ patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');
   );
 } */
 
+
 $('#register-user-submit').on('click', (e) => {
   e.preventDefault();
   let form = $('#register-form')
     .first()
     .get()[0];
-  form.classList.add('was-validated');
+  // form.classList.add('was-validated');
   // @ts-ignore
   if (form.checkValidity()) {
     app.logInHandler.registerUser();
   } else {
+    $('#email-register').addClass('is-invalid');
     $('#register-email-feedback').text('Ogiltig e-post.');
   }
 });

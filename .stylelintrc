@@ -2,6 +2,8 @@
   "extends": "stylelint-config-standard",
   "plugins": ["stylelint-scss"],
   "rules": {
-    "color-hex-case": null
+    "color-hex-case": null,
+    "comment-empty-line-before": null,
+    "comment-whitespace-inside": null
   }
 }

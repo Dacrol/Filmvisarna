@@ -21,22 +21,12 @@ export default class LogInHandler extends Base {
     });
     $('#sign-in-submit').on('click', function (event) {
       event.preventDefault();
-      that.logIn().then((user) => {
-        console.log(user);
-        if (user === null) {
-          $('#login-form input').addClass('is-invalid');
-        }
-      });
+      that.logIn();
     });
     $('#login-modal').keyup(function (event) {
       if (event.which === 13) {
         event.preventDefault();
-        that.logIn().then((user) => {
-          console.log(user);
-          if (user === null) {
-            $('#login-form input').addClass('is-invalid');
-          }
-        });
+        that.logIn();
       }
     });
   }
@@ -55,22 +45,43 @@ export default class LogInHandler extends Base {
         }
       }
     }
+    $('#login-form input').addClass('is-invalid');
     return null;
   }
   confirmLogIn (user) {
-    let session = MD5(user.id);
-    user.session = session;
-    sessionStorage.setItem('signed-in', JSON.stringify(session));
-    // this.currentUser = user;
-    this.checkIfLoggedIn(user).then((user) => {
+    this.makeSession(user);
+    this.currentUser = user;
+    this.verifySession(user).then((user) => {
       if (user) {
         $('#login-modal').modal('hide');
-        this.app.changePage('mypage');
+        $('#booking').removeClass('disabled');
+        // this.app.changePage('mypage');
       }
     });
   }
+  makeSession (user) {
+    // @ts-ignore
+    let newSession = MD5(
+      user.id +
+        (() => {
+          let text = '';
+          let randomCode =
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          for (let i = 0; i < 10; i++) {
+            text += randomCode.charAt(
+              Math.floor(Math.random() * randomCode.length)
+            );
+          }
+          return text;
+        })()
+      // @ts-ignore
+    ).words.join('');
+    user.session = newSession;
+    user.save();
+    sessionStorage.setItem('signed-in', newSession);
+  }
 
-  async checkIfLoggedIn (user = null) {
+  async verifySession (user = null) {
     let session = sessionStorage.getItem('signed-in');
     if (session) {
       $('#sign-in')
@@ -81,7 +92,7 @@ export default class LogInHandler extends Base {
       );
       if (!user) {
         let allUserNames = await JSON._load('users.json');
-        user = allUserNames.filter((user) => {
+        user = allUserNames.find((user) => {
           return user.session === session;
         });
       }
@@ -131,9 +142,10 @@ export default class LogInHandler extends Base {
           $('#register-email-feedback').text('E-posten används redan.');
           // console.log(error);
         });
+      $('#password-match, #password-register').addClass('is-valid');
     } else {
       $('#register-form').removeClass('was-validated');
-      $('#password-match').addClass('is-invalid');
+      $('#password-match, #password-register').addClass('is-invalid');
     }
   }
 

@@ -6,7 +6,13 @@ class App extends Renderer {
   constructor () {
     super();
     this.logInHandler = new LogInHandler(this);
-    this.currentUser = null;
+    // this.currentUser = null; // Moved to getter
+    this.currentBooking = null;
+    this.allBookings = [];
+  }
+
+  get currentUser () {
+    return this.logInHandler.currentUser;
   }
 
   /**
@@ -15,11 +21,7 @@ class App extends Renderer {
    * @memberof App
    */
   initializePage () {
-    this.logInHandler.checkIfLoggedIn().then((user) => {
-      if (user) {
-        this.currentUser = user;
-      }
-    });
+    this.logInHandler.verifySession();
   }
 }
 
