@@ -1,5 +1,6 @@
 body {
   overflow-y: scroll;
+  background-color: black;
 }
 
 .logo {
@@ -8,7 +9,34 @@ body {
 }
 
 .nav-item {
-  font-size: 20px;
+  font-size: 15px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: black;
+}
+
+.nav-pills .nav-link {
+  transition: background-color .3s, box-shadow .3s;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.3);
+}
+
+.nav-pills .nav-link.active {
+  background-color: rgba(84, 21, 21, 0.5);
+    box-shadow: 0px 0px 16px rgba(33,33,33,0.4);
+}
+
+.navbar-nav .nav-link {
+  padding-left: 15px;
+  color: black;
+}
+
+header {
+  background-color: #cc0020;
 }
 
 .card {
@@ -17,6 +45,125 @@ body {
 
 .card-text {
   color: black;
+}
+
+.salon-wrapper {
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.salon-container {
+  background-color: #343a40;
+  /*min-height: 60vh;*/
+  /*padding: 10px;*/
+  /*margin-bottom: 20px;*/
+  transform-origin: 0 0;
+  width: 1080px;
+  height: 480px;
+  padding-top: 20px;
+}
+
+.seat {
+  background-color: #888;
+  height: 40px;
+  width: 40px;
+  border-radius: 0 0 10px 10px;
+  margin: 5px;
+  display: inline-block;
+}
+
+.seat:hover {
+  cursor: pointer;
+}
+
+.hovered {
+  background-color: #ddd;
+}
+
+.selected {
+  background-color: #ccb130;
+}
+
+.unavailable {
+  background-color: #cc3030;
+}
+
+button.booking {
+  background-color: #cc0020;
+  color: #fff;
+  border-radius: 0.1875rem;
+  margin-bottom: 20px;
+  font-size: 15px;
+  box-shadow:
+    inset 0 -0.35rem 0 0 rgba(0, 0, 0, 0.2),
+    0 0.125rem 2px 0 rgba(0, 0, 0, 0.24),
+    0 8px 8px 0 rgba(0, 0, 0, 0.24);
+  border: none;
+
+  &:hover {
+    background-color: #f81f32;
+  }
+
+  &[disabled] {
+    background: #cc0020;
+  }
+
+  &.disabled {
+    background: #da0021;
+  }
+}
+
+.film-info {
+  // background-color: #eee;
+  min-height: 250px;
+}
+
+h1, h2, {
+  color: #919aa1;
+}
+
+span.h3, span.h5 {
+  color: #919aa1;
+}
+
+.btn.plus-minus {
+  padding: 0;
+  margin: 0 3px;
+  width: 2.88em;
+  height: 2.7em;
+  border-radius: 50%;
+}
+
+.special-tickets {
+  padding: 0 10px;
+}
+
+.text-light {
+  color: #ccc !important;
+}
+
+.text-lighter {
+  color: #ddd !important;
+}
+
+.text-inherit {
+  color: inherit;
+}
+
+.bg-transparent {
+  background-color: transparent;
+  .card-text {
+    color: #ccc;
+  }
+  .card-title {
+    color: #ddd;
+  }
+}
+
+.movie-screenings:nth-child(14n) {
+  margin-bottom: 70px !important;
 }
 
 .jumbotron {

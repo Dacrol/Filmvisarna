@@ -1,4 +1,4 @@
-import LogInHandler from './log-in-handler.class.js';
+// import LogInHandler from './log-in-handler.class.js';
 const SHA256 = require('crypto-js/sha256');
 
 export default class User {
@@ -16,9 +16,16 @@ export default class User {
   }
 
   async save () {
-    const users = await JSON._load('users.json');
+    let users = await JSON._load('users.json');
+    users = users.filter((user) => {
+      return !(user.id === this.id);
+    }); // Avoid duplicates
     users.push(this);
     return JSON._save('users.json', users);
+  }
+
+  getBookings () {
+    // ladda in booknongar från json o kolla om man finns med
   }
 
   static async createAndSaveNewUser (id, password) {

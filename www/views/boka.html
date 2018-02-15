@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="justify-content-center">
+    <h2 class="mb-3 text-lighter inher">
+      {{:screening.movie}}: {{:screening.date}}
+    </h2>
+    <div class="mb-2 h3 text-inherit">Du är på väg att boka {{:seats.length}} biljetter, varav: </div>
+          <div class="d-inline-flex p-2">
+      <div class="mb-4 text-left" style="font-size: 14pt;">
+        <div>
+          <span> Barn: </span>
+          <span class="float-right">
+            <button class="btn btn-outline-danger plus-minus minus" type="button">-</button>
+            <span class="quantity" id="juniors">0</span>
+            <button class="btn btn-outline-danger plus-minus plus" type="button">+</button>
+          </span>
+        </div>
+        <div class="mt-4">
+          <span class="mr-4"> Pensionärer: </span>
+          <button class="btn btn-outline-danger plus-minus minus" type="button">-</button>
+          <span class="quantity" id="seniors">0</span>
+          <button class="btn btn-outline-danger plus-minus plus" type="button">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="mb-2 h2 text-inherit">Totalpris: <span id="price">{{:price}}</span> kr</div>
+  </div>
+  <button type="submit" class="btn btn-lg booking mt-4" id="booking-2">Boka biljetter</button>
+</div>

@@ -2,6 +2,7 @@
 var gulp = require('gulp');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
+// eslint-disable-next-line no-unused-vars
 var uglify = require('gulp-uglify');
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
@@ -69,7 +70,7 @@ gulp.task('js', function () {
           loadMaps: true
         })
       )
-      .pipe(uglify())
+      // .pipe(uglify())
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(jsDist));
   });
