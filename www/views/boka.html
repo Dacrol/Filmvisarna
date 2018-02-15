@@ -3,7 +3,7 @@
     <h2 class="mb-3 text-lighter inher">
       {{:screening.movie}}: {{:screening.date}}
     </h2>
-    <div class="mb-2 h3 text-inherit">Du är på väg att boka 100 biljetter, varav: </div>
+    <div class="mb-2 h3 text-inherit">Du är på väg att boka {{:seats.length}} biljetter, varav: </div>
           <div class="d-inline-flex p-2">
       <div class="mb-4 text-left" style="font-size: 14pt;">
         <div>
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div class="mb-2 h2 text-inherit">Totalpris: 1 miljon kr</div>
+    <div class="mb-2 h2 text-inherit">Totalpris: <span id="price">{{:price}}</span> kr</div>
   </div>
   <button type="submit" class="btn btn-lg booking mt-4" id="booking-2">Boka biljetter</button>
 </div>

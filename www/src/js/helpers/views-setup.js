@@ -92,8 +92,13 @@ export default function viewsSetup (app) {
 
       $('#booking').on('click', function (event) {
         event.preventDefault();
-        if (app.currentUser) {
-          app.allBookings.push(app.currentBooking);
+        if (app.currentUser && app.currentBooking) {
+          let seats = $('.selected')
+            .map(function () {
+              return $(this).data();
+            })
+            .get();
+          app.currentBooking.seats = seats;
           // console.log(app);
           app.changePage('/boka');
         }
@@ -110,19 +115,33 @@ export default function viewsSetup (app) {
       );
     if (app.currentBooking) {
       Renderer.renderView('boka', app.currentBooking, async (booking) => {
+        // console.log(booking);
+        let tickets = booking.seats.length;
+        booking.ticketTypes = { adults: tickets, juniors: 0, seniors: 0 };
+        console.log(booking, app.currentBooking);
+        let updatePrice;
+        (updatePrice = () => {
+          $('#price').text(booking.price)
+        })();
+        // updatePrice();
         $('.plus-minus.plus').click(function (e) {
           e.preventDefault();
-          let tickets = 3;
           let quantity = parseInt(
             $(this)
-              .siblings('.quantity').first()
+              .siblings('.quantity')
+              .first()
               .text()
               .toString()
           );
-          if ((+$('#juniors').text() + +$('#seniors').text()) < tickets) {
-            $(this)
+          if (+$('#juniors').text() + +$('#seniors').text() < tickets) {
+            let type = $(this)
               .siblings('.quantity')
-              .text(quantity + 1);
+              .text(quantity + 1)
+              .prop('id');
+            booking.ticketTypes[type] = quantity + 1;
+            booking.ticketTypes.adults--;
+            updatePrice();
+            // console.log(booking);
           }
         });
 
@@ -135,9 +154,14 @@ export default function viewsSetup (app) {
               .toString()
           );
           if (quantity > 0) {
-            $(this)
+            let type = $(this)
               .siblings('.quantity')
-              .text(quantity - 1);
+              .text(quantity - 1)
+              .prop('id');
+            booking.ticketTypes[type] = quantity - 1;
+            booking.ticketTypes.adults++;
+            updatePrice();
+            // console.log(booking);
           }
         });
       });
