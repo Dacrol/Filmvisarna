@@ -32,7 +32,7 @@ export default class Booking {
     return this.confirmationNumber;
   }
 
-  async fetch (number) {
+  static async fetch (number) {
     if (typeof number !== 'string') {
       number = '' + number;
     }
