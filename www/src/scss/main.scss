@@ -109,6 +109,10 @@ button.booking {
   &[disabled] {
     background: #cc0020;
   }
+
+  &.disabled {
+    background: #da0021;
+  }
 }
 
 .film-info {

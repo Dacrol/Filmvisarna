@@ -86,7 +86,11 @@ export default function viewsSetup (app) {
       console.log(salon);
       salon.renderSeats();
 
-      if (!app.logInHandler.currentUser || !app.currentBooking) {
+      if (!app.logInHandler.currentUser) {
+        $('#booking').addClass('disabled');
+      }
+
+      if (!app.currentBooking){
         $('#booking').prop('disabled', true);
       }
 
@@ -101,7 +105,9 @@ export default function viewsSetup (app) {
           app.currentBooking.seats = seats;
           // console.log(app);
           app.changePage('/boka');
-        }
+        } else if (!app.currentUser) {
+        $('#login-modal').modal('toggle');
+      }
       });
     }
   );

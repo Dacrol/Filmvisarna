@@ -54,7 +54,8 @@ export default class LogInHandler extends Base {
     this.verifySession(user).then((user) => {
       if (user) {
         $('#login-modal').modal('hide');
-        this.app.changePage('mypage');
+        $('#booking').removeClass('disabled');
+        // this.app.changePage('mypage');
       }
     });
   }
