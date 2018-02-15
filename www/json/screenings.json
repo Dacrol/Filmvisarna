@@ -1,15 +1,5 @@
 [
   {
-    "date": "2/25/2018, 9:30:00 PM",
-    "salon": 0,
-    "movie": "Jumanji: Welcome to the Jungle"
-  },
-  {
-    "date": "2/25/2018, 4:30:00 PM",
-    "salon": 1,
-    "movie": "Fifty Shades Darker"
-  },
-  {
     "date": "2/26/2018, 9:30:00 PM",
     "salon": 0,
     "movie": "Fifty Shades Darker"
@@ -428,15 +418,5 @@
     "date": "4/8/2018, 4:30:00 PM",
     "salon": 1,
     "movie": "Pacific Rim"
-  },
-  {
-    "date": "4/9/2018, 9:30:00 PM",
-    "salon": 0,
-    "movie": "Borg"
-  },
-  {
-    "date": "4/9/2018, 4:30:00 PM",
-    "salon": 1,
-    "movie": "The Commuter"
   }
 ]

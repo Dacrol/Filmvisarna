@@ -157,3 +157,7 @@ span.h3, span.h5 {
     color: #ddd;
   }
 }
+
+.movie-screenings:nth-child(14n) {
+  margin-bottom: 70px !important;
+}
