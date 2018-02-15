@@ -4,13 +4,34 @@ export default class Booking {
     this.user = app.logInHandler.currentUser;
     this.seats = [];
     this.ticketTypes = {};
+    this.confirmationNumber = undefined;
   }
 
   get price () {
-    return (this.ticketTypes.adults * 85 + this.ticketTypes.seniors * 75 + this.ticketTypes.juniors * 65);
+    return (
+      this.ticketTypes.adults * 85 +
+      this.ticketTypes.seniors * 75 +
+      this.ticketTypes.juniors * 65
+    );
   }
 
-  randomBookNumber () {
+  async save (allBookings = null) {
+    let bookings =
+      allBookings || (await JSON._load('bookings.json').catch(() => []));
+    if (
+      !this.confirmationNumber ||
+      bookings.some(
+        (booking) => booking.confirmationNumber === this.confirmationNumber
+      )
+    ) {
+      this.confirmationNumber = Booking.randomBookNumber();
+      return this.save(bookings);
+    }
+    bookings.push(this);
+    return JSON._save('bookings.json', bookings);
+  }
+
+  static randomBookNumber () {
     let text = '';
     let randomCode = '0123456789';
 
