@@ -1,7 +1,7 @@
 export default class Booking {
-  constructor (screening, app) {
+  constructor (screening) {
     this.screening = screening;
-    this.user = app.logInHandler.currentUser;
+    this.user = null;
     this.seats = [];
     this.ticketTypes = {};
     this.confirmationNumber = undefined;
@@ -28,7 +28,26 @@ export default class Booking {
       return this.save(bookings);
     }
     bookings.push(this);
-    return JSON._save('bookings.json', bookings);
+    await JSON._save('bookings.json', bookings);
+    return this.confirmationNumber;
+  }
+
+  async fetch (number) {
+    if (typeof number !== 'string') {
+      number = '' + number;
+    }
+    let allBookings = await JSON._load('bookings.json', (...args) => {
+      return args;
+    }).catch(() => []);
+    console.log(allBookings)
+    let booking = allBookings.find(
+      (booking) => booking.confirmationNumber === number
+    );
+    if (booking) {
+      return booking;
+    } else {
+      throw new Error('Invalid confirmation number');
+    }
   }
 
   static randomBookNumber () {

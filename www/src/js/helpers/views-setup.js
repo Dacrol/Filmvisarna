@@ -181,9 +181,45 @@ export default function viewsSetup (app) {
             // console.log(booking);
           }
         });
+        $('#booking-confirm').on('click', async function (event) {
+          event.preventDefault();
+          if (!app.currentUser) {
+            $('#login-modal').modal('show');
+            return;
+          }
+          if (!booking.user) {
+            booking.user = app.currentUser;
+          }
+          const confirmationNumber = await booking.save();
+          app.changePage('/bokning/' + confirmationNumber);
+        });
       });
     } else {
       app.changePage('/visningar'); // Redirect if not actually booking
+    }
+  });
+  app.bindView('confirmation', '/bokning', async (Renderer, pathParams) => {
+    try {
+      let booking =
+        app.currentBooking &&
+        app.currentBooking.confirmationNumber &&
+        app.currentBooking.confirmationNumber === pathParams
+          ? app.currentBooking
+          : pathParams
+            ? await Booking.fetch(pathParams, app)
+            : void app.changePage(
+              app.currentBooking.confirmationNumber
+                ? '/bokning' + app.currentBooking.confirmationNumber
+                : '/'
+            );
+
+      if (booking) {
+        Renderer.renderView('confirmation', booking);
+      } else {
+        throw new Error('Invalid confirmation number');
+      }
+    } catch (e) {
+      app.changePage('/');
     }
   });
   app.bindViewWithJSON('bio', '/bios', '/json/movie-data.json', 'movies');
@@ -220,7 +256,7 @@ export default function viewsSetup (app) {
           .on('click', function (event) {
             event.preventDefault();
             // @ts-ignore
-            app.currentBooking = new Booking(screening, app);
+            app.currentBooking = new Booking(screening);
             app.changePage('/salontemplate');
           });
       });

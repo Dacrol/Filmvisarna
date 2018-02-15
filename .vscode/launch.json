@@ -14,7 +14,9 @@
       "webRoot": "${workspaceFolder}/www",
       "sourceMapPathOverrides": {
         "www/*": "${workspaceFolder}/www/*"
-      }
+      },
+      "showAsyncStacks": false,
+      "smartStep": true
     },
     {
       "type": "node",
