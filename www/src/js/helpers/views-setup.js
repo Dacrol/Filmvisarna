@@ -97,6 +97,9 @@ export default function viewsSetup (app) {
       $('#booking').on('click', function (event) {
         event.preventDefault();
         if (app.currentUser && app.currentBooking) {
+          if (!app.currentBooking.user) {
+            app.currentBooking.user = app.currentUser;
+          }
           let seats = $('.selected')
             .map(function () {
               return $(this).data();
@@ -128,7 +131,12 @@ export default function viewsSetup (app) {
         $('#adults').text(tickets);
         let updatePrice;
         (updatePrice = () => {
-          $('#price').text(booking.price || (booking.ticketTypes.adults * 85 + booking.ticketTypes.seniors * 75 + booking.ticketTypes.juniors * 65));
+          $('#price').text(
+            booking.price ||
+              booking.ticketTypes.adults * 85 +
+                booking.ticketTypes.seniors * 75 +
+                booking.ticketTypes.juniors * 65
+          );
         })();
         // updatePrice();
         $('.plus-minus.plus').click(function (e) {
