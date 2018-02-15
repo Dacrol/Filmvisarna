@@ -25,7 +25,7 @@ class Salon extends Base {
     let salonContainerWidth = 1080;
 
     let rows = this.salonSeats.length;
-    let salonContainerHeight = 65.4 * rows - 0.675 * (rows ** 2) || 480; // Andragradspolynom för att scala height efter varierande antal rows
+    let salonContainerHeight = 65.4 * rows - 0.675 * rows ** 2 || 480; // Andragradspolynom för att scala height efter varierande antal rows
 
     let w = $(window).width();
     let h = $(window).height();
@@ -161,3 +161,34 @@ class Salon extends Base {
 }
 
 export default Salon;
+/*
+(async function makeScreenings () {
+  // Script for generating new screenings
+  let screenings = await JSON._load('screenings.json').then((screenings) => {
+    let newScreenings = [];
+    let date1 = new Date('Feb 24 2018 21:30:00');
+    let date2 = new Date('Feb 24 2018 16:30:00');
+    let count = 0;
+    while (count < 84) {
+      for (const screening of screenings) {
+        let newScreening = Object.assign({}, screening);
+        let salon = count % 2;
+        let date = salon === 0 ? date1 : date2;
+        date.setDate(date.getDate() + 1);
+        Object.assign(newScreening, {
+          date: date.toLocaleString('en', {
+            hour12: 'false'
+          })
+        });
+        newScreening.salon = salon;
+        newScreenings.push(newScreening);
+        count++;
+      }
+    }
+    return newScreenings;
+  });
+  return screenings;
+})().then((screenings) => {
+  console.log(screenings);
+  // JSON._save('screenings', screenings);
+}); */

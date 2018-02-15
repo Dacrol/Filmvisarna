@@ -103,34 +103,41 @@ export default function viewsSetup (app) {
   app.bindView('boka', '/boka', (Renderer, pathParams) => {
     console.log(app.currentBooking);
     // ! TODO: Remove this
-    app.currentBooking = app.currentBooking || JSON.parse('{"screening":{"date":"Feb 24 2018 21:30:00","salon":1,"movie":"Fifty Shades Darker"},"user":{"id":"test@test.com","passwordHash":{"words":[1803989619,-13304607,-1653899186,-10862761,1202562282,-1573970615,-1071754531,-1215866037],"sigBytes":32},"session":"2028036453-20884762-182915439-706389771"}}')
+    app.currentBooking =
+      app.currentBooking ||
+      JSON.parse(
+        '{"screening":{"date":"Feb 24 2018 21:30:00","salon":1,"movie":"Fifty Shades Darker"},"user":{"id":"test@test.com","passwordHash":{"words":[1803989619,-13304607,-1653899186,-10862761,1202562282,-1573970615,-1071754531,-1215866037],"sigBytes":32},"session":"2028036453-20884762-182915439-706389771"}}'
+      );
     if (app.currentBooking) {
       Renderer.renderView('boka', app.currentBooking, async (booking) => {
-
-        $('.quantity-right-plus').click(function (e) {
-          // Stop acting like a button
+        $('.plus-minus.plus').click(function (e) {
           e.preventDefault();
-          // Get the field name
-          var quantity = parseInt($('#quantity').val());
-
-          // If is not undefined
-
-          $('#quantity').val(quantity + 1);
-
-          // Increment
+          let tickets = 3;
+          let quantity = parseInt(
+            $(this)
+              .siblings('.quantity').first()
+              .text()
+              .toString()
+          );
+          if ((+$('#juniors').text() + +$('#seniors').text()) < tickets) {
+            $(this)
+              .siblings('.quantity')
+              .text(quantity + 1);
+          }
         });
 
-        $('.quantity-left-minus').click(function (e) {
-          // Stop acting like a button
+        $('.plus-minus.minus').click(function (e) {
           e.preventDefault();
-          // Get the field name
-          var quantity = parseInt($('#quantity').val());
-
-          // If is not undefined
-
-          // Increment
+          let quantity = parseInt(
+            $(this)
+              .siblings('.quantity')
+              .text()
+              .toString()
+          );
           if (quantity > 0) {
-            $('#quantity').val(quantity - 1);
+            $(this)
+              .siblings('.quantity')
+              .text(quantity - 1);
           }
         });
       });
