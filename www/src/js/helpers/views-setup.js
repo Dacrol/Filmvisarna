@@ -212,11 +212,11 @@ export default function viewsSetup (app) {
                 ? '/bokning' + app.currentBooking.confirmationNumber
                 : '/'
             );
-
-      if (booking) {
+      let user = app.currentUser || await app.logInHandler.verifySession()
+      if (booking && user) {
         Renderer.renderView('confirmation', booking);
       } else {
-        throw new Error('Invalid confirmation number');
+        throw new Error('Unauthorized');
       }
     } catch (e) {
       app.changePage('/');

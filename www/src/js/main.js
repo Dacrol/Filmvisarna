@@ -32,12 +32,12 @@ $.owlCarousel = $.fn.owlCarousel;
 JSON._classes(User, Booking);
 patchOwlCarousel('&iv_load_policy=3&rel=0&showinfo=1&controls=1');
 let app = new App();
+viewsSetup(app);
 app.initializePage();
 
 // @ts-ignore
 window.app = app;
 
-viewsSetup(app);
 
 $('#register-user-submit').on('click', (e) => {
   e.preventDefault();

@@ -36,9 +36,7 @@ export default class Booking {
     if (typeof number !== 'string') {
       number = '' + number;
     }
-    let allBookings = await JSON._load('bookings.json', (...args) => {
-      return args;
-    }).catch(() => []);
+    let allBookings = await JSON._load('bookings.json').catch(() => []);
     console.log(allBookings)
     let booking = allBookings.find(
       (booking) => booking.confirmationNumber === number

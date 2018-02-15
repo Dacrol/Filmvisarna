@@ -94,5 +94,97 @@
     },
     "confirmationNumber": "370978835996",
     "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "3/18/2018, 9:30:00 PM",
+      "salon": 0,
+      "movie": "Fifty Shades Darker"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "1222977737-801778190601607179-1338100137",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 6,
+        "rownumber": 1
+      },
+      {
+        "seatnumber": 5,
+        "rownumber": 1
+      },
+      {
+        "seatnumber": 4,
+        "rownumber": 1
+      },
+      {
+        "seatnumber": 3,
+        "rownumber": 1
+      }
+    ],
+    "ticketTypes": {
+      "adults": 4,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "735576248939",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "3/26/2018, 4:30:00 PM",
+      "salon": 1,
+      "movie": "Smurfarna: Den försvunna byn"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "1222977737-801778190601607179-1338100137",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 11,
+        "rownumber": 2
+      },
+      {
+        "seatnumber": 10,
+        "rownumber": 2
+      }
+    ],
+    "ticketTypes": {
+      "adults": 2,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "422408296490",
+    "⚙": "Booking"
   }
 ]
