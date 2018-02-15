@@ -206,7 +206,7 @@ export default function viewsSetup (app) {
         app.currentBooking.confirmationNumber === pathParams
           ? app.currentBooking
           : pathParams
-            ? await Booking.fetch(pathParams, app)
+            ? await Booking.fetch(pathParams)
             : void app.changePage(
               app.currentBooking.confirmationNumber
                 ? '/bokning' + app.currentBooking.confirmationNumber
