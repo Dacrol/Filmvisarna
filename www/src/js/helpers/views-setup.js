@@ -90,7 +90,7 @@ export default function viewsSetup (app) {
         $('#booking').addClass('disabled');
       }
 
-      if (!app.currentBooking){
+      if (!app.currentBooking) {
         $('#booking').prop('disabled', true);
       }
 
@@ -106,8 +106,8 @@ export default function viewsSetup (app) {
           // console.log(app);
           app.changePage('/boka');
         } else if (!app.currentUser) {
-        $('#login-modal').modal('toggle');
-      }
+          $('#login-modal').modal('toggle');
+        }
       });
     }
   );
@@ -117,17 +117,18 @@ export default function viewsSetup (app) {
     app.currentBooking =
       app.currentBooking ||
       JSON.parse(
-        '{"screening":{"date":"Feb 24 2018 21:30:00","salon":1,"movie":"Fifty Shades Darker"},"user":{"id":"test@test.com","passwordHash":{"words":[1803989619,-13304607,-1653899186,-10862761,1202562282,-1573970615,-1071754531,-1215866037],"sigBytes":32},"session":"2028036453-20884762-182915439-706389771"}}'
+        '{"screening":{"date":"3/29/2018, 4:30:00 PM","salon":1,"movie":"Fifty Shades Darker"},"user":{"id":"test@test.com","passwordHash":{"words":[1803989619,-13304607,-1653899186,-10862761,1202562282,-1573970615,-1071754531,-1215866037],"sigBytes":32},"session":"1577922921401715461-2039341156-1724963259"},"seats":[{"seatnumber":21,"rownumber":3},{"seatnumber":20,"rownumber":3},{"seatnumber":19,"rownumber":3},{"seatnumber":18,"rownumber":3}],"ticketTypes":{"adults":4,"juniors":0,"seniors":0}}'
       );
     if (app.currentBooking) {
       Renderer.renderView('boka', app.currentBooking, async (booking) => {
         // console.log(booking);
         let tickets = booking.seats.length;
         booking.ticketTypes = { adults: tickets, juniors: 0, seniors: 0 };
-        console.log(booking, app.currentBooking);
+        // console.log(booking, app.currentBooking);
+        $('#adults').text(tickets);
         let updatePrice;
         (updatePrice = () => {
-          $('#price').text(booking.price)
+          $('#price').text(booking.price || (booking.ticketTypes.adults * 85 + booking.ticketTypes.seniors * 75 + booking.ticketTypes.juniors * 65));
         })();
         // updatePrice();
         $('.plus-minus.plus').click(function (e) {
@@ -146,6 +147,7 @@ export default function viewsSetup (app) {
               .prop('id');
             booking.ticketTypes[type] = quantity + 1;
             booking.ticketTypes.adults--;
+            $('#adults').text(booking.ticketTypes.adults);
             updatePrice();
             // console.log(booking);
           }
@@ -166,6 +168,7 @@ export default function viewsSetup (app) {
               .prop('id');
             booking.ticketTypes[type] = quantity - 1;
             booking.ticketTypes.adults++;
+            $('#adults').text(booking.ticketTypes.adults);
             updatePrice();
             // console.log(booking);
           }

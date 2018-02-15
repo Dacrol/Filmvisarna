@@ -6,7 +6,15 @@
     <div class="mb-2 h3 text-inherit">Du är på väg att boka {{:seats.length}} biljetter, varav: </div>
           <div class="d-inline-flex p-2">
       <div class="mb-4 text-left" style="font-size: 14pt;">
-        <div>
+          <div class="mt-1">
+              <span> Vuxna: </span>
+              <span class="float-right">
+                <button class="btn btn-outline-danger plus-minus btn-invisible" disabled type="button">-</button>
+                <span class="quantity" id="adults">0</span>
+                <button class="btn btn-outline-danger plus-minus btn-invisible" disabled type="button">+</button>
+              </span>
+            </div>
+        <div class="mt-4">
           <span> Barn: </span>
           <span class="float-right">
             <button class="btn btn-outline-danger plus-minus minus" type="button">-</button>
