@@ -148,3 +148,12 @@ span.h3, span.h5 {
   color: inherit;
 }
 
+.bg-transparent {
+  background-color: transparent;
+  .card-text {
+    color: #ccc;
+  }
+  .card-title {
+    color: #ddd;
+  }
+}
