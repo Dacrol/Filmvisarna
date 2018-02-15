@@ -16,12 +16,17 @@ body {
   color: black;
 }
 
+.nav-pills .nav-link {
+  transition: background-color .3s, box-shadow .3s;
+}
+
 .nav-pills .nav-link:hover {
-  background-color: #919aa1;
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.3);
 }
 
 .nav-pills .nav-link.active {
-  background-color: #c0cbd9;
+  background-color: #CC8F98;
 }
 
 .navbar-nav .nav-link {
