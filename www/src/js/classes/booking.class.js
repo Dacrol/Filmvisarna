@@ -37,7 +37,6 @@ export default class Booking {
       number = '' + number;
     }
     let allBookings = await JSON._load('bookings.json').catch(() => []);
-    console.log(allBookings)
     let booking = allBookings.find(
       (booking) => booking.confirmationNumber === number
     );
@@ -46,6 +45,14 @@ export default class Booking {
     } else {
       throw new Error('Invalid confirmation number');
     }
+  }
+
+  static async getOccupied (screening) {
+    let allBookings = await JSON._load('bookings.json').catch(() => []);
+    let matching = allBookings.filter((booking) => {
+      return Object.entries(screening).every((entry) => booking.screening[entry[0]] === entry[1]);
+    });
+    return [].concat(...matching.map((match) => match.seats));
   }
 
   static randomBookNumber () {
@@ -58,3 +65,6 @@ export default class Booking {
     return text;
   }
 }
+
+// @ts-ignore
+window.Booking = Booking;

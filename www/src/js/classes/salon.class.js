@@ -3,7 +3,7 @@ import Base from './base.class.js';
 class Salon extends Base {
   constructor (app, salongNr = undefined) {
     super();
-    // Vilka properties behöver Salon-klassen?
+    this.unavailableSeats = [];
     this.salongNr = salongNr;
     this.salonSeats = [];
     this.salonContainerHeight = 480;
@@ -87,12 +87,15 @@ class Salon extends Base {
     $('#number-of-visitors')
       .on('change', function () {
         let seats = $(this).val();
-        if (typeof seats === 'string') that.refreshSeatEvents(parseInt(seats));
+        if (typeof seats === 'string') {
+          that.refreshSeatEvents(parseInt(seats));
+        }
       })
       .trigger('change');
   }
 
-  refreshSeatEvents (seats = 1) {
+  refreshSeatEvents (seats = undefined) {
+    seats = seats || +$('#number-of-visitors').val() || 1;
     let that = this;
     // console.log(seats);
     $('.seat').off('mouseenter mouseleave');
@@ -101,7 +104,7 @@ class Salon extends Base {
       let row = $(this).attr('data-rownumber');
       let seat = $(this).attr('data-seatnumber');
       // console.log(row, seat);
-      let seatNumbers = that.getAdjacent(+seat, seats, that.salonSeats, +row);
+      let seatNumbers = that.getAdjacent(+seat, seats, that.salonSeats, +row, that.unavailableSeats);
       let targetSeats = $(this)
         .siblings()
         .addBack()
@@ -137,7 +140,7 @@ class Salon extends Base {
    * @returns {Array.<number>} selected seats
    * @memberof Salon
    */
-  getAdjacent (start, amount, seatsPerRow, row) {
+  getAdjacent (start, amount, seatsPerRow, row, unavailable = []) {
     let seatNumbers = [];
     row -= 1;
     const max = seatsPerRow.reduce((acc, seats, index) => {
@@ -147,7 +150,7 @@ class Salon extends Base {
     for (let count = 0; count <= (amount - 1) * 2; count++) {
       let offset = count % 2 !== 0 ? (count + 1) / 2 : -(count / 2);
       let seat = start + offset;
-      if (!(seat > max || seat < min)) {
+      if (!(seat > max || seat < min || unavailable.includes(seat))) {
         seatNumbers.push(seat);
         if (seatNumbers.length === amount) {
           return seatNumbers.sort((a, b) => {

@@ -84,7 +84,19 @@ export default function viewsSetup (app) {
         salon = new Salon(app, contextData.pathParams || 0);
       }
       console.log(salon);
-      salon.renderSeats();
+      salon.renderSeats().then(async () => {
+        if (app.currentBooking && app.currentBooking.screening) {
+          let screening = app.currentBooking.screening;
+          let occupied = await Booking.getOccupied(screening);
+          occupied.forEach((seat) => {
+            $(`.seat[data-seatnumber="${seat.seatnumber}"]`).addClass(
+              'unavailable'
+            );
+            salon.unavailableSeats.push(+seat.seatnumber);
+          });
+          salon.refreshSeatEvents();
+        }
+      });
 
       if (!app.logInHandler.currentUser) {
         $('#booking').addClass('disabled');
@@ -212,7 +224,7 @@ export default function viewsSetup (app) {
                 ? '/bokning' + app.currentBooking.confirmationNumber
                 : '/'
             );
-      let user = app.currentUser || await app.logInHandler.verifySession()
+      let user = app.currentUser || (await app.logInHandler.verifySession());
       if (booking && user) {
         Renderer.renderView('confirmation', booking);
       } else {
