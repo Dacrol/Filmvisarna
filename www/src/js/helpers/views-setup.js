@@ -13,14 +13,33 @@ export default function viewsSetup (app) {
   app.bindViewWithJSON(
     'mypage',
     '/mypage',
-    '/json/movie-data.json',
-    'movies',
-    () => {
+    ['/json/movie-data.json', '/json/bookings.json'],
+    '',
+    (data) => {
+      let myBookings = data[1].filter((booking) => {
+        return booking.user.id === app.currentUser.id;
+      })
+      let now = new Date()
+      myBookings.forEach(booking => {
+        let date = new Date(booking.screening.date)
+        let target = date > now ? $('#current-bookings') : $('#past-bookings');
+        console.log(target)
+        target.append(`
+        <a class="text-light" alt="" href="/bokning/${booking.confirmationNumber}">
+        <dt> ${booking.screening.movie} </dt>
+        <dl> ${toSwedishDate(date)} </dl>
+        </a>
+        `);
+      })
+
+      console.log(data);
+
       $('#sign-out').on('click', function (event) {
         event.preventDefault();
         // @ts-ignore
         app.logInHandler.signOut();
       });
+
     }
   );
 
@@ -305,25 +324,29 @@ export default function viewsSetup (app) {
           }
         );
       });
-      const dateOptions = {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric'
-      };
       contextData.forEach((screening) => {
-        const date = new Date(screening.date).toLocaleDateString(
-          'sv-SE',
-          dateOptions
-        );
+        const date = toSwedishDate(new Date(screening.date));
         Object.assign(screening, {
-          dateString: capitalizeFirstLetter(date)
+          dateString: date
         });
       });
       Renderer.renderView('screenings', { screenings: contextData });
     }
   );
+}
+
+function toSwedishDate(date) {
+  const dateOptions = {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric'
+  };
+  return capitalizeFirstLetter(date.toLocaleDateString(
+    'sv-SE',
+    dateOptions
+  ));
 }
 
 /**
