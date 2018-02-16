@@ -3,6 +3,7 @@ import Base from './base.class.js';
 class Salon extends Base {
   constructor (app, salongNr = undefined) {
     super();
+    this.app = app;
     this.unavailableSeats = [];
     this.salongNr = salongNr;
     this.salonSeats = [];
@@ -98,13 +99,19 @@ class Salon extends Base {
     seats = seats || +$('#number-of-visitors').val() || 1;
     let that = this;
     // console.log(seats);
-    $('.seat').off('mouseenter mouseleave');
+    $('.seat').off('mouseenter mouseleave click');
 
     $('.seat').each(function () {
       let row = $(this).attr('data-rownumber');
       let seat = $(this).attr('data-seatnumber');
       // console.log(row, seat);
-      let seatNumbers = that.getAdjacent(+seat, seats, that.salonSeats, +row, that.unavailableSeats);
+      let seatNumbers = that.getAdjacent(
+        +seat,
+        seats,
+        that.salonSeats,
+        +row,
+        that.unavailableSeats
+      );
       let targetSeats = $(this)
         .siblings()
         .addBack()
@@ -122,8 +129,11 @@ class Salon extends Base {
           }
         )
         .click(function () {
-          $('.seat').removeClass('selected');
-          targetSeats.addClass('selected');
+          if (targetSeats.length > 0 && that.app.currentBooking) {
+            $('.seat').removeClass('selected');
+            targetSeats.addClass('selected');
+            $('#booking').prop('disabled', false);
+          }
         });
     });
   }

@@ -96,14 +96,13 @@ export default function viewsSetup (app) {
           });
           salon.refreshSeatEvents();
         }
+        if (!app.currentBooking || app.currentBooking.seats.length < 1) {
+          $('#booking').prop('disabled', true);
+        }
       });
 
       if (!app.logInHandler.currentUser) {
         $('#booking').addClass('disabled');
-      }
-
-      if (!app.currentBooking) {
-        $('#booking').prop('disabled', true);
       }
 
       $('#booking').on('click', function (event) {
@@ -117,9 +116,11 @@ export default function viewsSetup (app) {
               return $(this).data();
             })
             .get();
-          app.currentBooking.seats = seats;
-          // console.log(app);
-          app.changePage('/boka');
+          if (seats.length > 0) {
+            app.currentBooking.seats = seats;
+            // console.log(app);
+            app.changePage('/boka');
+          }
         } else if (!app.currentUser) {
           $('#login-modal').modal('toggle');
         }
