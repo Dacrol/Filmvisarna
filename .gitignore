@@ -29,4 +29,8 @@ node_modules
 
 # OSX folder attributes
 .DS_Store
-www/dist/
+www/dist/*
+!www/dist/css
+www/dist/css/*
+!www/dist/css/owl.video.play.png
+!www/dist/css/ajax-loader.gif

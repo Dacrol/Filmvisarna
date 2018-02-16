@@ -1,0 +1,586 @@
+[
+  {
+    "screening": {
+      "date": "1/27/2018, 4:30:00 PM",
+      "salon": 1,
+      "movie": "Pacific Rim"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "824385540-15259804018380378461884252702",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 21,
+        "rownumber": 3
+      },
+      {
+        "seatnumber": 20,
+        "rownumber": 3
+      },
+      {
+        "seatnumber": 19,
+        "rownumber": 3
+      },
+      {
+        "seatnumber": 18,
+        "rownumber": 3
+      }
+    ],
+    "ticketTypes": {
+      "adults": 2,
+      "juniors": 1,
+      "seniors": 1
+    },
+    "confirmationNumber": "7010652950461",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "1/25/2018, 4:30:00 PM",
+      "salon": 1,
+      "movie": "Fifty Shades Darker"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "-16608387475297701462005785418-786944875",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 30,
+        "rownumber": 4
+      },
+      {
+        "seatnumber": 29,
+        "rownumber": 4
+      },
+      {
+        "seatnumber": 28,
+        "rownumber": 4
+      },
+      {
+        "seatnumber": 27,
+        "rownumber": 4
+      },
+      {
+        "seatnumber": 26,
+        "rownumber": 4
+      }
+    ],
+    "ticketTypes": {
+      "adults": 5,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "524054999524",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "3/25/2018, 4:30:00 PM",
+      "salon": 1,
+      "movie": "Fifty Shades Darker"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "-16608387475297701462005785418-786944875",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 30,
+        "rownumber": 4
+      },
+      {
+        "seatnumber": 29,
+        "rownumber": 4
+      },
+      {
+        "seatnumber": 28,
+        "rownumber": 4
+      },
+      {
+        "seatnumber": 27,
+        "rownumber": 4
+      },
+      {
+        "seatnumber": 26,
+        "rownumber": 4
+      }
+    ],
+    "ticketTypes": {
+      "adults": 5,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "524054629524",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "3/21/2018, 4:30:00 PM",
+      "salon": 1,
+      "movie": "Fifty Shades Darker"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "-16608387475297701462005785418-786944875",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 9,
+        "rownumber": 2
+      },
+      {
+        "seatnumber": 8,
+        "rownumber": 2
+      }
+    ],
+    "ticketTypes": {
+      "adults": 2,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "370978835996",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "3/18/2018, 9:30:00 PM",
+      "salon": 0,
+      "movie": "Fifty Shades Darker"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "1222977737-801778190601607179-1338100137",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 6,
+        "rownumber": 1
+      },
+      {
+        "seatnumber": 5,
+        "rownumber": 1
+      },
+      {
+        "seatnumber": 4,
+        "rownumber": 1
+      },
+      {
+        "seatnumber": 3,
+        "rownumber": 1
+      }
+    ],
+    "ticketTypes": {
+      "adults": 4,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "735576248939",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "3/26/2018, 4:30:00 PM",
+      "salon": 1,
+      "movie": "Smurfarna: Den försvunna byn"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "1222977737-801778190601607179-1338100137",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 11,
+        "rownumber": 2
+      },
+      {
+        "seatnumber": 10,
+        "rownumber": 2
+      }
+    ],
+    "ticketTypes": {
+      "adults": 2,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "422408296490",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "2/26/2018, 9:30:00 PM",
+      "salon": 0,
+      "movie": "Fifty Shades Darker"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "-705390519-667227251-9978317471577938035",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 15,
+        "rownumber": 2
+      },
+      {
+        "seatnumber": 14,
+        "rownumber": 2
+      },
+      {
+        "seatnumber": 13,
+        "rownumber": 2
+      },
+      {
+        "seatnumber": 12,
+        "rownumber": 2
+      }
+    ],
+    "ticketTypes": {
+      "adults": 4,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "740844135737",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "2/27/2018, 4:30:00 PM",
+      "salon": 1,
+      "movie": "Pacific Rim"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "824385540-15259804018380378461884252702",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 21,
+        "rownumber": 3
+      },
+      {
+        "seatnumber": 20,
+        "rownumber": 3
+      },
+      {
+        "seatnumber": 19,
+        "rownumber": 3
+      },
+      {
+        "seatnumber": 18,
+        "rownumber": 3
+      }
+    ],
+    "ticketTypes": {
+      "adults": 2,
+      "juniors": 1,
+      "seniors": 1
+    },
+    "confirmationNumber": "701012950461",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "3/29/2018, 4:30:00 PM",
+      "salon": 1,
+      "movie": "Fifty Shades Darker"
+    },
+    "user": {
+      "id": "t@hek.com",
+      "passwordHash": {
+        "words": [
+          -474379699,
+          -1558572419,
+          1272868419,
+          54486714,
+          659335950,
+          -1209328528,
+          -331268053,
+          -165200424
+        ],
+        "sigBytes": 32
+      },
+      "session": "-376261916-929781342-1755608332-1504690156",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 28,
+        "rownumber": 4
+      },
+      {
+        "seatnumber": 27,
+        "rownumber": 4
+      }
+    ],
+    "ticketTypes": {
+      "adults": 2,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "261422339669",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "2/26/2018, 9:30:00 PM",
+      "salon": 0,
+      "movie": "Fifty Shades Darker"
+    },
+    "user": {
+      "id": "j@j.com",
+      "passwordHash": {
+        "words": [
+          413089795,
+          1273471385,
+          -235235183,
+          1720640427,
+          1615460397,
+          952536039,
+          257519275,
+          773347255
+        ],
+        "sigBytes": 32
+      },
+      "session": "1650803644407451827-580645952435497842",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 45,
+        "rownumber": 5
+      },
+      {
+        "seatnumber": 44,
+        "rownumber": 5
+      },
+      {
+        "seatnumber": 43,
+        "rownumber": 5
+      },
+      {
+        "seatnumber": 42,
+        "rownumber": 5
+      }
+    ],
+    "ticketTypes": {
+      "adults": 4,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "132096009891",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "2/26/2018, 9:30:00 PM",
+      "salon": 0,
+      "movie": "Fifty Shades Darker"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "1544375635-516502569400378780723832896",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 55,
+        "rownumber": 6
+      },
+      {
+        "seatnumber": 54,
+        "rownumber": 6
+      },
+      {
+        "seatnumber": 53,
+        "rownumber": 6
+      },
+      {
+        "seatnumber": 52,
+        "rownumber": 6
+      },
+      {
+        "seatnumber": 51,
+        "rownumber": 6
+      }
+    ],
+    "ticketTypes": {
+      "adults": 3,
+      "juniors": 1,
+      "seniors": 1
+    },
+    "confirmationNumber": "354367104795",
+    "⚙": "Booking"
+  },
+  {
+    "screening": {
+      "date": "3/2/2018, 9:30:00 PM",
+      "salon": 0,
+      "movie": "Fifty Shades Darker"
+    },
+    "user": {
+      "id": "test@test.com",
+      "passwordHash": {
+        "words": [
+          1803989619,
+          -13304607,
+          -1653899186,
+          -10862761,
+          1202562282,
+          -1573970615,
+          -1071754531,
+          -1215866037
+        ],
+        "sigBytes": 32
+      },
+      "session": "1544375635-516502569400378780723832896",
+      "⚙": "User"
+    },
+    "seats": [
+      {
+        "seatnumber": 23,
+        "rownumber": 3
+      },
+      {
+        "seatnumber": 22,
+        "rownumber": 3
+      },
+      {
+        "seatnumber": 21,
+        "rownumber": 3
+      }
+    ],
+    "ticketTypes": {
+      "adults": 3,
+      "juniors": 0,
+      "seniors": 0
+    },
+    "confirmationNumber": "077858978970",
+    "⚙": "Booking"
+  }
+]
