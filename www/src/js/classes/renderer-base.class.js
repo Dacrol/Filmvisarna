@@ -238,17 +238,16 @@ class Renderer extends PopStateHandler {
         view,
         url,
         async (Renderer, pathParams) => {
-          let contextData = await Promise.all(
+          let contextData = { pathParams: pathParams }
+          let promiseData = await Promise.all(
             // @ts-ignore
             jsonUrl.map((url) => {
               return $.getJSON(url);
             })
           );
-          if (!dataName) {
-            dataName = 'data';
-          }
-          if (typeof dataName === 'string') {
-            let data = { [dataName]: contextData };
+          Object.assign(contextData, promiseData);
+          if (typeof dataName === 'string' || !dataName) {
+            let data = (typeof dataName === 'string' && dataName.trim().length > 0) ? { [dataName]: contextData } : contextData;
             if (
               additionalData &&
               additionalData.constructor.name === 'Object'
