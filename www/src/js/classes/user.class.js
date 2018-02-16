@@ -54,6 +54,3 @@ export default class User {
     return SHA256(str);
   }
 }
-
-// @ts-ignore
-window.User = User;

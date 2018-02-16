@@ -13,14 +13,33 @@ export default function viewsSetup (app) {
   app.bindViewWithJSON(
     'mypage',
     '/mypage',
-    '/json/movie-data.json',
-    'movies',
-    () => {
+    ['/json/movie-data.json', '/json/bookings.json'],
+    '',
+    (data) => {
+      let myBookings = data[1].filter((booking) => {
+        return booking.user.id === app.currentUser.id;
+      })
+      let now = new Date()
+      myBookings.forEach(booking => {
+        let date = new Date(booking.screening.date)
+        let target = date > now ? $('#current-bookings') : $('#past-bookings');
+        console.log(target)
+        target.append(`
+        <a class="text-light" alt="" href="/bokning/${booking.confirmationNumber}">
+        <dt> ${booking.screening.movie} </dt>
+        <dl> ${toSwedishDate(date)} </dl>
+        </a>
+        `);
+      })
+
+      console.log(data);
+
       $('#sign-out').on('click', function (event) {
         event.preventDefault();
         // @ts-ignore
         app.logInHandler.signOut();
       });
+
     }
   );
 
@@ -84,30 +103,46 @@ export default function viewsSetup (app) {
         salon = new Salon(app, contextData.pathParams || 0);
       }
       console.log(salon);
-      salon.renderSeats();
+      salon.renderSeats().then(async () => {
+        if (app.currentBooking && app.currentBooking.screening) {
+          let screening = app.currentBooking.screening;
+          let occupied = await Booking.getOccupied(screening);
+          occupied.forEach((seat) => {
+            $(`.seat[data-seatnumber="${seat.seatnumber}"]`).addClass(
+              'unavailable'
+            );
+            salon.unavailableSeats.push(+seat.seatnumber);
+          });
+          salon.refreshSeatEvents();
+        }
+        if (!app.currentBooking || app.currentBooking.seats.length < 1) {
+          $('#booking').prop('disabled', true);
+        }
+      });
 
       if (!app.logInHandler.currentUser) {
         $('#booking').addClass('disabled');
       }
 
-      if (!app.currentBooking){
-        $('#booking').prop('disabled', true);
-      }
-
       $('#booking').on('click', function (event) {
         event.preventDefault();
         if (app.currentUser && app.currentBooking) {
+          if (!app.currentBooking.user) {
+            app.currentBooking.user = app.currentUser;
+          }
           let seats = $('.selected')
             .map(function () {
               return $(this).data();
             })
             .get();
-          app.currentBooking.seats = seats;
-          // console.log(app);
-          app.changePage('/boka');
+          if (seats.length > 0) {
+            app.currentBooking.seats = seats;
+            // console.log(app);
+            app.changePage('/boka');
+          }
         } else if (!app.currentUser) {
-        $('#login-modal').modal('toggle');
-      }
+          $('#login-modal').modal('toggle');
+        }
       });
     }
   );
@@ -117,17 +152,23 @@ export default function viewsSetup (app) {
     app.currentBooking =
       app.currentBooking ||
       JSON.parse(
-        '{"screening":{"date":"Feb 24 2018 21:30:00","salon":1,"movie":"Fifty Shades Darker"},"user":{"id":"test@test.com","passwordHash":{"words":[1803989619,-13304607,-1653899186,-10862761,1202562282,-1573970615,-1071754531,-1215866037],"sigBytes":32},"session":"2028036453-20884762-182915439-706389771"}}'
+        '{"screening":{"date":"3/29/2018, 4:30:00 PM","salon":1,"movie":"Fifty Shades Darker"},"user":{"id":"test@test.com","passwordHash":{"words":[1803989619,-13304607,-1653899186,-10862761,1202562282,-1573970615,-1071754531,-1215866037],"sigBytes":32},"session":"1577922921401715461-2039341156-1724963259"},"seats":[{"seatnumber":21,"rownumber":3},{"seatnumber":20,"rownumber":3},{"seatnumber":19,"rownumber":3},{"seatnumber":18,"rownumber":3}],"ticketTypes":{"adults":4,"juniors":0,"seniors":0}}'
       );
     if (app.currentBooking) {
       Renderer.renderView('boka', app.currentBooking, async (booking) => {
         // console.log(booking);
         let tickets = booking.seats.length;
         booking.ticketTypes = { adults: tickets, juniors: 0, seniors: 0 };
-        console.log(booking, app.currentBooking);
+        // console.log(booking, app.currentBooking);
+        $('#adults').text(tickets);
         let updatePrice;
         (updatePrice = () => {
-          $('#price').text(booking.price)
+          $('#price').text(
+            booking.price ||
+              booking.ticketTypes.adults * 85 +
+                booking.ticketTypes.seniors * 75 +
+                booking.ticketTypes.juniors * 65
+          );
         })();
         // updatePrice();
         $('.plus-minus.plus').click(function (e) {
@@ -146,6 +187,7 @@ export default function viewsSetup (app) {
               .prop('id');
             booking.ticketTypes[type] = quantity + 1;
             booking.ticketTypes.adults--;
+            $('#adults').text(booking.ticketTypes.adults);
             updatePrice();
             // console.log(booking);
           }
@@ -166,13 +208,50 @@ export default function viewsSetup (app) {
               .prop('id');
             booking.ticketTypes[type] = quantity - 1;
             booking.ticketTypes.adults++;
+            $('#adults').text(booking.ticketTypes.adults);
             updatePrice();
             // console.log(booking);
           }
         });
+        $('#booking-confirm').on('click', async function (event) {
+          event.preventDefault();
+          if (!app.currentUser) {
+            $('#login-modal').modal('show');
+            return;
+          }
+          if (!booking.user) {
+            booking.user = app.currentUser;
+          }
+          const confirmationNumber = await booking.save();
+          app.changePage('/bokning/' + confirmationNumber);
+        });
       });
     } else {
       app.changePage('/visningar'); // Redirect if not actually booking
+    }
+  });
+  app.bindView('confirmation', '/bokning', async (Renderer, pathParams) => {
+    try {
+      let booking =
+        app.currentBooking &&
+        app.currentBooking.confirmationNumber &&
+        app.currentBooking.confirmationNumber === pathParams
+          ? app.currentBooking
+          : pathParams
+            ? await Booking.fetch(pathParams)
+            : void app.changePage(
+              app.currentBooking.confirmationNumber
+                ? '/bokning' + app.currentBooking.confirmationNumber
+                : '/'
+            );
+      let user = app.currentUser || (await app.logInHandler.verifySession());
+      if (booking && user) {
+        Renderer.renderView('confirmation', booking);
+      } else {
+        throw new Error('Unauthorized');
+      }
+    } catch (e) {
+      app.changePage('/');
     }
   });
   app.bindViewWithJSON('bio', '/bios', '/json/movie-data.json', 'movies');
@@ -209,7 +288,7 @@ export default function viewsSetup (app) {
           .on('click', function (event) {
             event.preventDefault();
             // @ts-ignore
-            app.currentBooking = new Booking(screening, app);
+            app.currentBooking = new Booking(screening);
             app.changePage('/salontemplate');
           });
       });
@@ -245,25 +324,29 @@ export default function viewsSetup (app) {
           }
         );
       });
-      const dateOptions = {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric'
-      };
       contextData.forEach((screening) => {
-        const date = new Date(screening.date).toLocaleDateString(
-          'sv-SE',
-          dateOptions
-        );
+        const date = toSwedishDate(new Date(screening.date));
         Object.assign(screening, {
-          dateString: capitalizeFirstLetter(date)
+          dateString: date
         });
       });
       Renderer.renderView('screenings', { screenings: contextData });
     }
   );
+}
+
+function toSwedishDate (date) {
+  const dateOptions = {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric'
+  };
+  return capitalizeFirstLetter(date.toLocaleDateString(
+    'sv-SE',
+    dateOptions
+  ));
 }
 
 /**

@@ -21,7 +21,7 @@ class App extends Renderer {
    * @memberof App
    */
   initializePage () {
-    this.logInHandler.verifySession();
+    return this.logInHandler.verifySession();
   }
 }
 
