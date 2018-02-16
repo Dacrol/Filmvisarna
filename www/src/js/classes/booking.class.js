@@ -15,6 +15,27 @@ export default class Booking {
     );
   }
 
+  get swedishDate () {
+    if (this.screening && this.screening.date) {
+      let date = new Date(this.screening.date);
+      const capitalizeFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      };
+      const dateOptions = {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      };
+      return capitalizeFirstLetter(
+        date.toLocaleDateString('sv-SE', dateOptions)
+      );
+    } else {
+      return null;
+    }
+  }
+
   async save (allBookings = null) {
     let bookings =
       allBookings || (await JSON._load('bookings.json').catch(() => []));
@@ -50,7 +71,9 @@ export default class Booking {
   static async getOccupied (screening) {
     let allBookings = await JSON._load('bookings.json').catch(() => []);
     let matching = allBookings.filter((booking) => {
-      return Object.entries(screening).every((entry) => booking.screening[entry[0]] === entry[1]);
+      return Object.entries(screening).every(
+        (entry) => booking.screening[entry[0]] === entry[1]
+      );
     });
     return [].concat(...matching.map((match) => match.seats));
   }

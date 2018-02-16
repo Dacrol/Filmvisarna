@@ -1,1 +1,36 @@
-<h1>Huge success!</h1>
+<div class="container">
+
+<div class="justify-content-center">
+  <h3 class="text-inherit">Bokningsnummer: {{:confirmationNumber}}</h3>
+  <h2 class="mb-3 mt-3 text-lighter inher">
+    {{:screening.movie}}: {{:swedishDate}}
+  </h2>
+  <div class="mb-2 h3 text-inherit">Du har bokat {{:seats.length}} biljetter:  </div>
+
+        <div class="d-inline-flex p-2">
+    <div class="mb-3 text-left" style="font-size: 13pt;">
+        <div>
+            <span> Vuxna: </span><span class="float-right"> {{:ticketTypes.adults}} </span>
+          </div>
+      <div class="mt-1">
+        <span> Barn: </span><span class="float-right"> {{:ticketTypes.juniors}} </span>
+      </div>
+      <div class="mt-1">
+        <span class="mr-3"> Pensionärer: </span><span class="ml-3 float-right"> {{:ticketTypes.seniors}} </span>
+      </div>
+    </div>
+
+  </div>
+  <div class="mb-2 h3 text-inherit">På platserna: </div>
+  <ul class="list-unstyled">
+    {{for seats}}
+      <li class="mb-1">Rad {{:rownumber}}, plats {{:seatnumber}}</li>
+    {{/for}}
+  </ul>
+  <div class="mt-3 mb-3 h2 text-inherit">Totalpris: <span id="price">{{:price}}</span> kr</div>
+  <div class="mb-4 h3 text-inherit">Vänligen ta med dig denna bekräftelse till visningen, völkommen till Filmvisarna!</div>
+</div>
+<!-- <img src="https://image.tmdb.org/t/p/original/sCJEwEShZvruTpQ2a4yiX3Q9EyZ.jpg" class="figure-img img-fluid rounded"
+    alt=""> -->
+
+</div>

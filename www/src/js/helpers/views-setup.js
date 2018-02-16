@@ -335,7 +335,7 @@ export default function viewsSetup (app) {
   );
 }
 
-function toSwedishDate(date) {
+function toSwedishDate (date) {
   const dateOptions = {
     weekday: 'long',
     month: 'long',
