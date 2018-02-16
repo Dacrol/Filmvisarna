@@ -281,7 +281,7 @@ export default function viewsSetup (app) {
           .append(
             `<a class="dropdown-item" href="/salontemplate/${
               screening.salon
-            }">${screening.date}</a>`
+            }">${toSwedishDate(new Date(screening.date))}</a>`
           )
           .children()
           .last()
