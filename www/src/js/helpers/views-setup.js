@@ -23,7 +23,7 @@ export default function viewsSetup (app) {
       myBookings.forEach(booking => {
         let date = new Date(booking.screening.date)
         let target = date > now ? $('#current-bookings') : $('#past-bookings');
-        console.log(target)
+        // console.log(target);
         target.append(`
         <a class="text-light" alt="" href="/bokning/${booking.confirmationNumber}">
         <dt> ${booking.screening.movie} </dt>
@@ -32,7 +32,7 @@ export default function viewsSetup (app) {
         `);
       })
 
-      console.log(data);
+      // console.log(data);
 
       $('#sign-out').on('click', function (event) {
         event.preventDefault();
@@ -95,14 +95,14 @@ export default function viewsSetup (app) {
     '/json/salong.json',
     'salons',
     (contextData) => {
-      console.log(app.currentBooking);
+      // console.log(app.currentBooking);
       let salon;
       if (app.currentBooking) {
         salon = new Salon(app, app.currentBooking.screening.salon);
       } else {
         salon = new Salon(app, contextData.pathParams || 0);
       }
-      console.log(salon);
+      // console.log(salon);
       salon.renderSeats().then(async () => {
         if (app.currentBooking && app.currentBooking.screening) {
           let screening = app.currentBooking.screening;

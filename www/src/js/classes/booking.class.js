@@ -90,4 +90,4 @@ export default class Booking {
 }
 
 // @ts-ignore
-window.Booking = Booking;
+// window.Booking = Booking;
