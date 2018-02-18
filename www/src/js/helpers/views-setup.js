@@ -147,13 +147,6 @@ export default function viewsSetup (app) {
     }
   );
   app.bindView('boka', '/boka', (Renderer, pathParams) => {
-    console.log(app.currentBooking);
-    // ! TODO: Remove this
-    app.currentBooking =
-      app.currentBooking ||
-      JSON.parse(
-        '{"screening":{"date":"3/29/2018, 4:30:00 PM","salon":1,"movie":"Fifty Shades Darker"},"user":{"id":"test@test.com","passwordHash":{"words":[1803989619,-13304607,-1653899186,-10862761,1202562282,-1573970615,-1071754531,-1215866037],"sigBytes":32},"session":"1577922921401715461-2039341156-1724963259"},"seats":[{"seatnumber":21,"rownumber":3},{"seatnumber":20,"rownumber":3},{"seatnumber":19,"rownumber":3},{"seatnumber":18,"rownumber":3}],"ticketTypes":{"adults":4,"juniors":0,"seniors":0}}'
-      );
     if (app.currentBooking) {
       Renderer.renderView('boka', app.currentBooking, async (booking) => {
         // console.log(booking);
