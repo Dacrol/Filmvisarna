@@ -90,7 +90,7 @@ export default function viewsSetup (app) {
   app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
   app.bindViewWithJSON(
     'salon-template',
-    '/salontemplate',
+    '/salon',
     '/json/salong.json',
     'salons',
     (contextData) => {
@@ -271,7 +271,7 @@ export default function viewsSetup (app) {
       list.forEach((screening) => {
         $('#up-coming-movies')
           .append(
-            `<a class="dropdown-item" href="/salontemplate/${
+            `<a class="dropdown-item" href="/salon/${
               screening.salon
             }">${toSwedishDate(new Date(screening.date))}</a>`
           )
@@ -281,7 +281,7 @@ export default function viewsSetup (app) {
             event.preventDefault();
             // @ts-ignore
             app.currentBooking = new Booking(screening);
-            app.changePage('/salontemplate');
+            app.changePage('/salon');
           });
       });
     }
