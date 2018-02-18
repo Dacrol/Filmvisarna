@@ -238,7 +238,7 @@ class Renderer extends PopStateHandler {
         view,
         url,
         async (Renderer, pathParams) => {
-          let contextData = { pathParams: pathParams }
+          let contextData = { pathParams: pathParams };
           let promiseData = await Promise.all(
             // @ts-ignore
             jsonUrl.map((url) => {

@@ -18,10 +18,10 @@ export default function viewsSetup (app) {
     (data) => {
       let myBookings = data[1].filter((booking) => {
         return booking.user.id === app.currentUser.id;
-      })
-      let now = new Date()
-      myBookings.forEach(booking => {
-        let date = new Date(booking.screening.date)
+      });
+      let now = new Date();
+      myBookings.forEach((booking) => {
+        let date = new Date(booking.screening.date);
         let target = date > now ? $('#current-bookings') : $('#past-bookings');
         // console.log(target);
         target.append(`
@@ -30,7 +30,7 @@ export default function viewsSetup (app) {
         <dl> ${toSwedishDate(date)} </dl>
         </a>
         `);
-      })
+      });
 
       // console.log(data);
 
@@ -39,7 +39,6 @@ export default function viewsSetup (app) {
         // @ts-ignore
         app.logInHandler.signOut();
       });
-
     }
   );
 
@@ -336,10 +335,7 @@ function toSwedishDate (date) {
     hour: 'numeric',
     minute: 'numeric'
   };
-  return capitalizeFirstLetter(date.toLocaleDateString(
-    'sv-SE',
-    dateOptions
-  ));
+  return capitalizeFirstLetter(date.toLocaleDateString('sv-SE', dateOptions));
 }
 
 /**
