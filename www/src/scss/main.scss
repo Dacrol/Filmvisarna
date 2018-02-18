@@ -10,7 +10,7 @@ body {
 
 .nav-item {
   font-size: 15px;
-  margin-right: 1rem;
+  margin-right: 1.5rem;
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -18,7 +18,7 @@ body {
 }
 
 .nav-pills .nav-link {
-  transition: background-color .3s, box-shadow .3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .nav-pills .nav-link:hover {
@@ -28,7 +28,8 @@ body {
 
 .nav-pills .nav-link.active {
   background-color: rgba(35, 0, 0, 0.22);
-    box-shadow: 0px 0px 16px 2px rgba(33,33,33,0.4), 0px 11px 10px -4px rgba(33,33,33,0.3);
+  box-shadow: 0px 0px 16px 2px rgba(33, 33, 33, 0.4),
+    0px 11px 10px -4px rgba(33, 33, 33, 0.3);
 }
 
 .navbar-nav .nav-link {
@@ -92,14 +93,13 @@ header {
 }
 
 button.booking {
-  transition: background-color .3s, box-shadow .3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
   background-color: #cc0020;
   color: #fff;
   border-radius: 0.1875rem;
   margin-bottom: 20px;
   font-size: 15px;
-  box-shadow:
-    inset 0 -0.35rem 2px -1px rgba(0, 0, 0, 0.2),
+  box-shadow: inset 0 -0.35rem 2px -1px rgba(0, 0, 0, 0.2),
     0 0.125rem 2px 0 rgba(0, 0, 0, 0.24),
     0 8px 8px 0 rgba(0, 0, 0, 0.24);
   border: none;
@@ -110,12 +110,13 @@ button.booking {
 
   &[disabled] {
     background-color: #cc0020;
-    transition: background-color .3s, box-shadow .3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
   }
 
   &.disabled {
     background-color: #da0021;
-    transition: background-color .3s, box-shadow .3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
   }
 }
 
@@ -124,11 +125,13 @@ button.booking {
   min-height: 250px;
 }
 
-h1, h2, {
+h1,
+h2 {
   color: #919aa1;
 }
 
-span.h3, span.h5 {
+span.h3,
+span.h5 {
   color: #919aa1;
 }
 
@@ -163,9 +166,11 @@ span.h3, span.h5 {
 
 .bg-transparent {
   background-color: transparent;
+
   .card-text {
     color: #ccc;
   }
+
   .card-title {
     color: #ddd;
   }
@@ -185,22 +190,23 @@ span.h3, span.h5 {
 }
 
 .salon-image {
-  box-shadow: 0 13px 40px -4px rgba(217,83,79,0.24);
+  box-shadow: 0 13px 40px -4px rgba(217, 83, 79, 0.24);
   border-radius: 3%;
 }
 
 .video-wrapper {
-	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	padding-top: 25px;
-	height: 0;
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
 }
+
 .video-wrapper iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 nav ul {

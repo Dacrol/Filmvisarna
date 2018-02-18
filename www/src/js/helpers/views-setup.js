@@ -18,28 +18,27 @@ export default function viewsSetup (app) {
     (data) => {
       let myBookings = data[1].filter((booking) => {
         return booking.user.id === app.currentUser.id;
-      })
-      let now = new Date()
-      myBookings.forEach(booking => {
-        let date = new Date(booking.screening.date)
+      });
+      let now = new Date();
+      myBookings.forEach((booking) => {
+        let date = new Date(booking.screening.date);
         let target = date > now ? $('#current-bookings') : $('#past-bookings');
-        console.log(target)
+        // console.log(target);
         target.append(`
         <a class="text-light" alt="" href="/bokning/${booking.confirmationNumber}">
         <dt> ${booking.screening.movie} </dt>
         <dl> ${toSwedishDate(date)} </dl>
         </a>
         `);
-      })
+      });
 
-      console.log(data);
+      // console.log(data);
 
       $('#sign-out').on('click', function (event) {
         event.preventDefault();
         // @ts-ignore
         app.logInHandler.signOut();
       });
-
     }
   );
 
@@ -91,18 +90,18 @@ export default function viewsSetup (app) {
   app.bindViewWithJSON('salonger', '/salons', '/json/salong.json', 'salons');
   app.bindViewWithJSON(
     'salon-template',
-    '/salontemplate',
+    '/salon',
     '/json/salong.json',
     'salons',
     (contextData) => {
-      console.log(app.currentBooking);
+      // console.log(app.currentBooking);
       let salon;
       if (app.currentBooking) {
         salon = new Salon(app, app.currentBooking.screening.salon);
       } else {
         salon = new Salon(app, contextData.pathParams || 0);
       }
-      console.log(salon);
+      // console.log(salon);
       salon.renderSeats().then(async () => {
         if (app.currentBooking && app.currentBooking.screening) {
           let screening = app.currentBooking.screening;
@@ -147,13 +146,6 @@ export default function viewsSetup (app) {
     }
   );
   app.bindView('boka', '/boka', (Renderer, pathParams) => {
-    console.log(app.currentBooking);
-    // ! TODO: Remove this
-    app.currentBooking =
-      app.currentBooking ||
-      JSON.parse(
-        '{"screening":{"date":"3/29/2018, 4:30:00 PM","salon":1,"movie":"Fifty Shades Darker"},"user":{"id":"test@test.com","passwordHash":{"words":[1803989619,-13304607,-1653899186,-10862761,1202562282,-1573970615,-1071754531,-1215866037],"sigBytes":32},"session":"1577922921401715461-2039341156-1724963259"},"seats":[{"seatnumber":21,"rownumber":3},{"seatnumber":20,"rownumber":3},{"seatnumber":19,"rownumber":3},{"seatnumber":18,"rownumber":3}],"ticketTypes":{"adults":4,"juniors":0,"seniors":0}}'
-      );
     if (app.currentBooking) {
       Renderer.renderView('boka', app.currentBooking, async (booking) => {
         // console.log(booking);
@@ -279,7 +271,7 @@ export default function viewsSetup (app) {
       list.forEach((screening) => {
         $('#up-coming-movies')
           .append(
-            `<a class="dropdown-item" href="/salontemplate/${
+            `<a class="dropdown-item" href="/salon/${
               screening.salon
             }">${toSwedishDate(new Date(screening.date))}</a>`
           )
@@ -289,7 +281,7 @@ export default function viewsSetup (app) {
             event.preventDefault();
             // @ts-ignore
             app.currentBooking = new Booking(screening);
-            app.changePage('/salontemplate');
+            app.changePage('/salon');
           });
       });
     }
@@ -343,10 +335,7 @@ function toSwedishDate (date) {
     hour: 'numeric',
     minute: 'numeric'
   };
-  return capitalizeFirstLetter(date.toLocaleDateString(
-    'sv-SE',
-    dateOptions
-  ));
+  return capitalizeFirstLetter(date.toLocaleDateString('sv-SE', dateOptions));
 }
 
 /**
